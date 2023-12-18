@@ -1,0 +1,30 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  ci:
+    name: Check code quality
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+
+    - uses: Swatinem/rust-cache@v2
+
+    - uses: taiki-e/install-action@just
+    - uses: taiki-e/install-action@dprint
+    - uses: taiki-e/install-action@v2
+      with:
+        tool: typos-cli,stylua
+
+    - name: Install prerequisites
+      run: |
+        just setup
+
+    - name: Check
+      run: |
+        just check

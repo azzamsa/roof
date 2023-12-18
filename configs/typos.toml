@@ -1,0 +1,6 @@
+[files]
+extend-exclude = ["CHANGELOG.md"]
+
+[default.extend-words]
+# Don't correct the package name "noice"
+noice = "noice"
