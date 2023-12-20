@@ -11,11 +11,20 @@ _Code beneath my own roof!_
 
 **Roof!** features:
 
-- Colemak Mod-DH 🐲
+- 👾 [Doom Emacs][doom] experience
+- 🐲 [Colemak Mod-DH][colemak]
+- 🔒 Pinned packages
 
-This configuration aims for compatibility with [emacs-evil-colemak-basics](https://github.com/wbolster/emacs-evil-colemak-basics).
-
-## Contribution
+## Contribute
 
 I won't be accepting any functionality or behavior changes. But it is OK for fixes and refinement.
 I don't recommend using this repository directly. Instead, use it as a source of inspiration.
+
+## Credits
+
+This configuration is crafted using the magical ingredients of [LazyVim][lazyvim] and [Launch.nvim][launch.nvim]. Bon appétit!
+
+[doom]: https://github.com/doomemacs/doomemacs/
+[colemak]: https://github.com/wbolster/emacs-evil-colemak-basics
+[lazyvim]: https://github.com/LazyVim/LazyVim/tree/77672ba3fd401b84d62a93640691acc7ee9b3157
+[launch.nvim]: https://github.com/LunarVim/Launch.nvim/commit/29f420def1079a9d634c86487db4253cd24868b2

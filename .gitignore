@@ -1,8 +1,20 @@
-tt.*
-.tests
-doc/tags
-debug
-.repro
-foo.*
-*.log
-data
+# Ignore everything in the root directory
+/*
+
+# Adding myself to the party!
+!.gitignore
+
+!configs
+!docs
+!etc
+!scripts
+
+!lua
+!init.lua
+!justfile
+!lazy-lock.json
+!version
+
+!LICENSE
+!README.md
+!CHANGELOG.md

@@ -2,6 +2,8 @@
 
 alias f := fmt
 alias l := lint
+alias c := comply
+alias k := check
 
 # List available commands.
 _default:
@@ -19,12 +21,12 @@ check: fmt-check lint
 # Format the codebase.
 fmt:
     dprint fmt --config configs/dprint.json
-    stylua --config-path configs/stylua.toml --glob '*.lua' --glob '!target' --allow-hidden .
+    stylua .
 
 # Check is the codebase properly formatted.
 fmt-check:
     dprint check --config configs/dprint.json
-    stylua --config-path configs/stylua.toml --glob '*.lua' --glob '!target' --allow-hidden --check .
+    stylua --check .
 
 # Lint the codebase.
 lint:
