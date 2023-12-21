@@ -67,12 +67,8 @@ spec("plugins.visualmulti")
 spec("plugins.noice")
 -- Surround actions
 spec("plugins.surround")
-
--- Jump around -- Neovim's answer to the mouse 🦘
--- spec("plugins.leap")
-
--- Enhanced t/j motions
-spec("plugins.flit")
+-- Jump around
+spec("plugins.flash")
 -- Markdown support
 spec("plugins.markdown")
 -- KDL support
