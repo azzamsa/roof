@@ -6,13 +6,16 @@ local M = {
 
 function M.config()
     local mappings = {
+        -- Every keymap that uses a custom function means the default `Telescope <*>` always starts from the `cwd`.
+
+        -- stylua: ignore start
+        ["."] = { function() require("configs.utils").find_files_from_here() end, "Find file" },
+        ["<space>"] = { function() require("configs.utils").find_files_from_here() end, "Find file" },
 
         [","] = { "<cmd>Telescope buffers previewer=false<cr>", "Switch buffer" },
-        -- stylua: ignore
-        ["x"] = { function() require("configs.utils").open_scratch_buffer() end, "Pop up scratch buffer", },
-        ["."] = { "<cmd>Telescope find_files<cr>", "Find file" },
-        ["/"] = { "<cmd>Telescope live_grep<cr>", "Search project" },
-        ["<space>"] = { "<cmd>Telescope find_files<cr>", "Find file" },
+        ["x"] = { function() require("configs.utils").open_scratch_buffer() end, "Open scratch buffer" },
+        ["/"] = { function() require("configs.utils").grep_from_here() end, "Search" },
+        -- stylua: ignore end
 
         -- <leader> b --- buffer
         b = {
@@ -42,8 +45,7 @@ function M.config()
             d = { "<cmd>Oil<cr>", "Find directory" },
             D = { "<cmd>call delete(expand('%')) <bar> bdelete!<cr>", "Delete this file" },
             e = { function() require("configs.utils").find_files_in_config() end, "Find file in config", },
-            f = { "<cmd>Telescope find_files<cr>", "Find file" },
-            F = { function() require("configs.utils").find_files_from_here() end, "Find file from here", },
+            f = { function() require("configs.utils").find_files_from_here() end, "Find file", },
             r = { "<cmd>Telescope oldfiles<cr>", "Recent file" },
             R = { "<cmd>Telescope registers<cr>", "Registers" },
             s = { "<cmd>w<cr>", "Save buffer" },
@@ -54,8 +56,7 @@ function M.config()
         -- stylua: ignore
         g = {
             name = "VCS",
-            g = { "<cmd>Neogit<cr>", "Neogit" },
-            G = { function() require('neogit').open({ cwd = vim.fn.expand("%:p:h") }) end, "Neogit from here" },
+            g = { function() require('neogit').open({ cwd = vim.fn.expand("%:p:h") }) end, "Neogit" },
         },
 
         -- <leader> h --- help
@@ -78,8 +79,9 @@ function M.config()
         -- stylua: ignore
         o = {
             name = "Open",
+            -- Open from current buffer by default
             d = { "<cmd>Oil<cr>", "File manager from here" },
-            D = { function() require('oil').open(vim.fn.getcwd())  end, "File manager from cwd" },
+            -- Open from current buffer by default
             p = { "<cmd>NvimTreeToggle<cr>", "Side panel" },
             x = { function() vim.fn.system("xdg-open .") end, "GUI File manager" },
         },
@@ -103,8 +105,7 @@ function M.config()
             name = "Search",
             c = { "<cmd>Telescope command_history<cr>", "Command history" },
             C = { "<cmd>Telescope commands<cr>", "Commands" },
-            g = { "<cmd>Telescope live_grep<cr>", "Search" },
-            G = { function() require("configs.utils").grep_from_here() end, "Search from here" },
+            g = { function() require("configs.utils").grep_from_here() end, "Search" },
             K = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
             R = { "<cmd>Telescope resume<cr>", "Resume" },
         },
