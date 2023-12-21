@@ -18,7 +18,7 @@ function M.config()
             sort = {
                 -- sort order can be "asc" or "desc"
                 -- see :help oil-columns to see which columns are sortable
-                { "mtime", "asc" },
+                { "mtime", "desc" },
             },
         },
     })

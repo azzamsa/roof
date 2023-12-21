@@ -9,9 +9,9 @@ function M.config()
         active = true,
         on_config_done = nil,
         manual_mode = false,
-        detection_methods = { "pattern" },
+        detection_methods = { "lsp", "pattern" },
         --  `.project` and `.projectile` are part of the Emacs's project detection system.
-        patterns = { ".git", "justfile", "package.json", ".project", ".projectile" },
+        patterns = { ".git", "justfile", "Makefile", "package.json", ".project", ".projectile" },
         ignore_lsp = {},
         exclude_dirs = {},
         show_hidden = false,

@@ -51,9 +51,11 @@ function M.config()
         },
 
         -- <leader> g --- version control
+        -- stylua: ignore
         g = {
             name = "VCS",
             g = { "<cmd>Neogit<cr>", "Neogit" },
+            G = { function() require('neogit').open({ cwd = vim.fn.expand("%:p:h") }) end, "Neogit from here" },
         },
 
         -- <leader> h --- help
@@ -73,9 +75,13 @@ function M.config()
         },
 
         -- <leader> o --- open
+        -- stylua: ignore
         o = {
             name = "Open",
+            d = { "<cmd>Oil<cr>", "File manager from here" },
+            D = { function() require('oil').open(vim.fn.getcwd())  end, "File manager from cwd" },
             p = { "<cmd>NvimTreeToggle<cr>", "Side panel" },
+            x = { function() vim.fn.system("xdg-open .") end, "GUI File manager" },
         },
 
         -- <leader> p --- project
@@ -87,8 +93,8 @@ function M.config()
         -- <leader> q --- quit
         q = {
             name = "Quit",
-            q = { "<cmd>wa <bar> q<cr>", "Quit" },
-            Q = { "<cmd>q!<cr>", "Quit without saving" },
+            q = { "<cmd>wa <bar> qa<cr>", "Quit" },
+            Q = { "<cmd>qa!<cr>", "Quit without saving" },
         },
 
         -- <leader> s --- search

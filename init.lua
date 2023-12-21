@@ -50,8 +50,7 @@ spec("plugins.diffview")
 spec("plugins.indentline")
 -- Dashboard
 spec("plugins.alpha")
--- Adds a layer of ✨bling✨ to netrw.
--- spec("plugins.netrw")
+-- Adds a layer of bling to netrw.
 spec("plugins.oil")
 -- Project management.
 spec("plugins.project")
