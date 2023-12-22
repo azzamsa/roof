@@ -56,8 +56,6 @@ spec("plugins.oil")
 spec("plugins.project")
 -- Floating terminal
 spec("plugins.toggleterm")
--- Delete Neovim buffers without losing window layout
-spec("plugins.bufdelete")
 -- Trim tailing whitespaces
 spec("plugins.trim")
 -- Multiple cursors
