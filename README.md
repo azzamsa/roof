@@ -15,6 +15,10 @@ _Code beneath my own roof!_
 - 🐲 [Colemak Mod-DH][colemak]
 - 🔒 Pinned packages
 
+## Requirements
+
+- [Toor](https://github.com/azzamsa/toor) - Find project root.
+
 ## Contribute
 
 I won't be accepting any functionality or behavior changes. But it is OK for fixes and refinement.

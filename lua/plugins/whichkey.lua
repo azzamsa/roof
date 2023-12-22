@@ -9,12 +9,12 @@ function M.config()
         -- Every keymap that uses a custom function means the default `Telescope <*>` always starts from the `cwd`.
 
         -- stylua: ignore start
-        ["."] = { function() require("configs.utils").find_files_from_here() end, "Find file" },
-        ["<space>"] = { function() require("configs.utils").find_files_from_here() end, "Find file" },
+        ["."] =  { function() require("configs.utils").find_files_in_project() end, "Find project file" },
+        ["<space>"] =  { function() require("configs.utils").find_files_in_project() end, "Find project file" },
 
         [","] = { "<cmd>Telescope buffers previewer=false<cr>", "Switch buffer" },
         ["x"] = { function() require("configs.utils").open_scratch_buffer() end, "Open scratch buffer" },
-        ["/"] = { function() require("configs.utils").grep_from_here() end, "Search" },
+        ["/"]  = { function() require("configs.utils").grep_in_project() end, "Search in project" },
         -- stylua: ignore end
 
         -- <leader> b --- buffer
@@ -22,7 +22,8 @@ function M.config()
             name = "Buffers",
             b = { "<cmd>Telescope buffers previewer=false<cr>", "Switch buffer" },
             k = { "<cmd>bd<cr>", "Kill buffer" },
-            K = { "<cmd>%bd <bar> e#<cr>", "Kill other buffers" },
+            K = { "<cmd>%bd!<cr>", "Kill all buffer" },
+            O = { "<cmd>%bd <bar> e#<cr>", "Kill other buffers" },
             -- Doom use both `<leader> b s` and `<leader> f s` to save file
             s = { "<cmd>w<cr>", "Save buffer" },
             S = { "<cmd>wa<cr>", "Save all buffers" },
@@ -87,9 +88,12 @@ function M.config()
         },
 
         -- <leader> p --- project
+        -- stylua: ignore
         p = {
             name = "Project",
+            f =  { function() require("configs.utils").find_files_in_project() end, "Find project file" }, 
             p = { "<cmd>Telescope projects<cr>", "Switch project" },
+            s  = { function() require("configs.utils").grep_in_project() end, "Search in project" },
         },
 
         -- <leader> q --- quit

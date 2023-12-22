@@ -1,19 +1,65 @@
 local M = {}
 
+function M.find_files(path)
+    require("telescope.builtin").find_files({
+        cwd = path,
+    })
+end
+
+function M.live_grep(path)
+    require("telescope.builtin").live_grep({
+        cwd = path,
+    })
+end
+
+-- Find project root
+-- Requires https://github.com/azzamsa/toor
+---@param path string
+function M.project_root(path)
+    local root = vim.fn.system("toor " .. path)
+    return vim.fn.trim(root)
+end
+
+-- Live grep from current buffer directory
+function M.grep_from_here()
+    M.live_grep(vim.fn.expand("%:p:h"))
+end
+
+-- Live grep from the project root.
+function M.grep_in_project()
+    local root = M.project_root(vim.fn.expand("%:p:h"))
+    -- Use the current file's directory if the project root is empty
+    if root == "" then
+        root = vim.fn.expand("%:p:h")
+    end
+
+    M.live_grep(root)
+end
+
 -- Find files from the directory of `config`
 function M.find_files_in_config()
-    require("telescope.builtin").find_files({
-        cwd = vim.fn.stdpath("config"),
-    })
+    M.find_files(vim.fn.stdpath("config"))
 end
 
 -- Find files from the directory of the currently opened buffer.
 function M.find_files_from_here()
-    local current_buffer_dir = vim.fn.expand("%:p:h")
-    require("telescope.builtin").find_files({
-        cwd = current_buffer_dir,
-    })
+    M.find_files(vim.fn.expand("%:p:h"))
 end
+
+-- Find files from the project root.
+function M.find_files_in_project()
+    local root = M.project_root(vim.fn.expand("%:p:h"))
+    -- Use the current file's directory if the project root is empty
+    if root == "" then
+        root = vim.fn.expand("%:p:h")
+    end
+
+    M.find_files(root)
+end
+
+--
+-- Toggle
+--
 
 function M.toggle_opt(option)
     vim.opt_local[option] = not vim.opt_local[option]:get()
@@ -86,12 +132,9 @@ function M.toggle_format(buf)
     M.info()
 end
 
-function M.grep_from_here()
-    local current_buffer_dir = vim.fn.expand("%:p:h")
-    require("telescope.builtin").live_grep({
-        cwd = current_buffer_dir,
-    })
-end
+--
+-- Scrath
+--
 
 local scratch_file = "~/.local/share/meta/**scratch**.md"
 function M.open_scratch_buffer()
