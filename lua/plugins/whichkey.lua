@@ -63,9 +63,13 @@ function M.config()
         -- <leader> g --- version control
         g = {
             name = "VCS",
-            -- stylua: ignore start
-            g = { function() require('neogit').open({ cwd = vim.fn.expand("%:p:h") }) end, "Neogit" },
-            -- stylua: ignore end
+            g = {
+                function()
+                    local path = require("configs.utils").sanitize(vim.fn.expand("%:p:h"))
+                    require("neogit").open({ cwd = path })
+                end,
+                "Neogit",
+            },
         },
 
         -- <leader> h --- help

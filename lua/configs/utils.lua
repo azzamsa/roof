@@ -12,6 +12,19 @@ function M.live_grep(path)
     })
 end
 
+-- Get real path
+---@param path string
+function M.sanitize(path)
+    local is_oil_path = string.match(path, "^oil://")
+
+    if is_oil_path then
+        -- Remove the "oil://" prefix
+        return string.gsub(path, "^oil://", "")
+    else
+        return path
+    end
+end
+
 -- Find project root
 -- Requires https://github.com/azzamsa/toor
 ---@param path string
