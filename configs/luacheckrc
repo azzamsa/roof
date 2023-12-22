@@ -1,0 +1,12 @@
+ignore = {
+  "631", -- Line is too long
+  "122", -- Setting a readonly global
+}
+
+read_globals = {
+  "vim",
+}
+
+globals = {
+  "LAZY_PLUGIN_SPEC",
+}

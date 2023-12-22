@@ -10,12 +10,6 @@ local M = {
     },
 }
 
-local function lsp_keymaps(bufnr) end
-
-M.on_attach = function(client, bufnr)
-    lsp_keymaps(bufnr)
-end
-
 function M.common_capabilities()
     local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
     if status_ok then
@@ -40,8 +34,25 @@ function M.config()
     local icons = require("plugins.icons")
 
     local servers = {
+        -- Lua
         "lua_ls",
+
+        -- Yaml
+        "yamlls",
+
+        -- Rust
         "rust_analyzer",
+
+        -- Markdown
+        "marksman",
+
+        -- FE
+        "jsonls",
+        "tsserver",
+        "tailwindcss",
+
+        -- Python
+        "pyright",
     }
 
     local default_diagnostic_config = {

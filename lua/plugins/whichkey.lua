@@ -7,20 +7,19 @@ local M = {
 function M.config()
     local mappings = {
         -- Every keymap that uses a custom function means the default `Telescope <*>` always starts from the `cwd`.
+        [","] = { "<cmd>Telescope buffers previewer=false<cr>", "Switch buffer" },
 
         -- stylua: ignore start
-        ["."] =  { function() require("configs.utils").find_files_in_project() end, "Find project file" },
-        ["<space>"] =  { function() require("configs.utils").find_files_in_project() end, "Find project file" },
-
-        [","] = { "<cmd>Telescope buffers previewer=false<cr>", "Switch buffer" },
-        ["x"] = { function() require("configs.utils").open_scratch_buffer() end, "Open scratch buffer" },
-        ["/"]  = { function() require("configs.utils").grep_in_project() end, "Search in project" },
+        ["."]       = { function() require("configs.utils").find_files_in_project() end, "Find project file" },
+        ["<space>"] = { function() require("configs.utils").find_files_in_project() end, "Find project file" },
+        ["x"]       = { function() require("configs.utils").open_scratch_buffer() end, "Open scratch buffer" },
+        ["/"]       = { function() require("configs.utils").grep_in_project() end, "Search in project" },
         -- stylua: ignore end
 
         -- <leader> b --- buffer
         b = {
             name = "Buffers",
-            b = { "<cmd>Telescope buffers previewer=false<cr>", "Switch buffer" },
+            b = { "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", "Switch buffer" },
             k = { "<cmd>bd<cr>", "Kill buffer" },
             K = { "<cmd>%bd!<cr>", "Kill all buffer" },
             O = { "<cmd>%bd <bar> e#<cr>", "Kill other buffers" },
@@ -33,31 +32,40 @@ function M.config()
         c = {
             name = "Code",
             a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-            f = { "<cmd>lua vim.lsp.buf.format({timeout_ms = 1000000})<cr>", "Format" },
+            d = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Line Diagnostics" },
             p = { "<cmd>MarkdownPreviewToggle<cr>", "Markdown Preview" },
             r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
             w = { "<cmd>Trim<cr>", "Delete trailing whitespaces" },
+            x = { "<cmd>TroubleToggle document_diagnostics<cr>", "Diagnostics" },
+            X = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Project diagnostics" },
+
+            -- stylua: ignore start
+            f = { function() require('conform').format({ async = false, lsp_fallback = false }) end, "Format" },
+            -- stylua: ignore end
         },
 
         -- <leader> f --- file
-        -- stylua: ignore
         f = {
             name = "File",
             d = { "<cmd>Oil<cr>", "Find directory" },
             D = { "<cmd>call delete(expand('%')) <bar> bdelete!<cr>", "Delete this file" },
-            e = { function() require("configs.utils").find_files_in_config() end, "Find file in config", },
-            f = { function() require("configs.utils").find_files_from_here() end, "Find file", },
             r = { "<cmd>Telescope oldfiles<cr>", "Recent file" },
             R = { "<cmd>Telescope registers<cr>", "Registers" },
             s = { "<cmd>w<cr>", "Save buffer" },
             S = { "<cmd>wa<cr>", "Save all buffers" },
+
+            -- stylua: ignore start
+            e = { function() require("configs.utils").find_files_in_config() end, "Find file in config" },
+            f = { function() require("configs.utils").find_files_from_here() end, "Find file" },
+            -- stylua: ignore end
         },
 
         -- <leader> g --- version control
-        -- stylua: ignore
         g = {
             name = "VCS",
+            -- stylua: ignore start
             g = { function() require('neogit').open({ cwd = vim.fn.expand("%:p:h") }) end, "Neogit" },
+            -- stylua: ignore end
         },
 
         -- <leader> h --- help
@@ -77,23 +85,27 @@ function M.config()
         },
 
         -- <leader> o --- open
-        -- stylua: ignore
         o = {
             name = "Open",
             -- Open from current buffer by default
             d = { "<cmd>Oil<cr>", "File manager from here" },
             -- Open from current buffer by default
             p = { "<cmd>NvimTreeToggle<cr>", "Side panel" },
+
+            -- stylua: ignore start
             x = { function() vim.fn.system("xdg-open .") end, "GUI File manager" },
+            -- stylua: ignore end
         },
 
         -- <leader> p --- project
-        -- stylua: ignore
         p = {
             name = "Project",
-            f =  { function() require("configs.utils").find_files_in_project() end, "Find project file" }, 
             p = { "<cmd>Telescope projects<cr>", "Switch project" },
-            s  = { function() require("configs.utils").grep_in_project() end, "Search in project" },
+
+            -- stylua: ignore start
+            f = { function() require("configs.utils").find_files_in_project() end, "Find project file" },
+            s = { function() require("configs.utils").grep_in_project() end, "Search in project" },
+            -- stylua: ignore end
         },
 
         -- <leader> q --- quit
@@ -104,31 +116,41 @@ function M.config()
         },
 
         -- <leader> s --- search
-        -- stylua: ignore
         s = {
             name = "Search",
             c = { "<cmd>Telescope command_history<cr>", "Command history" },
             C = { "<cmd>Telescope commands<cr>", "Commands" },
-            g = { function() require("configs.utils").grep_from_here() end, "Search" },
             K = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
             R = { "<cmd>Telescope resume<cr>", "Resume" },
+
+            -- stylua: ignore start
+            r = { function() require("spectre").open() end, "Replace in files" },
+            g = { function() require("configs.utils").grep_from_here() end, "Search" },
+            -- stylua: ignore end
         },
 
         -- <leader> t --- toggle
-        -- stylua: ignore
         t = {
             name = "Toggle",
-            c = { function() require("configs.utils").toggle_opt("conceallevel", false, {0, conceallevel}) end, "Conceal" },
             C = { "<cmd>ColorizerToggle<cr>", "Rainbow color" },
-            d = { function() require("configs.utils").toggle_diagnostic() end, "Diagnostics", },
-            f = { function() require("configs.utils").toggle_format() end, "Auto format", },
-            F = { function() require("configs.utils").toggle_format(true) end, "Auto format buffer", },
-            h = { function() require("configs.utils").toggle_inlay_hints() end, "Inlay Hints", },
-            l = { function() require("configs.utils").toggle_line_number() end, "Relative line numbers", },
-            L = { function() require("configs.utils").toggle_opt("relativenumber") end, "line numbers", },
+
+            c = {
+                function()
+                    local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
+                    require("configs.utils").toggle_opt("conceallevel", false, { 0, conceallevel })
+                end,
+                "Conceal",
+            },
+           -- stylua: ignore start
+            d = { function() require("configs.utils").toggle_diagnostics() end, "Diagnostics" },
+            f = { function() require("configs.utils").toggle_autoformat() end, "Auto format" },
+            h = { function() require("configs.utils").toggle_inlay_hints() end, "Inlay Hints" },
+            l = { function() require("configs.utils").toggle_line_number() end, "Line numbers" },
+            L = { function() require("configs.utils").toggle_opt("relativenumber") end, "Relative line numbers" },
             s = { function() require("configs.utils").toggle_opt("spell") end, "Spelling" },
             T = { function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, "Treesitter" },
             w = { function() require("configs.utils").toggle_opt("wrap") end, "Word wrap" },
+            -- stylua: ignore end
         },
 
         -- <leader> w --- window
@@ -156,7 +178,6 @@ function M.config()
     -- NOTE: Prefer using : over <cmd> as the latter avoids going back in normal-mode.
     -- see https://neovim.io/doc/user/map.html#:map-cmd
     local vmappings = {
-
         -- <leader> c --- code
         c = {
             name = "Code",

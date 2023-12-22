@@ -1,6 +1,7 @@
 local M = {
     "nvim-tree/nvim-web-devicons",
     event = "VeryLazy",
+    commit = "aff5f50b34754335a312c9b3dc5b245f605ce437",
 }
 function M.config()
     local devicons = require("nvim-web-devicons")

@@ -1,5 +1,9 @@
 local opt = vim.opt
 
+-- `autochdir` is not reliable enough
+-- It doesn't update the `pwd` even in the event of buffer change
+-- opt.autochdir = true
+
 -- Enable auto write
 opt.autowrite = true
 -- Disable backup files
@@ -98,6 +102,9 @@ opt.shortmess:append("c")
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 -- Set iskeyword
 vim.cmd([[set iskeyword+=-]])
+
+-- Autoformat
+vim.g.autoformat = true
 
 -- Configure netrw options
 vim.g.netrw_banner = 0

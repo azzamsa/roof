@@ -16,8 +16,14 @@ end
 -- Requires https://github.com/azzamsa/toor
 ---@param path string
 function M.project_root(path)
-    local root = vim.fn.system("toor " .. path .. " 2>/dev/null")
-    return vim.fn.trim(root)
+    local root_dir = vim.fn.system("toor " .. path .. " 2>/dev/null")
+    root_dir = vim.fn.trim(root_dir)
+
+    if root_dir == "" then
+        return nil
+    end
+
+    return root_dir
 end
 
 -- Live grep from current buffer directory
@@ -64,7 +70,6 @@ end
 function M.toggle_opt(option)
     vim.opt_local[option] = not vim.opt_local[option]:get()
     local status = vim.opt_local[option]:get() and "Enabled" or "Disabled"
-    -- Util.info(status .. " " .. option, { title = "Option" })
     vim.notify(status .. " " .. option, "info")
 end
 
@@ -106,34 +111,19 @@ function M.toggle_inlay_hints(buf, value)
     end
 end
 
----@param buf? number
-function M.format_enabled(buf)
-    buf = (buf == nil or buf == 0) and vim.api.nvim_get_current_buf() or buf
-    local gaf = vim.g.autoformat
-    local baf = vim.b[buf].autoformat
-
-    -- If the buffer has a local value, use that
-    if baf ~= nil then
-        return baf
-    end
-
-    -- Otherwise use the global value if set, or true by default
-    return gaf == nil or gaf
-end
-
----@param buf? boolean
-function M.toggle_format(buf)
-    if buf then
-        vim.b.autoformat = not M.format_enabled()
+function M.toggle_autoformat()
+    vim.g.autoformat = not vim.g.autoformat
+    if vim.g.autoformat then
+        vim.g.autoformat = true
+        vim.notify("Enabled autoformat")
     else
-        vim.g.autoformat = not M.format_enabled()
-        vim.b.autoformat = nil
+        vim.g.autoformat = false
+        vim.notify("Disabled autoformat")
     end
-    M.info()
 end
 
 --
--- Scrath
+-- scratch
 --
 
 local scratch_file = "~/.local/share/meta/**scratch**.md"
@@ -146,6 +136,21 @@ function M.open_scratch_buffer()
     end
 
     vim.cmd("vsplit " .. scratch_file)
+end
+
+--
+-- Formatters and Linters
+--
+
+--- Get full config path located in custom directory.
+--- Usually it is on the root directory.
+---@param filename string
+function M.config_path(filename)
+    local root_dir = M.project_root(vim.fn.expand("%:p:h"))
+    local path = vim.fs.find(filename, { path = root_dir })[1]
+    if path then
+        return path
+    end
 end
 
 return M

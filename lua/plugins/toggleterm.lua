@@ -30,14 +30,15 @@ function M.config()
         on_open = function(term)
             -- Can't use `vim.fn.expand("%:p:h")` because it uses ToggleTerm buffer
             -- instead of the currently opened buffer.
-            -- A helper function is needed to get previous buffer path
-
+            -- A helper function is needed to get previous buffer path.
+            --
             -- Sometimes, I want to open the terminal in a non-project directory.
-            -- In such cases, I use the plain buffer path instead of '.project_root(get_previous_buffer_path())'.
-            -- If I later decide to switch to the project root, I can simply type 'r' (toor) in the floating terminal.
             local cwd = get_previous_buffer_path()
-            if not cwd then
-                cwd = vim.fn.getcwd()
+
+            -- Use project root if available, otherwise use the plain path.
+            local root_dir = require("configs.utils").project_root(cwd)
+            if root_dir then
+                cwd = root_dir
             end
 
             if cwd ~= term.dir then
