@@ -16,7 +16,7 @@ end
 -- Requires https://github.com/azzamsa/toor
 ---@param path string
 function M.project_root(path)
-    local root = vim.fn.system("toor " .. path)
+    local root = vim.fn.system("toor " .. path .. " 2>/dev/null")
     return vim.fn.trim(root)
 end
 
