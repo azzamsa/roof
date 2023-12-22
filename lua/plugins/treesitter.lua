@@ -1,28 +1,28 @@
 local M = {
     "nvim-treesitter/nvim-treesitter",
     event = { "BufReadPost", "BufNewFile" },
-    commit = "afa103385a2b5ef060596ed822ef63276ae88016",
+    commit = "d496c5e08e853dadedc7f5d0a6541288d0441fd3",
     build = ":TSUpdate",
     dependencies = {
         {
             "nvim-treesitter/nvim-treesitter-textobjects",
             event = "VeryLazy",
-            commit = "78c49ca7d2f7ccba2115c11422c037713c978ad1",
+            commit = "ec1c5bdb3d87ac971749fa6c7dbc2b14884f1f6a",
         },
         {
             "JoosepAlviste/nvim-ts-context-commentstring",
             event = "VeryLazy",
-            commit = "92e688f013c69f90c9bbd596019ec10235bc51de",
+            commit = "1277b4a1f451b0f18c0790e1a7f12e1e5fdebfee",
         },
         {
             "windwp/nvim-ts-autotag",
             event = "VeryLazy",
-            commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4",
+            commit = "8515e48a277a2f4947d91004d9aa92c29fdc5e18",
         },
         {
             "windwp/nvim-autopairs",
             event = "InsertEnter",
-            commit = "f6c71641f6f183427a651c0ce4ba3fb89404fa9e",
+            commit = "9fd41181693dd4106b3e414a822bb6569924de81",
         },
     },
 }
