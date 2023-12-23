@@ -5,6 +5,7 @@ vim.g.autoformat = true
 
 -- `autochdir` is not reliable enough
 -- It doesn't update the `pwd` even in the event of buffer change
+--
 -- opt.autochdir = true
 
 -- Enable auto write
@@ -19,8 +20,12 @@ opt.completeopt = "menu,menuone,noselect"
 
 -- Confirm to save changes before exiting modified buffer
 opt.confirm = true
+
+-- Cursorline highlighting make the text somewhat hard to read
+--
 -- Enable highlighting of the current line
-opt.cursorline = true
+-- opt.cursorline = true
+
 -- Use spaces instead of tabs
 opt.expandtab = true
 -- Define format options
@@ -52,6 +57,8 @@ opt.scrolloff = 4
 opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 -- Default $SHELL
 opt.shell = "fish"
+-- Larger recentfiles
+opt.shada = { "!", "'1000", "<50", "s10", "h" }
 -- Round indent
 opt.shiftround = true
 -- Size of an indent
@@ -69,7 +76,7 @@ opt.smartcase = true
 -- Insert indents automatically
 opt.smartindent = true
 -- Set spellcheck language
-opt.spelllang = { "en", "id" }
+opt.spelllang = { "en" }
 -- Put new windows below current
 opt.splitbelow = true
 -- Keep windows split by screen
@@ -116,4 +123,11 @@ if vim.g.neovide then
     -- Include the Emoji font to display colored emojis
     opt.guifont = "Iosevka Nerd Font,Noto Color Emoji:h19"
     vim.g.neovide_cursor_vfx_mode = "railgun"
+
+    -- Unlike Terminals, Neovide doesn't add or remove any keybindings to Neovim.
+    local map = vim.keymap.set
+    -- This is so strange, it doesn't work when I only try to put one of the mode.
+    -- I need to put them all.
+    map({ "c", "n", "v", "i" }, "<C-y>", "<c-r>*", { desc = "Paste" }) -- In search prompt, telescope.
+    map("t", "<c-y>", [[<C-\><C-n>p]], { desc = "Paste" })
 end

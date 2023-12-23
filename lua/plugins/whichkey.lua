@@ -26,13 +26,20 @@ function M.config()
             -- Doom use both `<leader> b s` and `<leader> f s` to save file
             s = { "<cmd>w<cr>", "Save buffer" },
             S = { "<cmd>wa<cr>", "Save all buffers" },
+
+            -- stylua: ignore start
+            c = { function() require("genghis").createNewFile() end, "New file" },
+            C = { function() require("genghis").duplicateFile() end, "Duplicate file" },
+            r = { function() require("genghis").moveAndRenameFile() end, "Rename file" },
+            -- stylua: ignore end
         },
 
         -- <leader> c --- code
         c = {
             name = "Code",
             a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-            d = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Line Diagnostics" },
+            d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "Jump to definition" },
+            e = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Line Diagnostics" },
             p = { "<cmd>MarkdownPreviewToggle<cr>", "Markdown Preview" },
             r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
             w = { "<cmd>Trim<cr>", "Delete trailing whitespaces" },
@@ -64,9 +71,18 @@ function M.config()
         g = {
             name = "VCS",
             g = {
+                -- Without the valid directory, Neogit only able to show git status.
+                -- But hunk-operation and visit file didn't work.
                 function()
-                    local path = require("configs.utils").sanitize(vim.fn.expand("%:p:h"))
-                    require("neogit").open({ cwd = path })
+                    local buf_dir = vim.fn.expand("%:p:h")
+                    -- Is it special buffer? Such as Oil buffer.
+                    local sanitized_dir = require("configs.utils").sanitize(buf_dir)
+                    if sanitized_dir then
+                        -- Yes, it is. Okay. Use the sanitized path.
+                        require("neogit").open({ cwd = sanitized_dir })
+                    else
+                        require("neogit").open()
+                    end
                 end,
                 "Neogit",
             },
@@ -101,9 +117,13 @@ function M.config()
                 end,
                 "Side panel",
             },
-            -- stylua: ignore start
-            x = { function() vim.fn.system("xdg-open .") end, "GUI File manager" },
-            -- stylua: ignore end
+            x = {
+                function()
+                    local cwd = vim.fn.expand("%:p:h")
+                    vim.fn.system("xdg-open " .. cwd)
+                end,
+                "GUI File manager",
+            },
         },
 
         -- <leader> p --- project
@@ -120,8 +140,8 @@ function M.config()
         -- <leader> q --- quit
         q = {
             name = "Quit",
-            q = { "<cmd>wa <bar> qa<cr>", "Quit" },
-            Q = { "<cmd>qa!<cr>", "Quit without saving" },
+            -- Avoid accidental presses of lowercase 'q'
+            Q = { "<cmd>wa <bar> qa<cr>", "Quit" },
         },
 
         -- <leader> s --- search
@@ -133,6 +153,7 @@ function M.config()
             m = { "<cmd>MCstart<cr>", "Multiple cursors" },
             R = { "<cmd>Telescope resume<cr>", "Resume" },
             u = { "<cmd>Telescope undo<cr>", "Visual undo" },
+            ['"'] = { "<cmd>Telescope registers<cr>", "Registers" },
 
             -- stylua: ignore start
             r = { function() require("spectre").open() end, "Replace in files" },
@@ -168,9 +189,8 @@ function M.config()
         w = {
             name = "Window",
             d = { "<c-w>c", "Delete window" },
-            -- TODO
-            -- "<c-o>" = { "<c-w>o", "Delete other window" },
             o = { "<c-w>o", "Delete other window" },
+            ["<c-o>"] = { "<c-w>o", "Delete other window" },
             s = { "<c-w>s", "Horizontal Split" },
             w = { "<c-w>p", "Other window" },
             v = { "<c-w>v", "Vertical Split" },

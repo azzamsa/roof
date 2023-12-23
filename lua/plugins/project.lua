@@ -9,13 +9,15 @@ function M.config()
         active = true,
         on_config_done = nil,
         manual_mode = false,
-        detection_methods = { "lsp", "pattern" },
+        -- Don't use `lsp` as detection method.
+        -- It will use a buffer's directory as a root project.
+        detection_methods = { "pattern" },
         --  `.project` and `.projectile` are part of the Emacs's project detection system.
         patterns = { ".git", "justfile", "Makefile", "package.json", ".project", ".projectile" },
         ignore_lsp = {},
         exclude_dirs = {},
-        show_hidden = false,
-        silent_chdir = true,
+        show_hidden = true,
+        silent_chdir = false,
         scope_chdir = "global",
     })
 end

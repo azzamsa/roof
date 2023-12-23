@@ -7,6 +7,13 @@ local M = {
             "rcarriga/nvim-notify",
             event = "VeryLazy",
             commit = "e4a2022f4fec2d5ebc79afa612f96d8b11c627b3",
+            config = function()
+                require("notify").setup({
+                    render = "simple",
+                    -- FIXME: timeout didn't get applied but render did.
+                    timeout = 1000,
+                })
+            end,
         },
     },
 }

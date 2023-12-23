@@ -42,8 +42,8 @@ spec("plugins.flash")
 spec("plugins.surround")
 -- Multiple cursors
 spec("plugins.multicursors")
--- Trim tailing whitespaces
-spec("plugins.trim")
+-- Convenience File operations
+spec("plugins.genghis")
 
 --
 -- UI
@@ -87,6 +87,8 @@ spec("plugins.illuminate")
 spec("plugins.autopairs")
 -- Enhances commenting functionality.
 spec("plugins.comment")
+-- Show trailing whitespace
+spec("plugins.whitespace")
 
 -- LSP servers package manager
 spec("plugins.mason")

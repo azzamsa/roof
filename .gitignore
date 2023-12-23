@@ -3,6 +3,9 @@
 
 # Adding myself to the party!
 !.gitignore
+!.ignore
+
+!.github
 
 !configs
 !docs

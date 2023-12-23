@@ -20,9 +20,9 @@ function M.sanitize(path)
     if is_oil_path then
         -- Remove the "oil://" prefix
         return string.gsub(path, "^oil://", "")
-    else
-        return path
     end
+
+    return nil
 end
 
 -- Find project root
