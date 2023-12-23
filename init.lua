@@ -5,6 +5,11 @@ require("configs.options")
 require("configs.keymaps")
 require("configs.autocmds")
 
+-- Plugins that provide apis for other plugins
+spec("plugins.api")
+-- Specifies the colorscheme for the editor.
+spec("plugins.colorscheme")
+
 --
 -- Core
 --
@@ -28,15 +33,15 @@ spec("plugins.telescope")
 spec("plugins.telescope-tabs")
 -- Find and replace across files.
 spec("plugins.spectre")
--- NeoTree alternative
-spec("plugins.nvimtree")
+-- NeoTree
+spec("plugins.neotree")
 
 -- Jump around
 spec("plugins.flash")
 -- Surround actions
 spec("plugins.surround")
 -- Multiple cursors
-spec("plugins.visualmulti")
+spec("plugins.multicursors")
 -- Trim tailing whitespaces
 spec("plugins.trim")
 
@@ -48,8 +53,8 @@ spec("plugins.trim")
 spec("plugins.alpha")
 -- Customizes the status line.
 spec("plugins.lualine")
--- Specifies the colorscheme for the editor.
-spec("plugins.colorscheme")
+-- Scrollbar
+spec("plugins.scrollbar")
 -- Enhances file icons in the editor.
 spec("plugins.devicons")
 

@@ -36,9 +36,9 @@ function M.config()
             local cwd = get_previous_buffer_path()
 
             -- Use project root if available, otherwise use the plain path.
-            local root_dir = require("configs.utils").project_root(cwd)
-            if root_dir then
-                cwd = root_dir
+            local root = require("configs.utils").project_root(cwd)
+            if root then
+                cwd = root
             end
 
             if cwd ~= term.dir then

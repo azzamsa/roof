@@ -93,9 +93,14 @@ function M.config()
             name = "Open",
             -- Open from current buffer by default
             d = { "<cmd>Oil<cr>", "File manager from here" },
-            -- Open from current buffer by default
-            p = { "<cmd>NvimTreeToggle<cr>", "Side panel" },
 
+            p = {
+                function()
+                    local root = require("configs.utils").project_root(vim.fn.expand("%:p:h"))
+                    require("neo-tree.command").execute({ toggle = true, dir = root })
+                end,
+                "Side panel",
+            },
             -- stylua: ignore start
             x = { function() vim.fn.system("xdg-open .") end, "GUI File manager" },
             -- stylua: ignore end
@@ -125,7 +130,9 @@ function M.config()
             c = { "<cmd>Telescope command_history<cr>", "Command history" },
             C = { "<cmd>Telescope commands<cr>", "Commands" },
             K = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
+            m = { "<cmd>MCstart<cr>", "Multiple cursors" },
             R = { "<cmd>Telescope resume<cr>", "Resume" },
+            u = { "<cmd>Telescope undo<cr>", "Visual undo" },
 
             -- stylua: ignore start
             r = { function() require("spectre").open() end, "Replace in files" },
@@ -186,6 +193,12 @@ function M.config()
         c = {
             name = "Code",
             a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+        },
+
+        -- <leader> s --- search
+        s = {
+            name = "Search",
+            m = { "<cmd>MCstart<cr>", "Multiple cursors" },
         },
     }
 

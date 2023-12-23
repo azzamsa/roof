@@ -1,9 +1,23 @@
 local M = {
     "nvim-telescope/telescope.nvim",
-    dependencies = { { "nvim-telescope/telescope-fzf-native.nvim", build = "make", lazy = true } },
     commit = "74ce793a60759e3db0d265174f137fb627430355",
     lazy = true,
     cmd = "Telescope",
+    dependencies = {
+        {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
+            lazy = true,
+            commit = "6c921ca12321edaa773e324ef64ea301a1d0da62",
+        },
+        {
+            "debugloop/telescope-undo.nvim",
+            commit = "d3afc1c105535a90caec092ce27a113f77ba7b84",
+            config = function()
+                require("telescope").load_extension("undo")
+            end,
+        },
+    },
 }
 
 function M.config()

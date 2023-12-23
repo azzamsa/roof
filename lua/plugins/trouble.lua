@@ -1,11 +1,5 @@
 local M = {
     "folke/trouble.nvim",
-    dependencies = {
-        {
-            "nvim-tree/nvim-web-devicons",
-            commit = "aff5f50b34754335a312c9b3dc5b245f605ce437",
-        },
-    },
     opts = { use_diagnostic_signs = true },
 }
 

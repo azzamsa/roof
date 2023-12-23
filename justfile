@@ -33,6 +33,6 @@ lint:
     typos --config configs/typos.toml
     luacheck --config configs/luacheckrc --quiet .
 
-# Create a release. Example `just release 0.1.0`
-release version start_sha:
+# Create a release. Example `just release v0.1.0`
+release version:
     python scripts/release.py {{ version }}

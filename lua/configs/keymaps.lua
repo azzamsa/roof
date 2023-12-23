@@ -104,3 +104,10 @@ map({ "i", "v", "n" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 -- Better indenting
 map("v", "<", "<gv")
 map("v", ">", ">gv")
+
+--
+-- Workaround
+--
+
+-- windows
+map("n", "<leader>ww", "<C-w>p", { desc = "Other window", remap = true })

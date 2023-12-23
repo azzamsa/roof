@@ -1,117 +1,119 @@
 local opt = vim.opt
 
+-- Enable roof! auto format
+vim.g.autoformat = true
+
 -- `autochdir` is not reliable enough
 -- It doesn't update the `pwd` even in the event of buffer change
 -- opt.autochdir = true
 
 -- Enable auto write
 opt.autowrite = true
--- Disable backup files
-opt.backup = false
 -- Sync with system clipboard
 opt.clipboard = "unnamedplus"
--- Increase neovim command line height for better message visibility
-opt.cmdheight = 1
 -- Set completeopt for 'cmp' plugin
-opt.completeopt = { "menuone", "noselect" }
--- Ensure conceal characters are visible in markdown files
-opt.conceallevel = 0
+opt.completeopt = "menu,menuone,noselect"
 
--- Set file encoding to UTF-8
--- opt.fileencoding = "utf-8"
+-- Hide * markup for bold and italic
+-- opt.conceallevel = 3
 
--- Highlight all matches on previous search pattern
-opt.hlsearch = true
+-- Confirm to save changes before exiting modified buffer
+opt.confirm = true
+-- Enable highlighting of the current line
+opt.cursorline = true
+-- Use spaces instead of tabs
+opt.expandtab = true
+-- Define format options
+opt.formatoptions = "jcroqlnt" -- tcqj
+-- Configure grep format
+opt.grepformat = "%f:%l:%c:%m"
+opt.grepprg = "rg --vimgrep"
 -- Ignore case in search patterns
 opt.ignorecase = true
--- Allow the mouse to be used in Neovim
+-- Preview incremental substitute
+opt.inccommand = "nosplit"
+-- Global statusline
+opt.laststatus = 3
+-- Show some invisible characters (tabs, spaces, and newlines)
+opt.list = true
+-- Enable mouse mode
 opt.mouse = "a"
--- Set pop-up menu height
-opt.pumheight = 10
--- Set pop-up menu blend
+-- Print line number
+opt.number = true
+-- Popup blend
 opt.pumblend = 10
--- Hide mode display
+-- Maximum number of entries in a popup
+opt.pumheight = 10
+-- Relative line numbers
+opt.relativenumber = true
+-- Lines of context
+opt.scrolloff = 4
+-- Define session options
+opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
+-- Default $SHELL
+opt.shell = "fish"
+-- Round indent
+opt.shiftround = true
+-- Size of an indent
+opt.shiftwidth = 2
+-- Configure shortmess
+opt.shortmess:append({ W = true, I = true, c = true, C = true })
+-- Don't show mode since we have a statusline
 opt.showmode = false
--- Always show tabs
-opt.showtabline = 1
--- Enable smart case in search patterns
+-- Columns of context
+opt.sidescrolloff = 8
+-- Always show the signcolumn, otherwise it would shift the text each time
+opt.signcolumn = "yes"
+-- Don't ignore case with capitals
 opt.smartcase = true
--- Enable smart indentation
+-- Insert indents automatically
 opt.smartindent = true
--- Force horizontal splits to go below current window
+-- Set spellcheck language
+opt.spelllang = { "en", "id" }
+-- Put new windows below current
 opt.splitbelow = true
--- Force vertical splits to go to the right of the current window
+-- Keep windows split by screen
+opt.splitkeep = "screen"
+-- Put new windows right of current
 opt.splitright = true
--- Disable swap files
-opt.swapfile = false
--- Set term gui colors
+-- Number of spaces tabs count for
+opt.tabstop = 2
+-- True color support
 opt.termguicolors = true
 -- Set time to wait for a mapped sequence to complete
 opt.timeoutlen = 300
 -- Enable persistent undo
 opt.undofile = true
--- Set update time for faster completion
-opt.updatetime = 100
--- Disable backup file creation
-opt.writebackup = false
--- Convert tabs to spaces
-opt.expandtab = true
--- Set number of spaces inserted for each indentation
-opt.shiftwidth = 2
--- Set spaces for a tab
-opt.tabstop = 2
--- Highlight the current line
-opt.cursorline = true
--- Display line numbers
-opt.number = true
--- Set last status
-opt.laststatus = 3
--- Hide command display
-opt.showcmd = false
--- Hide ruler
-opt.ruler = false
--- Set relative numbered lines
-opt.relativenumber = true
--- Set number column width
-opt.numberwidth = 4
--- Always show the sign column
-opt.signcolumn = "yes"
--- Disable line wrapping
+opt.undolevels = 10000
+-- Save swap file and trigger CursorHold
+opt.updatetime = 200
+-- Allow cursor to move where there is no text in visual block mode
+opt.virtualedit = "block"
+-- Command-line completion mode
+opt.wildmode = "longest:full,full"
+-- Minimum window width
+opt.winminwidth = 5
+-- Disable line wrap
 opt.wrap = false
--- Set scrolloff
-opt.scrolloff = 0
--- Set sidescrolloff
-opt.sidescrolloff = 8
--- Set the font for graphical Neovim applications
--- Include the Emoji font to display colored emojis
-opt.guifont = "Iosevka Nerd Font,Noto Color Emoji:h19"
--- Disable window title
-opt.title = false
--- Set shell to fish
-opt.shell = "/usr/bin/fish"
-
 -- Customize fillchars
-opt.fillchars = opt.fillchars + "eob: "
-opt.fillchars:append({
-    stl = " ",
-})
+opt.fillchars = {
+    foldopen = "",
+    foldclose = "",
+    -- fold = "⸱",
+    fold = " ",
+    foldsep = " ",
+    diff = "╱",
+    eob = " ",
+}
 
--- Add shortmess option
-opt.shortmess:append("c")
--- Set whichwrap
-vim.cmd("set whichwrap+=<,>,[,],h,l")
--- Set iskeyword
-vim.cmd([[set iskeyword+=-]])
+if vim.fn.has("nvim-0.10") == 1 then
+    opt.smoothscroll = true
+end
 
--- Autoformat
-vim.g.autoformat = true
-
--- Configure netrw options
-vim.g.netrw_banner = 0
-vim.g.netrw_mouse = 2
-
--- Check if Neovide is present and configure specific options
+-- Put anything you want to happen only in Neovide here
 if vim.g.neovide then
-    -- Put anything you want to happen only in Neovide here
+    -- Set the font for graphical Neovim applications
+    -- Include the Emoji font to display colored emojis
+    opt.guifont = "Iosevka Nerd Font,Noto Color Emoji:h19"
     vim.g.neovide_cursor_vfx_mode = "railgun"
 end

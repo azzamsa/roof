@@ -2,12 +2,6 @@ local M = {
     "neogitorg/neogit",
     event = "VeryLazy",
     commit = "801143ee4db4121fc11a6468daae6680ba9fab51",
-    dependencies = {
-        {
-            "nvim-lua/plenary.nvim", -- required
-            commit = "55d9fe89e33efd26f532ef20223e5f9430c8b0c0",
-        },
-    },
 }
 
 function M.config()

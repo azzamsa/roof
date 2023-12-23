@@ -4,11 +4,6 @@ local M = {
     commit = "92433164e2f7118d4122c7674c3834d9511722ba",
     dependencies = {
         {
-            "MunifTanjim/nui.nvim",
-            event = "VeryLazy",
-            commit = "c9b4de623d19a85b353ff70d2ae9c77143abe69c",
-        },
-        {
             "rcarriga/nvim-notify",
             event = "VeryLazy",
             commit = "e4a2022f4fec2d5ebc79afa612f96d8b11c627b3",

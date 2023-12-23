@@ -2,49 +2,96 @@
 
 """
 Usage example:
-python scripts/release.py 1.0.0 43934a367
+python scripts/release.py v1.0.0
 """
 
+import os
 import subprocess
 import sys
 
-def check_untracked_files():
-    untracked_files = subprocess.check_output(['git', 'ls-files', '.', '--exclude-standard', '--others'], universal_newlines=True).strip()
-    return untracked_files
 
-def update_changelog(tag):
-    subprocess.run(['git-cliff', '--tag', tag, '--config', 'configs/cliff.toml', '>', 'CHANGELOG.md'], shell=True)
+def run(command):
+    subprocess.run(command, check=True)
 
-def format_changelog():
-    subprocess.run(['just', 'fmt'], shell=True)
 
-def commit_and_tag(tag):
-    subprocess.run(['git', 'add', '--all'], check=True)
-    subprocess.run(['git', 'commit', '--message=' + tag], check=True)
-    subprocess.run(['git', 'show'], check=True)
-    subprocess.run(['git', 'tag', '--sign', '--annotate', tag, '--message=' + tag, '--message=For details, see the CHANGELOG.md'], check=True)
-    subprocess.run(['git', 'tag', '--verify', tag], check=True)
+def check_working_directory():
+    # Check for untracked files
+    untracked_files = subprocess.check_output(
+        ["git", "ls-files", ".", "--exclude-standard", "--others"], text=True
+    ).strip()
+    if untracked_files:
+        print("Error: Please stash or remove the untracked files!")
+        sys.exit(1)
+
+
+def check_tag():
+    # Check if a tag is provided
+    if len(sys.argv) < 2:
+        print("Error: Please provide a tag!")
+        sys.exit(1)
+
+
+def update_changelog(version):
+    print("Updating the changelog")
+    try:
+        run(
+            [
+                "git-cliff",
+                "--config",
+                "configs/cliff.toml",
+                "--tag",
+                version,
+                "--output",
+                "CHANGELOG.md",
+            ],
+        )
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to update the changelog")
+        print(f"stderr: {e.stderr}")
+        sys.exit(1)
+
+    # Run formatting with just
+    try:
+        run(["just", "fmt"])
+    except subprocess.CalledProcessError as e:
+        print(f"Error running just fmt: {e}")
+        sys.exit(1)
+
+
+def update_version_file(version):
+    # Write the new_version to a file 'version'
+    with open("version", "w") as version_file:
+        version_file.write(version)
+
+
+def commit(version):
+    run(["git", "add", "--all"])
+    run(["git", "commit", "--message=" + version])
+    run(["git", "show"])
+    run(
+        [
+            "git",
+            "tag",
+            "--sign",
+            "--annotate",
+            version,
+            "--message=" + version,
+            "--message=For details, see the CHANGELOG.md",
+        ],
+    )
+    run(["git", "tag", "--verify", version])
+
 
 def main():
-    # Check for untracked files
-    untracked_files = check_untracked_files()
-    if untracked_files:
-        print("warn: Please stash or remove the untracked files")
-        sys.exit(1)
+    version = sys.argv[1]
+    version_number = version.replace("v", "")
 
-    # Check if tag is provided
-    if len(sys.argv) < 2:
-        print("warn: Please provide a tag")
-        sys.exit(1)
+    check_working_directory()
+    check_tag()
+    update_changelog(version)
+    update_version_file(version_number)
+    commit(version)
 
-    tag = sys.argv[1]
-
-    # Update changelog
-    update_changelog(tag)
-    # Format changelog
-    format_changelog()
-    # Commit and tag
-    commit_and_tag(tag)
 
 if __name__ == "__main__":
     main()

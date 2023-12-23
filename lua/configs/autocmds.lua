@@ -21,24 +21,17 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 
 -- Go to last loc when opening a buffer (à la save-place mode)
 vim.api.nvim_create_autocmd("BufReadPost", {
-    callback = function()
-        -- Filetypes to be excluded
-        local exclude = { "gitcommit", "NeogitStatus" }
-        local current_buffer = vim.api.nvim_get_current_buf()
-
-        -- Skip execution if the buffer's filetype is in the exclusion list.
-        if vim.tbl_contains(exclude, vim.bo[current_buffer].filetype) then
+    callback = function(event)
+        local exclude = { "gitcommit", "NeogStatus", "l/NeogitStatus" }
+        local buf = event.buf
+        if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].roof_last_loc then
             return
         end
-
-        -- Get the mark position (last cursor position) in the buffer.
-        local mark = vim.api.nvim_buf_get_mark(current_buffer, '"')
-        -- Get the total number of lines in the buffer.
-        local lcount = vim.api.nvim_buf_line_count(current_buffer)
-        -- Check if the mark is within the valid range of lines.
+        vim.b[buf].roof_last_loc = true
+        local mark = vim.api.nvim_buf_get_mark(buf, '"')
+        local lcount = vim.api.nvim_buf_line_count(buf)
         if mark[1] > 0 and mark[1] <= lcount then
-            -- Set the cursor position to the mark using a protected call.
-            pcall(vim.api.nvim_win_set_cursor, current_buffer, mark)
+            pcall(vim.api.nvim_win_set_cursor, 0, mark)
         end
     end,
 })

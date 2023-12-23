@@ -29,14 +29,14 @@ end
 -- Requires https://github.com/azzamsa/toor
 ---@param path string
 function M.project_root(path)
-    local root_dir = vim.fn.system("toor " .. path .. " 2>/dev/null")
-    root_dir = vim.fn.trim(root_dir)
+    local root = vim.fn.system("toor " .. path .. " 2>/dev/null")
+    root = vim.fn.trim(root)
 
-    if root_dir == "" then
+    if root == "" then
         return nil
     end
 
-    return root_dir
+    return root
 end
 
 -- Live grep from current buffer directory
@@ -159,8 +159,8 @@ end
 --- Usually it is on the root directory.
 ---@param filename string
 function M.config_path(filename)
-    local root_dir = M.project_root(vim.fn.expand("%:p:h"))
-    local path = vim.fs.find(filename, { path = root_dir })[1]
+    local root = M.project_root(vim.fn.expand("%:p:h"))
+    local path = vim.fs.find(filename, { path = root })[1]
     if path then
         return path
     end

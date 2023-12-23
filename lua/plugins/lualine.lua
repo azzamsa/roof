@@ -35,25 +35,23 @@ function M.config()
 
     require("lualine").setup({
         options = {
-            component_separators = { left = "", right = "" },
-            section_separators = { left = "", right = "" },
+            theme = "kanagawa",
 
+            component_separators = { left = "", right = "" },
+            section_separators = { left = "", right = "" },
             ignore_focus = { "NvimTree" },
-            theme = "tokyonight",
         },
         sections = {
             lualine_a = { "mode" },
-            -- lualine_b = { "filename" },
             lualine_b = {},
             lualine_c = {
-                { "location", padding = { left = 0, right = 1 } },
-                { "progress", separator = " ", padding = { left = 1, right = 0 } },
+                { "location", padding = { left = 1, right = 0 } },
             },
             lualine_x = { "diagnostics", copilot },
             lualine_y = { "filetype" },
             lualine_z = { { "branch", icon = "" } },
         },
-        extensions = { "quickfix", "man", "fugitive" },
+        extensions = { "neo-tree", "lazy" },
     })
 end
 
