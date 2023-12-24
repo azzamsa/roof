@@ -7,8 +7,8 @@ local M = {
             commit = "41e75af1f578e55ba050c863587cffde3556ffa6",
         },
         {
-            "nvim-lua/plenary.nvim",
-            commit = "55d9fe89e33efd26f532ef20223e5f9430c8b0c0",
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
+            commit = "8b70e7f1e0a4119c1234c3bde4a01c241cabcc74",
         },
     },
 }
@@ -16,38 +16,27 @@ local M = {
 -- Get the package name here https://mason-registry.dev/registry/list
 M.servers = {
     -- Lua
-    "lua-language-server", -- language server
-    "stylua", -- formatter
-    "luacheck", -- linter
+    "lua_ls", -- language server
 
     -- Rust
-    "rust-analyzer", -- language server
+    "rust_analyzer", -- language server
 
     -- Yaml
     "yamlls", -- language server
-    "actionlint", -- linter
 
     -- Markdown
     "marksman", -- Markdown language server
 
     -- Shell
-    "bash-language-server", -- language server
-    "shfmt", -- formatting
+    "bashls", -- language server
 
     -- FE
-    "typescript-language-server", -- TypeScript language server
-    "css-lsp", -- CSS language server
-    "json-lsp", -- JSON language server
-    "tailwindcss-language-server", -- Tailwind language server
-    "prettier", -- formatter
-    "eslint-lsp", -- linter
-    "stylelint", -- linter
+    "tsserver", -- TypeScript language server
+    "jsonls", -- JSON language server
+    "tailwindcss", -- Tailwind language server
 
     -- Python
     "pyright", -- language server
-
-    -- Misc
-    "cspell", -- spell checker
 }
 
 function M.config()
@@ -58,6 +47,27 @@ function M.config()
     })
     require("mason-lspconfig").setup({
         ensure_installed = M.servers,
+    })
+    require("mason-tool-installer").setup({
+        ensure_installed = {
+            -- Lua
+            "stylua", -- formatter
+            "luacheck", -- linter
+
+            -- Yaml
+            "actionlint", -- linter
+
+            -- Shell
+            "shfmt", -- formatting
+
+            -- FE
+            "prettier", -- formatter
+            "eslint-lsp", -- linter
+            "stylelint", -- linter
+
+            -- Misc
+            "cspell", -- spell checker
+        },
     })
 end
 

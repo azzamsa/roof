@@ -33,16 +33,12 @@ function M.config()
             -- A helper function is needed to get previous buffer path.
             --
             -- Sometimes, I want to open the terminal in a non-project directory.
-            local cwd = get_previous_buffer_path()
+            local prev_buf_dir = get_previous_buffer_path()
 
             -- Use project root if available, otherwise use the plain path.
-            local root = require("configs.utils").project_root(cwd)
-            if root then
-                cwd = root
-            end
-
-            if cwd ~= term.dir then
-                term:change_dir(cwd)
+            local path = require("configs.utils").project_root_or_cwd(prev_buf_dir)
+            if path ~= term.dir then
+                term:change_dir(path)
             end
 
             -- Start in insert mode

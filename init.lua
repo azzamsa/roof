@@ -62,6 +62,12 @@ spec("plugins.devicons")
 
 -- Replaces the UI for messages, cmdline and the popupmenu.
 spec("plugins.noice")
+-- A butter bufferline
+-- spec("plugins.bufferline")
+-- A winbar that uses LSP to display current code context.
+spec("plugins.navic")
+-- Breadcrumbs navigation.
+spec("plugins.breadcrumbs")
 
 --
 -- Programming
@@ -94,10 +100,6 @@ spec("plugins.whitespace")
 
 -- LSP servers package manager
 spec("plugins.mason")
--- A winbar that uses LSP to display current code context.
-spec("plugins.navic")
--- Breadcrumbs navigation.
-spec("plugins.breadcrumbs")
 
 --
 -- Data

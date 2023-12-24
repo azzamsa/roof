@@ -54,12 +54,16 @@ function M.cwd()
 end
 
 -- Try to get project root. If fails fallback to cwd.
-function M.project_root_or_cwd()
-    local cwd = M.cwd()
-    local path = M.project_root(cwd)
-    -- Use the current file's directory if the project root is empty
+---@param path? string
+function M.project_root_or_cwd(path)
+    -- Set default @param path?
     if not path then
-        path = cwd
+        path = M.cwd()
+    end
+
+    local root = M.project_root(path)
+    if root then
+        path = root
     end
 
     return path

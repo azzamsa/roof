@@ -43,10 +43,10 @@ function M.config()
         },
         sections = {
             lualine_a = { "mode" },
-            lualine_b = {},
-            lualine_c = {
-                { "location", padding = { left = 1, right = 0 } },
+            lualine_b = {
+                { "filename", file_status = true, path = 4 },
             },
+            lualine_c = { "location" },
             lualine_x = { "diagnostics", copilot },
             lualine_y = { "filetype" },
             lualine_z = { { "branch", icon = "" } },

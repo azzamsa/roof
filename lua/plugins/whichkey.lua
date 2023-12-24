@@ -64,6 +64,8 @@ function M.config()
             e = { function() require("configs.utils").find_files_in_config() end, "Find file in config" },
             f = { function() require("configs.utils").find_files_from_here() end, "Find file" },
             R = { function() require("spectre").open() end, "Replace in files" },
+            y = { function() require("genghis").copyFilename() end, "Copy file name" },
+            Y = { function() require("genghis").copyFilepath() end, "Copy file path" },
             -- stylua: ignore end
         },
 

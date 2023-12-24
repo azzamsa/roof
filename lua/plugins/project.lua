@@ -17,7 +17,9 @@ function M.config()
         ignore_lsp = {},
         exclude_dirs = {},
         show_hidden = true,
-        silent_chdir = false,
+        -- Set to `true` to enable debugging.
+        -- But it is too noisy when switching between buffers a lot.
+        silent_chdir = true,
         scope_chdir = "global",
     })
 end
