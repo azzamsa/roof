@@ -7,13 +7,9 @@ local M = {
 function M.config()
     local function get_previous_buffer_path()
         local previous_bufnr = vim.fn.bufnr("#")
-
-        -- Check if there is a previous buffer
-        if previous_bufnr ~= -1 then
-            return vim.fn.fnamemodify(vim.fn.bufname(previous_bufnr), ":p:h")
-        else
-            return nil
-        end
+        -- So far, there must be a previous buffer.
+        -- No need to check if there is a previous buffer `previous_bufnr ~= -1`.
+        return vim.fn.fnamemodify(vim.fn.bufname(previous_bufnr), ":p:h")
     end
 
     require("toggleterm").setup({
@@ -28,15 +24,17 @@ function M.config()
 
         -- Runs everytime ToggleTerm toggled
         on_open = function(term)
-            -- Can't use `vim.fn.expand("%:p:h")` because it uses ToggleTerm buffer
+            -- Can't use `require("configs.utils").file_path()` because it uses ToggleTerm buffer
             -- instead of the currently opened buffer.
             -- A helper function is needed to get previous buffer path.
             --
             -- Sometimes, I want to open the terminal in a non-project directory.
-            local prev_buf_dir = get_previous_buffer_path()
+            local path = get_previous_buffer_path()
+            -- Open from oily path too! Such as `oil.nvim`
+            path = require("configs.utils").validate_path(path)
 
             -- Use project root if available, otherwise use the plain path.
-            local path = require("configs.utils").project_root_or_cwd(prev_buf_dir)
+            path = require("configs.utils").project_root_or_cwd(path)
             if path ~= term.dir then
                 term:change_dir(path)
             end
