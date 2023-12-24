@@ -19,6 +19,8 @@ spec("plugins.whichkey")
 
 -- Magit for Neovim.
 spec("plugins.neogit")
+-- VCS timemache
+spec("plugins.timemachine")
 -- Display VCS changes in the gutter.
 spec("plugins.gitsigns")
 -- Floating terminal

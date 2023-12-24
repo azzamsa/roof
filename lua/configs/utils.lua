@@ -14,66 +14,96 @@ end
 
 -- Get real path
 ---@param path string
-function M.sanitize(path)
+function M.validate_path(path)
     local is_oil_path = string.match(path, "^oil://")
 
     if is_oil_path then
         -- Remove the "oil://" prefix
         return string.gsub(path, "^oil://", "")
+    else
+        return path
     end
-
-    return nil
 end
 
 -- Find project root
 -- Requires https://github.com/azzamsa/toor
----@param path string
+---@param path? string
 function M.project_root(path)
+    if path then
+        path = M.validate_path(path)
+    end
+
+    if not path then
+        path = M.cwd()
+    end
+
     local root = vim.fn.system("toor " .. path .. " 2>/dev/null")
     root = vim.fn.trim(root)
 
     if root == "" then
-        return nil
+        return
     end
 
     return root
 end
 
+-- Find current working directory
+function M.cwd()
+    local dir_buffer = vim.fn.expand("%:p:h")
+    return M.validate_path(dir_buffer)
+end
+
+-- Try to get project root. If fails fallback to cwd.
+function M.project_root_or_cwd()
+    local cwd = M.cwd()
+    local path = M.project_root(cwd)
+    -- Use the current file's directory if the project root is empty
+    if not path then
+        path = cwd
+    end
+
+    return path
+end
+
 -- Live grep from current buffer directory
 function M.grep_from_here()
-    M.live_grep(vim.fn.expand("%:p:h"))
+    M.live_grep(M.cwd())
 end
 
 -- Live grep from the project root.
 function M.grep_in_project()
-    local root = M.project_root(vim.fn.expand("%:p:h"))
-    -- Use the current file's directory if the project root is empty
-    if root == "" then
-        root = vim.fn.expand("%:p:h")
-    end
-
-    M.live_grep(root)
+    M.live_grep(M.project_root_or_cwd())
 end
 
 -- Find files from the directory of `config`
 function M.find_files_in_config()
-    M.find_files(vim.fn.stdpath("config"))
+    M.find_files(M.cwd())
 end
 
 -- Find files from the directory of the currently opened buffer.
 function M.find_files_from_here()
-    M.find_files(vim.fn.expand("%:p:h"))
+    M.find_files(M.cwd())
 end
 
 -- Find files from the project root.
 function M.find_files_in_project()
-    local root = M.project_root(vim.fn.expand("%:p:h"))
-    -- Use the current file's directory if the project root is empty
-    if root == "" then
-        root = vim.fn.expand("%:p:h")
-    end
+    M.find_files(M.project_root_or_cwd())
+end
 
-    M.find_files(root)
+--
+-- Formatters and Linters
+--
+
+--- Get full config path located in custom directory.
+--- Mostly the config for sormatters and linters.
+-- Such as `configs/dprint.json`, `configs/stylua.toml`
+---@param filename string
+function M.config_path(filename)
+    local root = M.project_root()
+    local path = vim.fs.find(filename, { path = root })[1]
+    if path then
+        return path
+    end
 end
 
 --
@@ -149,21 +179,6 @@ function M.open_scratch_buffer()
     end
 
     vim.cmd("vsplit " .. scratch_file)
-end
-
---
--- Formatters and Linters
---
-
---- Get full config path located in custom directory.
---- Usually it is on the root directory.
----@param filename string
-function M.config_path(filename)
-    local root = M.project_root(vim.fn.expand("%:p:h"))
-    local path = vim.fs.find(filename, { path = root })[1]
-    if path then
-        return path
-    end
 end
 
 return M

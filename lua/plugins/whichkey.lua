@@ -28,9 +28,9 @@ function M.config()
             S = { "<cmd>wa<cr>", "Save all buffers" },
 
             -- stylua: ignore start
-            c = { function() require("genghis").createNewFile() end, "New file" },
-            C = { function() require("genghis").duplicateFile() end, "Duplicate file" },
-            r = { function() require("genghis").moveAndRenameFile() end, "Rename file" },
+            c = { function() require("genghis").duplicateFile() end, "Clone buffer" },
+            n = { function() require("genghis").createNewFile() end, "New buffer" },
+            r = { function() require("genghis").moveAndRenameFile() end, "Rename buffer" },
             -- stylua: ignore end
         },
 
@@ -57,13 +57,13 @@ function M.config()
             d = { "<cmd>Oil<cr>", "Find directory" },
             D = { "<cmd>call delete(expand('%')) <bar> bdelete!<cr>", "Delete this file" },
             r = { "<cmd>Telescope oldfiles<cr>", "Recent file" },
-            R = { "<cmd>Telescope registers<cr>", "Registers" },
             s = { "<cmd>w<cr>", "Save buffer" },
             S = { "<cmd>wa<cr>", "Save all buffers" },
 
             -- stylua: ignore start
             e = { function() require("configs.utils").find_files_in_config() end, "Find file in config" },
             f = { function() require("configs.utils").find_files_from_here() end, "Find file" },
+            R = { function() require("spectre").open() end, "Replace in files" },
             -- stylua: ignore end
         },
 
@@ -71,21 +71,17 @@ function M.config()
         g = {
             name = "VCS",
             g = {
-                -- Without the valid directory, Neogit only able to show git status.
-                -- But hunk-operation and visit file didn't work.
+                -- `("neogit").open()` doesn't work in the Oil directory.
+                -- A helper function is needed to obtain the project root path.
+                -- Using the directory path works for Git commit and Git status,
+                -- but fails during hunk and file visit operations.
                 function()
-                    local buf_dir = vim.fn.expand("%:p:h")
-                    -- Is it special buffer? Such as Oil buffer.
-                    local sanitized_dir = require("configs.utils").sanitize(buf_dir)
-                    if sanitized_dir then
-                        -- Yes, it is. Okay. Use the sanitized path.
-                        require("neogit").open({ cwd = sanitized_dir })
-                    else
-                        require("neogit").open()
-                    end
+                    local root = require("configs.utils").project_root()
+                    require("neogit").open({ cwd = root })
                 end,
                 "Neogit",
             },
+            t = { "<cmd>Tardis<cr>", "Git time machine" },
         },
 
         -- <leader> h --- help
@@ -112,14 +108,14 @@ function M.config()
 
             p = {
                 function()
-                    local root = require("configs.utils").project_root(vim.fn.expand("%:p:h"))
+                    local root = require("configs.utils").project_root()
                     require("neo-tree.command").execute({ toggle = true, dir = root })
                 end,
                 "Side panel",
             },
             x = {
                 function()
-                    local cwd = vim.fn.expand("%:p:h")
+                    local cwd = require("configs.utils").cwd()
                     vim.fn.system("xdg-open " .. cwd)
                 end,
                 "GUI File manager",
@@ -151,12 +147,12 @@ function M.config()
             C = { "<cmd>Telescope commands<cr>", "Commands" },
             K = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
             m = { "<cmd>MCstart<cr>", "Multiple cursors" },
+            r = { "<cmd>Telescope registers<cr>", "Registers" },
             R = { "<cmd>Telescope resume<cr>", "Resume" },
             u = { "<cmd>Telescope undo<cr>", "Visual undo" },
             ['"'] = { "<cmd>Telescope registers<cr>", "Registers" },
 
             -- stylua: ignore start
-            r = { function() require("spectre").open() end, "Replace in files" },
             g = { function() require("configs.utils").grep_from_here() end, "Search" },
             -- stylua: ignore end
         },
@@ -192,7 +188,9 @@ function M.config()
             o = { "<c-w>o", "Delete other window" },
             ["<c-o>"] = { "<c-w>o", "Delete other window" },
             s = { "<c-w>s", "Horizontal Split" },
-            w = { "<c-w>p", "Other window" },
+            -- w = { "<c-w>p", "Other window" },
+            -- w = { "winnr('#') != 0 ? '<c-w>p' : '<c-w>w'", "Other window", expr = true },
+            w = { "winnr('#') != 0 && winnr('#') != winnr() ? '<C-W>p' : '<C-W>w'", "Other window", expr = true },
             v = { "<c-w>v", "Vertical Split" },
         },
     }

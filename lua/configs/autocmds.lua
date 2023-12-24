@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 -- Go to last loc when opening a buffer (à la save-place mode)
 vim.api.nvim_create_autocmd("BufReadPost", {
     callback = function(event)
-        local exclude = { "gitcommit", "NeogStatus", "l/NeogitStatus" }
+        local exclude = { "gitcommit", "NeogitStatus", "NeogitCommitMessage" }
         local buf = event.buf
         if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].roof_last_loc then
             return

@@ -10,6 +10,26 @@ function M.config()
     local retrail = require("retrail")
 
     retrail.setup({
+        -- Enabled filetypes.
+        filetype = {
+            -- Excluded filetype list. Overrides `include` list.
+            exclude = {
+                "toggleterm",
+                "neo-tree",
+                -- following are defaults that need to be added or they'll be overridden
+                "",
+                "alpha",
+                "checkhealth",
+                "diff",
+                "help",
+                "lspinfo",
+                "man",
+                "mason",
+                "TelescopePrompt",
+                "Trouble",
+                "WhichKey",
+            },
+        },
         -- Trimming already handled by conform
         trim = {
             -- Auto trim on BufWritePre
