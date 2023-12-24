@@ -15,6 +15,10 @@ function M.config()
                 return { "--config-path", config }
             end
         end,
+        -- Don't run in case `stylua.toml` doesn't exist
+        condition = function()
+            return require("configs.utils").config_path("stylua.toml")
+        end,
     }
 
     conform.setup({
