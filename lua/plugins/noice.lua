@@ -12,6 +12,9 @@ local M = {
                     render = "simple",
                     -- FIXME: timeout didn't get applied but render did.
                     timeout = 1000,
+                    on_open = function(win)
+                        vim.api.nvim_win_set_config(win, { focusable = false })
+                    end,
                 })
             end,
         },

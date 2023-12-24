@@ -188,8 +188,12 @@ function M.config()
             o = { "<c-w>o", "Delete other window" },
             ["<c-o>"] = { "<c-w>o", "Delete other window" },
             s = { "<c-w>s", "Horizontal Split" },
-            -- w = { "<c-w>p", "Other window" },
-            -- w = { "winnr('#') != 0 ? '<c-w>p' : '<c-w>w'", "Other window", expr = true },
+            -- `C-W p` doesn't work if the next buffer is opened via `Telescope`.
+            -- However, it works when opened from `oil.nvim` or `:e .`.
+            -- I am not the only one experiencing this issue; others have resorted to using `C-w hjkl`.
+            -- But my Doom Emacs muscle memory is so strong that I don't want to abandon it.
+            -- Thus, the wizards of the Neovim core team come to my rescue with this `expr` hackery.
+            -- Thank you, Sean Dewar (seandewar).
             w = { "winnr('#') != 0 && winnr('#') != winnr() ? '<C-W>p' : '<C-W>w'", "Other window", expr = true },
             v = { "<c-w>v", "Vertical Split" },
         },
