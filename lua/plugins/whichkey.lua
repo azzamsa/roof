@@ -79,8 +79,8 @@ function M.config()
                 -- Using the directory path works for Git commit and Git status,
                 -- but fails during hunk and file visit operations.
                 function()
-                    local root = require("configs.utils").project_root()
-                    require("neogit").open({ cwd = root })
+                    local path = require("configs.utils").project_root_or_cwd()
+                    require("neogit").open({ cwd = path })
                 end,
                 "Neogit",
             },
