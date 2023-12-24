@@ -65,7 +65,8 @@ function M.config()
             f = { function() require("configs.utils").find_files_from_here() end, "Find file" },
             R = { function() require("spectre").open() end, "Replace in files" },
             y = { function() require("genghis").copyFilename() end, "Copy file name" },
-            Y = { function() require("genghis").copyFilepath() end, "Copy file path" },
+            -- A helper function is needed to enable this key to work in the `Oil.nvim` buffer.
+            Y = { function() require("configs.utils").copy_file_path() end, "Copy file path" },
             -- stylua: ignore end
         },
 

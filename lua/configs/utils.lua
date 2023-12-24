@@ -47,10 +47,16 @@ function M.project_root(path)
     return root
 end
 
--- Find current working directory
+-- Get current working directory
 function M.cwd()
     local dir_buffer = vim.fn.expand("%:p:h")
     return M.validate_path(dir_buffer)
+end
+
+-- Get current file path
+function M.file_path()
+    local path = vim.fn.expand("%:p")
+    return M.validate_path(path)
 end
 
 -- Try to get project root. If fails fallback to cwd.
@@ -108,6 +114,16 @@ function M.config_path(filename)
     if path then
         return path
     end
+end
+
+--
+-- General plugins
+--
+
+function M.copy_file_path()
+    local path = M.file_path()
+    vim.fn.setreg("+", path)
+    vim.notify(path, vim.log.levels.INFO, { title = "Copied" })
 end
 
 --
