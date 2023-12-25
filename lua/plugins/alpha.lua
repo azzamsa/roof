@@ -4,15 +4,8 @@ local M = {
     commit = "234822140b265ec4ba3203e3e0be0e0bb826dff5",
 }
 
-local function get_daily_quote()
-    math.randomseed(os.time())
-
-    local lines = vim.fn.readfile(vim.fn.stdpath("config") .. "/etc/quotes")
-    local filtered_lines = vim.tbl_filter(function(line)
-        return not line:match("^%s*$") and not line:match("^%s*#")
-    end, lines)
-
-    return "    " .. filtered_lines[math.random(#filtered_lines)]
+local function random_quote()
+    return require("etc.quotes").random()
 end
 
 function M.config()
@@ -47,7 +40,7 @@ function M.config()
 
     dashboard.section.header.val = header
     dashboard.section.footer.val = ""
-    dashboard.section.footer.val = get_daily_quote()
+    dashboard.section.footer.val = random_quote()
 
     dashboard.section.header.opts.hl = "String"
     dashboard.section.buttons.opts.hl = "Macro"

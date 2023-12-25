@@ -11,9 +11,12 @@ _Code beneath my own roof!_
 
 **Roof!** features:
 
-- 👾 [Doom Emacs][doom] experience
-- 🐲 [Colemak Mod-DH][colemak]
-- 🔒 Pinned packages
+- 👾 [Doom Emacs][doom] experience.
+- 🐲 [Colemak Mod-DH][colemak].
+- 🔒 Hard-pinned packages.
+- 🚩 Project/buffer-based operations (à la Emacs).
+- 💭 Daily dose of quotes.
+- 🔖 Interactive bookmark jumping.
 
 <div align="center">
     <img src="https://github.com/azzamsa/roof/assets/17734314/16b4ec66-6abc-429a-99db-28803d21ad42"

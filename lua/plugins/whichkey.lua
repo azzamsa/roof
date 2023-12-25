@@ -56,6 +56,7 @@ function M.config()
             name = "File",
             d = { "<cmd>Oil<cr>", "Find directory" },
             D = { "<cmd>call delete(expand('%')) <bar> bdelete!<cr>", "Delete this file" },
+            m = { ":Telescope file_browser path=%:p:h select_buffer=true<CR>", "File manager" },
             r = { "<cmd>Telescope oldfiles<cr>", "Recent file" },
             s = { "<cmd>w<cr>", "Save buffer" },
             S = { "<cmd>wa<cr>", "Save all buffers" },
@@ -153,8 +154,16 @@ function M.config()
             r = { "<cmd>Telescope registers<cr>", "Registers" },
             R = { "<cmd>Telescope resume<cr>", "Resume" },
             u = { "<cmd>Telescope undo<cr>", "Visual undo" },
+            s = { "<cmd>Telescope spell_suggest<cr>", "Spell candidate" },
             ['"'] = { "<cmd>Telescope registers<cr>", "Registers" },
 
+            b = {
+                function()
+                    local bookmarks = require("etc.bookmarks").bookmarks
+                    require("configs.utils.picker").bookmarks({ bookmarks = bookmarks })
+                end,
+                "Bookmarks",
+            },
             -- stylua: ignore start
             g = { function() require("configs.utils").grep_from_here() end, "Search" },
             -- stylua: ignore end

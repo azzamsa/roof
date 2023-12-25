@@ -27,6 +27,7 @@ spec("plugins.gitsigns")
 spec("plugins.toggleterm")
 -- Dired for Nvim.
 spec("plugins.oil")
+spec("plugins.filebrowser")
 -- Project management.
 spec("plugins.project")
 -- Fuzzy find things.
@@ -113,5 +114,7 @@ spec("plugins.kdl")
 spec("plugins.just")
 
 require("configs.utils")
+-- A file playground just like IELM from my Emacs days.
+require("configs.playground")
 -- Nvim package manager
 require("plugins.lazy")

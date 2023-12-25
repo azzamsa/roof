@@ -1,2 +1,4 @@
-# default : Tabs
-indent_type = "Spaces"
+indent_type = "Spaces" # default : Tabs
+
+[sort_requires]
+enabled = true 

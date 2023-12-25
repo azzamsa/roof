@@ -5,7 +5,14 @@ local M = {
 }
 
 function M.config()
-    require("neo-tree").setup({})
+    require("neo-tree").setup({
+        filesystem = {
+            follow_current_file = {
+                -- This will use the OS level file watchers to detect changes
+                use_libuv_file_watcher = true,
+            },
+        },
+    })
 end
 
 return M

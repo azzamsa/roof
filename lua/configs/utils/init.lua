@@ -87,7 +87,7 @@ end
 
 -- Find files from the directory of `config`
 function M.find_files_in_config()
-    M.find_files(M.cwd())
+    M.find_files(vim.fn.stdpath("config"))
 end
 
 -- Find files from the directory of the currently opened buffer.
