@@ -130,4 +130,13 @@ if vim.g.neovide then
     -- I need to put them all.
     map({ "c", "n", "v", "i" }, "<C-y>", "<c-r>*", { desc = "Paste" }) -- In search prompt, telescope.
     map({ "t" }, "<C-y>", '<C-\\><C-o>"+p', { desc = "Paste" }) -- In Terminal.
+
+    -- Unlike Terminals...
+    map("n", "<C-ScrollWheelUp>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
+    map("n", "<C-ScrollWheelDown>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")
+    map("n", "<C-ScrollWheelClick>", ":lua vim.g.neovide_scale_factor = 1<CR>")
+
+    map("n", "<C-+>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
+    map("n", "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")
+    map("n", "<C-0>", ":lua vim.g.neovide_scale_factor = 1<CR>")
 end

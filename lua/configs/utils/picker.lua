@@ -19,7 +19,9 @@ function M.bookmarks(opts)
                 actions.select_default:replace(function()
                     actions.close(prompt_bufnr)
                     local selection = action_state.get_selected_entry()
-                    vim.cmd("e " .. vim.fn.fnameescape(selection[1]))
+                    local path = vim.fn.fnameescape(selection[1])
+                    -- vim.cmd("e " .. path) -- Open in `oil.nvim`
+                    vim.cmd("Telescope file_browser path=" .. path) -- Open in `oil.nvim`
                 end)
                 return true
             end,

@@ -1,6 +1,5 @@
 -- To get list of vim modes: `h: modes`
 --[[
-()  Normal, Visual, Select, Operator-pending
 (n) Normal
 (v) Visual and Select
 (s) Select
@@ -104,3 +103,7 @@ map({ "i", "v", "n" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 -- Better indenting
 map("v", "<", "<gv")
 map("v", ">", ">gv")
+
+--
+-- Plugins
+--
