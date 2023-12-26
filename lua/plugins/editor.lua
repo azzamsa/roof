@@ -104,29 +104,34 @@ return {
         event = "VeryLazy",
         commit = "8e0543365fe5781c9babea7db89ef06bcff3716d",
         config = function()
-            local actions = require("telescope._extensions.file_browser.actions")
+            local oil = require("oil")
+            local fb_actions = require("telescope._extensions.file_browser.actions")
+            local actions = require("telescope.actions")
+            local action_state = require("telescope.actions.state")
 
             require("telescope").setup({
                 extensions = {
                     file_browser = {
-                        -- cwd_to_path = true,
                         initial_mode = "normal",
                         mappings = {
                             ["i"] = {},
                             ["n"] = {
-                                ["m"] = actions.goto_parent_dir,
-                                ["i"] = require("telescope.actions").select_default,
+                                ["m"] = fb_actions.goto_parent_dir,
+                                ["i"] = actions.select_default,
+                                ["o"] = function(prompt_bufnr)
+                                    local entry = action_state.get_selected_entry()
+                                    actions.close(prompt_bufnr)
+                                    oil.open(entry.path)
+                                end,
+                                ["c"] = fb_actions.create,
+                                ["r"] = fb_actions.rename,
+                                ["y"] = fb_actions.copy,
+                                ["d"] = fb_actions.remove,
+                                ["H"] = fb_actions.goto_home_dir,
                                 --
-                                ["c"] = actions.create,
-                                ["r"] = actions.rename,
-                                -- ["M"] = actions.move,
-                                ["y"] = actions.copy,
-                                ["d"] = actions.remove,
-                                ["H"] = actions.goto_home_dir,
-                                --
-                                ["f"] = actions.toggle_browser,
-                                ["h"] = actions.toggle_hidden,
-                                ["s"] = actions.toggle_all,
+                                ["f"] = fb_actions.toggle_browser,
+                                ["h"] = fb_actions.toggle_hidden,
+                                ["s"] = fb_actions.toggle_all,
                             },
                         },
                     },

@@ -53,9 +53,14 @@ return {
                 -- <leader> f --- file
                 f = {
                     name = "File",
-                    d = { "<cmd>Oil<cr>", "Find directory" },
+                    d = {
+                        function()
+                            local path = require("configs.utils").cwd()
+                            vim.cmd("Telescope file_browser files=false path=" .. path)
+                        end,
+                        "Find directory",
+                    },
                     D = { "<cmd>call delete(expand('%')) <bar> bdelete!<cr>", "Delete this file" },
-                    m = { ":Telescope file_browser path=%:p:h select_buffer=true<CR>", "File manager" },
                     r = { "<cmd>Telescope oldfiles<cr>", "Recent file" },
                     s = { "<cmd>w<cr>", "Save buffer" },
                     S = { "<cmd>wa<cr>", "Save all buffers" },
