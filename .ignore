@@ -1,2 +1,6 @@
 CHANGELOG.md
 lazy-lock.json
+*.svg
+
+# untracked files
+!personal.lua

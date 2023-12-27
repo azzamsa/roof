@@ -1,4 +1,5 @@
 local M = {}
+local File = require("configs.utils.file")
 
 function M.find_files(path)
     require("telescope.builtin").find_files({
@@ -12,25 +13,12 @@ function M.live_grep(path)
     })
 end
 
--- Get real path
----@param path string
-function M.validate_path(path)
-    local is_oil_path = string.match(path, "^oil://")
-
-    if is_oil_path then
-        -- Remove the "oil://" prefix
-        return string.gsub(path, "^oil://", "")
-    else
-        return path
-    end
-end
-
 -- Find project root
 -- Requires https://github.com/azzamsa/toor
 ---@param path? string
 function M.project_root(path)
     if path then
-        path = M.validate_path(path)
+        path = File.validate(path)
     end
 
     if not path then
@@ -50,13 +38,7 @@ end
 -- Get current working directory
 function M.cwd()
     local dir_buffer = vim.fn.expand("%:p:h")
-    return M.validate_path(dir_buffer)
-end
-
--- Get current file path
-function M.file_path()
-    local path = vim.fn.expand("%:p")
-    return M.validate_path(path)
+    return File.validate(dir_buffer)
 end
 
 -- Try to get project root. If fails fallback to cwd.
@@ -114,16 +96,6 @@ function M.config_path(filename)
     if path then
         return path
     end
-end
-
---
--- General plugins
---
-
-function M.copy_file_path()
-    local path = M.file_path()
-    vim.fn.setreg("+", path)
-    vim.notify(path, vim.log.levels.INFO, { title = "Copied" })
 end
 
 --

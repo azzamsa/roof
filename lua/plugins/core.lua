@@ -25,12 +25,6 @@ return {
                     -- Doom use both `<leader> b s` and `<leader> f s` to save file
                     s = { "<cmd>w<cr>", "Save buffer" },
                     S = { "<cmd>wa<cr>", "Save all buffers" },
-
-                    -- stylua: ignore start
-                    c = { function() require("genghis").duplicateFile() end, "Clone buffer" },
-                    n = { function() require("genghis").createNewFile() end, "New buffer" },
-                    r = { function() require("genghis").moveAndRenameFile() end, "Rename buffer" },
-                    -- stylua: ignore end
                 },
 
                 -- <leader> c --- code
@@ -41,6 +35,7 @@ return {
                     e = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Line Diagnostics" },
                     p = { "<cmd>MarkdownPreviewToggle<cr>", "Markdown Preview" },
                     r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+                    S = { "<cmd>SymbolsOutline<cr>", "Symbols" },
                     w = { "<cmd>Trim<cr>", "Delete trailing whitespaces" },
                     x = { "<cmd>TroubleToggle document_diagnostics<cr>", "Diagnostics" },
                     X = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Project diagnostics" },
@@ -53,13 +48,7 @@ return {
                 -- <leader> f --- file
                 f = {
                     name = "File",
-                    d = {
-                        function()
-                            local path = require("configs.utils").cwd()
-                            vim.cmd("Telescope file_browser files=false path=" .. path)
-                        end,
-                        "Find directory",
-                    },
+                    d = { "<cmd>Oil<cr>", "Find directory" },
                     D = { "<cmd>call delete(expand('%')) <bar> bdelete!<cr>", "Delete this file" },
                     r = { "<cmd>Telescope oldfiles<cr>", "Recent file" },
                     s = { "<cmd>w<cr>", "Save buffer" },
@@ -69,9 +58,9 @@ return {
                     e = { function() require("configs.utils").find_files_in_config() end, "Find file in config" },
                     f = { function() require("configs.utils").find_files_from_here() end, "Find file" },
                     R = { "<cmd>MurenToggle<cr>", "Replace in files" },
-                    y = { function() require("genghis").copyFilename() end, "Copy file name" },
+                    y = { function() require("configs.utils.file").copy_name() end, "Copy file name" },
                     -- A helper function is needed to enable this key to work in the `Oil.nvim` buffer.
-                    Y = { function() require("configs.utils").copy_file_path() end, "Copy file path" },
+                    Y = { function() require("configs.utils.file").copy_path() end, "Copy file path" },
                     -- stylua: ignore end
                 },
 
@@ -181,8 +170,7 @@ return {
 
                     c = {
                         function()
-                            local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
-                            require("configs.utils").toggle_opt("conceallevel", false, { 0, conceallevel })
+                            require("configs.utils").toggle_opt("conceallevel")
                         end,
                         "Conceal",
                     },

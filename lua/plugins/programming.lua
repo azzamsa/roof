@@ -1,3 +1,5 @@
+local Icons = require("configs.icons")
+
 return {
     -- Treesitter support.
     {
@@ -98,61 +100,18 @@ return {
             {
                 "folke/neodev.nvim",
                 commit = "b094a663ccb71733543d8254b988e6bebdbdaca4",
+                opts = {},
             },
         },
-        config = function()
-            local function common_capabilities()
-                local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-                if status_ok then
-                    return cmp_nvim_lsp.default_capabilities()
-                end
-
-                local capabilities = vim.lsp.protocol.make_client_capabilities()
-                capabilities.textDocument.completion.completionItem.snippetSupport = true
-                capabilities.textDocument.completion.completionItem.resolveSupport = {
-                    properties = {
-                        "documentation",
-                        "detail",
-                        "additionalTextEdits",
-                    },
-                }
-
-                return capabilities
-            end
-
-            local lspconfig = require("lspconfig")
-            local icons = require("configs.icons")
-
-            local servers = {
-                -- Lua
-                "lua_ls",
-
-                -- Yaml
-                "yamlls",
-
-                -- Rust
-                "rust_analyzer",
-
-                -- Markdown
-                "marksman",
-
-                -- FE
-                "jsonls",
-                "tsserver",
-                "tailwindcss",
-
-                -- Python
-                "pyright",
-            }
-
-            local default_diagnostic_config = {
+        opts = {
+            diagnostic = {
                 signs = {
                     active = true,
                     values = {
-                        { name = "DiagnosticSignError", text = icons.diagnostics.Error },
-                        { name = "DiagnosticSignWarn", text = icons.diagnostics.Warning },
-                        { name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
-                        { name = "DiagnosticSignInfo", text = icons.diagnostics.Information },
+                        { name = "DiagnosticSignError", text = Icons.diagnostics.Error },
+                        { name = "DiagnosticSignWarn", text = Icons.diagnostics.Warning },
+                        { name = "DiagnosticSignHint", text = Icons.diagnostics.Hint },
+                        { name = "DiagnosticSignInfo", text = Icons.diagnostics.Information },
                     },
                 },
                 virtual_text = false,
@@ -167,34 +126,55 @@ return {
                     header = "",
                     prefix = "",
                 },
-            }
+            },
+            servers = {
+                -- Lua
+                lua_ls = {
+                    -- mason = false, -- set to false if you don't want this server to be installed with mason
+                    settings = {
+                        Lua = {
+                            workspace = {
+                                checkThirdParty = false,
+                            },
+                            completion = {
+                                callSnippet = "Replace",
+                            },
+                        },
+                    },
+                },
+                -- Yaml
+                yamlls = {},
+                -- Rust
+                rust_analyzer = {},
+                -- Markdown
+                marksman = {},
+                -- FE
+                jsonls = {},
+                tsserver = {},
+                tailwindcss = {},
+                -- Python
+                pyright = {},
+            },
+        },
+        config = function(_, opts)
+            vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-            vim.diagnostic.config(default_diagnostic_config)
+            local servers = opts.servers
+            local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+            local capabilities = vim.tbl_deep_extend(
+                "force",
+                {},
+                vim.lsp.protocol.make_client_capabilities(),
+                has_cmp and cmp_nvim_lsp.default_capabilities() or {},
+                opts.capabilities or {}
+            )
 
-            for _, sign in ipairs(vim.tbl_get(vim.diagnostic.config(), "signs", "values") or {}) do
-                vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
-            end
+            for server, _ in pairs(servers) do
+                local server_opts = vim.tbl_deep_extend("force", {
+                    capabilities = vim.deepcopy(capabilities),
+                }, servers[server] or {})
 
-            vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-            vim.lsp.handlers["textDocument/signatureHelp"] =
-                vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
-            require("lspconfig.ui.windows").default_options.border = "rounded"
-
-            for _, server in pairs(servers) do
-                local opts = {
-                    capabilities = common_capabilities(),
-                }
-
-                local require_ok, settings = pcall(require, "plugins.lspsettings." .. server)
-                if require_ok then
-                    opts = vim.tbl_deep_extend("force", settings, opts)
-                end
-
-                if server == "lua_ls" then
-                    require("neodev").setup({})
-                end
-
-                lspconfig[server].setup(opts)
+                require("lspconfig")[server].setup(server_opts)
             end
         end,
     },
@@ -263,8 +243,6 @@ return {
                 return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
             end
 
-            local icons = require("configs.icons")
-
             cmp.setup({
                 snippet = {
                     expand = function(args)
@@ -320,7 +298,7 @@ return {
                 formatting = {
                     fields = { "kind", "abbr", "menu" },
                     format = function(entry, vim_item)
-                        vim_item.kind = icons.kind[vim_item.kind]
+                        vim_item.kind = Icons.kind[vim_item.kind]
                         vim_item.menu = ({
                             nvim_lsp = "",
                             nvim_lua = "",
@@ -330,27 +308,27 @@ return {
                             emoji = "",
                         })[entry.source.name]
                         if entry.source.name == "copilot" then
-                            vim_item.kind = icons.git.Octoface
+                            vim_item.kind = Icons.git.Octoface
                             vim_item.kind_hl_group = "CmpItemKindCopilot"
                         end
 
                         if entry.source.name == "cmp_tabnine" then
-                            vim_item.kind = icons.misc.Robot
+                            vim_item.kind = Icons.misc.Robot
                             vim_item.kind_hl_group = "CmpItemKindTabnine"
                         end
 
                         if entry.source.name == "crates" then
-                            vim_item.kind = icons.misc.Package
+                            vim_item.kind = Icons.misc.Package
                             vim_item.kind_hl_group = "CmpItemKindCrate"
                         end
 
                         if entry.source.name == "lab.quick_data" then
-                            vim_item.kind = icons.misc.CircuitBoard
+                            vim_item.kind = Icons.misc.CircuitBoard
                             vim_item.kind_hl_group = "CmpItemKindConstant"
                         end
 
                         if entry.source.name == "emoji" then
-                            vim_item.kind = icons.misc.Smiley
+                            vim_item.kind = Icons.misc.Smiley
                             vim_item.kind_hl_group = "CmpItemKindEmoji"
                         end
 
@@ -424,7 +402,7 @@ return {
     -- A formatter
     {
         "stevearc/conform.nvim",
-        commit = "8b407bb6175846cdc4c499e2a8d28109615a2089",
+        commit = "86393c143b8d1b7bdae1449fd25de315fd967fd7",
         event = { "BufWritePre" },
         cmd = { "ConformInfo" },
         config = function()
@@ -449,7 +427,7 @@ return {
                         -- not recommended to change
                         return { timeout_ms = 3000, async = false, quiet = false }
                     end
-                    return
+                    return nil
                 end,
                 formatters_by_ft = {
                     lua = { "stylua" },
@@ -506,8 +484,6 @@ return {
         event = "VeryLazy",
         commit = "9637670896b68805430e2f72cf5d16be5b97a22a",
         config = function()
-            local icons = require("configs.icons")
-
             require("indent_blankline").setup({
                 buftype_exclude = { "terminal", "nofile" },
                 filetype_exclude = {
@@ -521,9 +497,9 @@ return {
                     "text",
                 },
                 -- char = icons.ui.LineLeft,
-                char = icons.ui.LineMiddle,
-                -- context_char = icons.ui.LineLeft,
-                context_char = icons.ui.LineMiddle,
+                char = Icons.ui.LineMiddle,
+                -- context_char = Icons.ui.LineLeft,
+                context_char = Icons.ui.LineMiddle,
                 show_trailing_blankline_indent = false,
                 show_first_indent_level = true,
                 use_treesitter = true,
@@ -794,5 +770,21 @@ return {
                 },
             })
         end,
+    },
+    --
+    {
+        "simrat39/symbols-outline.nvim",
+        cmd = "SymbolsOutline",
+        config = function()
+            require("symbols-outline").setup()
+        end,
+        opts = {
+            keymaps = {
+                fold = "z",
+                unfold = "Z",
+            },
+            lsp_blacklist = {},
+            symbol_blacklist = {},
+        },
     },
 }

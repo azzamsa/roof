@@ -1,3 +1,5 @@
+local Icons = require("configs.icons")
+
 return {
     -- Dashboard
     {
@@ -10,8 +12,6 @@ return {
             end
 
             local dashboard = require("alpha.themes.dashboard")
-            local icons = require("configs.icons")
-
             local function button(sc, txt, keybind, keybind_opts)
                 local b = dashboard.button(sc, txt, keybind, keybind_opts)
                 b.opts.hl_shortcut = "Macro"
@@ -32,14 +32,12 @@ return {
             }
 
             dashboard.section.buttons.val = {
-                button("f", icons.ui.Files .. " Find file", ":Telescope find_files <CR>"),
-                button(
-                    "p",
-                    icons.git.Repo .. " Find project",
-                    ":lua require('telescope').extensions.projects.projects()<CR>"
-                ),
-                button("r", icons.ui.History .. " Recent files", ":Telescope oldfiles <CR>"),
-                button("q", icons.ui.SignOut .. " Quit", ":qa<CR>"),
+                -- stylua: ignore start
+                button("f", Icons.ui.Files .. " Find file", ":Telescope find_files <CR>"),
+                button( "p", Icons.git.Repo .. " Find project", ":lua require('telescope').extensions.projects.projects()<CR>"),
+                button("r", Icons.ui.History .. " Recent files", ":Telescope oldfiles <CR>"),
+                button("Q", Icons.ui.SignOut .. " Quit", ":qa<CR>"),
+                -- stylua: ignore end
             }
 
             dashboard.section.header.val = header
@@ -70,8 +68,6 @@ return {
         config = function()
             local sl_hl = vim.api.nvim_get_hl_by_name("StatusLine", true)
             vim.api.nvim_set_hl(0, "Copilot", { fg = "#6CC644", bg = sl_hl.background })
-            local icons = require("configs.icons")
-
             local copilot = function()
                 local buf_clients = vim.lsp.get_active_clients({ bufnr = 0 })
                 if #buf_clients == 0 then
@@ -92,7 +88,7 @@ return {
                 end
 
                 if copilot_active then
-                    return "%#Copilot#" .. icons.git.Octoface .. "%*"
+                    return "%#Copilot#" .. Icons.git.Octoface .. "%*"
                 end
                 return ""
             end
@@ -115,12 +111,12 @@ return {
                 options = {
                     component_separators = { left = "", right = "" },
                     section_separators = { left = "", right = "" },
-                    ignore_focus = { "NvimTree" },
+                    ignore_focus = { "Neotree" },
                 },
                 sections = {
                     lualine_a = { "mode" },
                     lualine_b = {
-                        { "filename", file_status = true, path = 4 },
+                        { "filename", path = 4 },
                     },
                     lualine_c = {
                         "location",
@@ -131,7 +127,6 @@ return {
                     lualine_y = { "filetype" },
                     lualine_z = { { "branch", icon = "" } },
                 },
-                extensions = { "neo-tree", "lazy" },
             })
         end,
     },
@@ -198,15 +193,14 @@ return {
             "SmiteshP/nvim-navic",
             commit = "0ffa7ffe6588f3417e680439872f5049e38a24db",
             config = function()
-                local icons = require("configs.icons")
                 require("nvim-navic").setup({
-                    icons = icons.kind,
+                    icons = Icons.kind,
                     highlight = true,
                     lsp = {
                         auto_attach = true,
                     },
                     click = true,
-                    separator = " " .. icons.ui.ChevronRight .. " ",
+                    separator = " " .. Icons.ui.ChevronRight .. " ",
                     depth_limit = 0,
                     depth_limit_indicator = "..",
                 })

@@ -30,6 +30,21 @@ _Code beneath my own roof!_
 
 - [Toor](https://github.com/azzamsa/toor) - Find project root.
 
+## Checklist
+
+When you use this configuration, try to follow the checklist.
+
+- [ ] Create a file `lua/configs/personal.lua`.
+
+And, enjoy :)
+
+## Usage
+
+```shell
+$ # Clone the repository
+$ nvim # I am using Neovide
+```
+
 ## Contribute
 
 I won't be accepting any functionality or behavior changes. But it is OK for fixes and refinement.

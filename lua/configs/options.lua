@@ -121,7 +121,7 @@ end
 if vim.g.neovide then
     -- Set the font for graphical Neovim applications
     -- Include the Emoji font to display colored emojis
-    opt.guifont = "Iosevka Nerd Font,Noto Color Emoji:h19"
+    opt.guifont = "Iosevka Nerd Font,Noto Sans Arabic,Noto Color Emoji:h19"
     vim.g.neovide_cursor_vfx_mode = "railgun"
 
     -- Unlike Terminals, Neovide doesn't add or remove any keybindings to Neovim.

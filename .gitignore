@@ -1,23 +1,5 @@
-# Ignore everything in the root directory
-/*
+*.log
 
-# Adding myself to the party!
-!.gitignore
-!.ignore
+# personal config
+personal.lua
 
-!.github
-
-!configs
-!docs
-!etc
-!scripts
-
-!lua
-!init.lua
-!justfile
-!lazy-lock.json
-!version
-
-!LICENSE
-!README.md
-!CHANGELOG.md

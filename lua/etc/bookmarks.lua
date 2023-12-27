@@ -3,14 +3,19 @@
 
 local M = {}
 
-local ext1 = "/run/media/" .. os.getenv("USER") .. "/exts1"
-
 M.bookmarks = {
     "~/.config",
+    "~/.local",
     "~/playground",
     "~/projects",
     "~/office",
-    ext1,
 }
+
+local personal_bookmarks = require("configs.personal").bookmarks
+
+-- Concatenate the two bookmarks
+for _, bookmark in ipairs(personal_bookmarks) do
+    table.insert(M.bookmarks, bookmark)
+end
 
 return M

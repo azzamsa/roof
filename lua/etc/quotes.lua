@@ -1,6 +1,6 @@
 local M = {}
 
-local quotes = {
+M.quotes = {
     "Practice. It is Practice. Practice.", -- Sarah Andersen
     "Do it scared.",
     "Don't fear moving slowly. Fear standing still.",
@@ -13,9 +13,16 @@ local quotes = {
     "The master has failed more than the beginner", -- Stephen McCranie
 }
 
+local personal_quotes = require("configs.personal").quotes
+
+-- Concatenate the two quotes
+for _, quote in ipairs(personal_quotes) do
+    table.insert(M.quotes, quote)
+end
+
 function M.random()
-    local random_index = math.random(1, #quotes)
-    return quotes[random_index]
+    local random_index = math.random(1, #M.quotes)
+    return M.quotes[random_index]
 end
 
 return M

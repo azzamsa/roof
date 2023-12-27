@@ -27,6 +27,21 @@ return {
             neogit.setup({})
         end,
     },
+    -- Display VCS changes in the gutter.
+    {
+        "lewis6991/gitsigns.nvim",
+        event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+        opts = {
+            signs = {
+                add = { text = "▎" },
+                change = { text = "▎" },
+                delete = { text = "" },
+                topdelete = { text = "" },
+                changedelete = { text = "▎" },
+                untracked = { text = "▎" },
+            },
+        },
+    },
     --  Terminal
     {
         "akinsho/toggleterm.nvim",
@@ -59,7 +74,7 @@ return {
                     -- Sometimes, I want to open the terminal in a non-project directory.
                     local path = get_previous_buffer_path()
                     -- Open from oily path too! Such as `oil.nvim`
-                    path = require("configs.utils").validate_path(path)
+                    path = require("configs.utils.file").validate(path)
 
                     -- Use project root if available, otherwise use the plain path.
                     path = require("configs.utils").project_root_or_cwd(path)
@@ -77,7 +92,7 @@ return {
     {
         "stevearc/oil.nvim",
         event = "VeryLazy",
-        commit = "24027ed8d7f3ee5c38cfd713915e2e16d89e79b3",
+        commit = "523b61430cb7365f8f86609c2ea60e48456bac63",
         config = function()
             require("oil").setup({
                 -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
@@ -93,47 +108,6 @@ return {
                         -- sort order can be "asc" or "desc"
                         -- see :help oil-columns to see which columns are sortable
                         { "mtime", "desc" },
-                    },
-                },
-            })
-        end,
-    },
-    -- Dired for Nvim.
-    {
-        "nvim-telescope/telescope-file-browser.nvim",
-        event = "VeryLazy",
-        commit = "8e0543365fe5781c9babea7db89ef06bcff3716d",
-        config = function()
-            local oil = require("oil")
-            local fb_actions = require("telescope._extensions.file_browser.actions")
-            local actions = require("telescope.actions")
-            local action_state = require("telescope.actions.state")
-
-            require("telescope").setup({
-                extensions = {
-                    file_browser = {
-                        initial_mode = "normal",
-                        mappings = {
-                            ["i"] = {},
-                            ["n"] = {
-                                ["m"] = fb_actions.goto_parent_dir,
-                                ["i"] = actions.select_default,
-                                ["o"] = function(prompt_bufnr)
-                                    local entry = action_state.get_selected_entry()
-                                    actions.close(prompt_bufnr)
-                                    oil.open(entry.path)
-                                end,
-                                ["c"] = fb_actions.create,
-                                ["r"] = fb_actions.rename,
-                                ["y"] = fb_actions.copy,
-                                ["d"] = fb_actions.remove,
-                                ["H"] = fb_actions.goto_home_dir,
-                                --
-                                ["f"] = fb_actions.toggle_browser,
-                                ["h"] = fb_actions.toggle_hidden,
-                                ["s"] = fb_actions.toggle_all,
-                            },
-                        },
                     },
                 },
             })
@@ -238,9 +212,8 @@ return {
 
                             ["<C-Down>"] = actions.cycle_history_next,
                             ["<C-Up>"] = actions.cycle_history_prev,
-
-                            ["<C-n>"] = actions.move_selection_next,
-                            ["<C-e>"] = actions.move_selection_previous,
+                            ["<C-n>"] = actions.cycle_history_next,
+                            ["<C-p>"] = actions.cycle_history_prev,
                         },
                         n = {
                             ["n"] = actions.move_selection_next,
@@ -259,7 +232,7 @@ return {
                         },
 
                         find_files = {
-                            -- theme = "dropdown",
+                            theme = "dropdown",
                             previewer = false,
                         },
 
@@ -346,6 +319,9 @@ return {
                         -- This will use the OS level file watchers to detect changes
                         use_libuv_file_watcher = true,
                     },
+                },
+                window = {
+                    width = 25,
                 },
             })
         end,
