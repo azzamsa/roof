@@ -66,33 +66,6 @@ return {
         "nvim-lualine/lualine.nvim",
         commit = "7533b0ead663d80452210c0c089e5105089697e5",
         config = function()
-            local sl_hl = vim.api.nvim_get_hl_by_name("StatusLine", true)
-            vim.api.nvim_set_hl(0, "Copilot", { fg = "#6CC644", bg = sl_hl.background })
-            local copilot = function()
-                local buf_clients = vim.lsp.get_active_clients({ bufnr = 0 })
-                if #buf_clients == 0 then
-                    return "LSP Inactive"
-                end
-
-                local buf_client_names = {}
-                local copilot_active = false
-
-                for _, client in pairs(buf_clients) do
-                    if client.name ~= "null-ls" and client.name ~= "copilot" then
-                        table.insert(buf_client_names, client.name)
-                    end
-
-                    if client.name == "copilot" then
-                        copilot_active = true
-                    end
-                end
-
-                if copilot_active then
-                    return "%#Copilot#" .. Icons.git.Octoface .. "%*"
-                end
-                return ""
-            end
-
             --- Multi cursor
             local function mc_is_active()
                 local ok, hydra = pcall(require, "hydra.statusline")
@@ -123,7 +96,7 @@ return {
                         -- Multi cursors
                         { mc_get_name, cond = mc_is_active },
                     },
-                    lualine_x = { "diagnostics", copilot },
+                    lualine_x = { "diagnostics" },
                     lualine_y = { "filetype" },
                     lualine_z = { { "branch", icon = "" } },
                 },
