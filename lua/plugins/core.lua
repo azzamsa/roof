@@ -11,7 +11,7 @@ return {
                 -- stylua: ignore start
                 ["."] = { function() require("configs.utils").find_files_in_project() end, "Find project file" },
                 ["<space>"] = { function() require("configs.utils").find_files_in_project() end, "Find project file" },
-                ["x"] = { function() require("configs.utils").open_scratch_buffer() end, "Open scratch buffer" },
+                ["x"] = { function() require("configs.utils").toggle_scratch_buffer() end, "Open scratch buffer" },
                 ["/"] = { function() require("configs.utils").grep_in_project() end, "Search in project" },
                 -- stylua: ignore end
 

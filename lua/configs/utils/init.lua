@@ -162,10 +162,15 @@ end
 --
 
 local scratch_file = "~/.local/share/meta/**scratch**.md"
-function M.open_scratch_buffer()
+
+-- Toggle the scratch buffer.
+function M.toggle_scratch_buffer()
     for _, win in ipairs(vim.fn.getwininfo()) do
-        if vim.fn.bufname(win.bufnr) == scratch_file then
+        local buf_name = vim.fn.bufname(win.bufnr)
+        -- Close scratch buffer if it is currently open
+        if string.find(buf_name, "**scratch**") then
             vim.cmd(win.winnr .. "wincmd w")
+            vim.cmd("bd! " .. win.bufnr)
             return
         end
     end
