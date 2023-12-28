@@ -113,31 +113,6 @@ return {
             })
         end,
     },
-    -- Project management.
-    {
-        "ahmedkhalf/project.nvim",
-        event = "VeryLazy",
-        commit = "8c6bad7d22eef1b71144b401c9f74ed01526a4fb",
-        config = function()
-            require("project_nvim").setup({
-                active = true,
-                on_config_done = nil,
-                manual_mode = false,
-                -- Don't use `lsp` as detection method.
-                -- It will use a buffer's directory as a root project.
-                detection_methods = { "pattern" },
-                --  `.project` and `.projectile` are part of the Emacs's project detection system.
-                patterns = { ".git", "justfile", "Makefile", "package.json", ".project", ".projectile" },
-                ignore_lsp = {},
-                exclude_dirs = {},
-                show_hidden = true,
-                -- Set to `true` to enable debugging.
-                -- But it is too noisy when switching between buffers a lot.
-                silent_chdir = true,
-                scope_chdir = "global",
-            })
-        end,
-    },
     -- Fuzzy find things.
     {
         "nvim-telescope/telescope.nvim",
@@ -182,6 +157,8 @@ return {
 
             require("telescope").setup({
                 defaults = {
+                    -- Ignore them; otherwise, they will pop up in `find_files`.
+                    file_ignore_patterns = { ".git" },
                     prompt_prefix = icons.ui.Telescope .. " ",
                     selection_caret = icons.ui.Forward .. " ",
                     entry_prefix = "   ",
@@ -223,23 +200,10 @@ return {
                         },
                     },
                     pickers = {
-                        live_grep = {
-                            theme = "dropdown",
-                        },
-
-                        grep_string = {
-                            theme = "dropdown",
-                        },
-
                         find_files = {
-                            theme = "dropdown",
                             previewer = false,
                         },
-
                         buffers = {
-                            theme = "dropdown",
-                            previewer = false,
-                            initial_mode = "normal",
                             mappings = {
                                 i = {
                                     ["<C-d>"] = actions.delete_buffer,
@@ -248,35 +212,6 @@ return {
                                     ["dd"] = actions.delete_buffer,
                                 },
                             },
-                        },
-
-                        planets = {
-                            show_pluto = true,
-                            show_moon = true,
-                        },
-
-                        colorscheme = {
-                            enable_preview = true,
-                        },
-
-                        lsp_references = {
-                            theme = "dropdown",
-                            initial_mode = "normal",
-                        },
-
-                        lsp_definitions = {
-                            theme = "dropdown",
-                            initial_mode = "normal",
-                        },
-
-                        lsp_declarations = {
-                            theme = "dropdown",
-                            initial_mode = "normal",
-                        },
-
-                        lsp_implementations = {
-                            theme = "dropdown",
-                            initial_mode = "normal",
                         },
                     },
                     extensions = {
@@ -289,6 +224,33 @@ return {
                     },
                 },
             })
+        end,
+    },
+    -- Project management.
+    {
+        "ahmedkhalf/project.nvim",
+        event = "VeryLazy",
+        commit = "8c6bad7d22eef1b71144b401c9f74ed01526a4fb",
+        config = function()
+            require("project_nvim").setup({
+                active = true,
+                on_config_done = nil,
+                manual_mode = false,
+                -- Don't use `lsp` as detection method.
+                -- It will use a buffer's directory as a root project.
+                detection_methods = { "pattern" },
+                --  `.project` and `.projectile` are part of the Emacs's project detection system.
+                patterns = { ".git", "justfile", "Makefile", "package.json", ".project", ".projectile" },
+                ignore_lsp = {},
+                exclude_dirs = {},
+                show_hidden = true,
+                -- Set to `true` to enable debugging.
+                -- But it is too noisy when switching between buffers a lot.
+                silent_chdir = true,
+                scope_chdir = "global",
+            })
+
+            require("telescope").load_extension("projects")
         end,
     },
     -- Find and replace across files.
