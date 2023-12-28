@@ -410,19 +410,12 @@ return {
         config = function()
             local conform = require("conform")
 
+            conform.formatters.prettier = {
+                -- When cwd is not found, don't run the formatter (default false)
+                require_cwd = true,
+            }
             conform.formatters.stylua = {
-                prepend_args = function()
-                    local config = require("configs.utils").config_path("stylua.toml")
-                    if config then
-                        return { "--config-path", config }
-                    end
-
-                    return ""
-                end,
-                -- Don't run in case `stylua.toml` doesn't exist
-                condition = function()
-                    return require("configs.utils").config_path("stylua.toml")
-                end,
+                require_cwd = true,
             }
 
             conform.setup({
@@ -434,10 +427,12 @@ return {
                     return nil
                 end,
                 formatters_by_ft = {
-                    lua = { "stylua" },
+                    lua = { "stylua" }, -- stylua trims trailing whitespace automatically
                     python = { "black" },
                     fish = { "fish_indent" },
                     sh = { "shfmt" },
+
+                    -- Prettier
                     javascript = { "prettier" },
                     typescript = { "prettier" },
                     vue = { "prettier" },
@@ -449,11 +444,8 @@ return {
                     yaml = { "prettier" },
                     markdown = { "prettier" },
                     graphql = { "prettier" },
-                    -- Use the "*" filetype to run formatters on all filetypes.
-                    ["*"] = { "codespell" },
-                    -- Use the "_" filetype to run formatters on filetypes that don't
-                    -- have other formatters configured.
-                    ["_"] = { "trim_whitespace" },
+
+                    ["*"] = { "trim_whitespace" },
                 },
             })
         end,
@@ -466,19 +458,13 @@ return {
         config = function()
             local lint = require("lint")
 
-            lint.linters.luacheck.args = {
-                "--config",
-                require("configs.utils").config_path("luacheckrc"),
-                "--formatter",
-                "plain",
-                "--codes",
-                "--ranges",
-                "-",
-            }
-
             lint.linters_by_ft = {
-                lua = { "luacheck" },
+                lua = { "selene" },
                 yaml = { "actionlint" },
+                markdown = { "vale" },
+                bash = { "shellcheck" },
+                sh = { "shellcheck" },
+                ["*"] = { "typos" },
             }
         end,
     },

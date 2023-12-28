@@ -20,18 +20,18 @@ check: fmt-check lint
 
 # Format the codebase.
 fmt:
-    dprint fmt --config configs/dprint.json
-    stylua --config-path configs/stylua.toml .
+    dprint fmt
+    stylua .
 
 # Check is the codebase properly formatted.
 fmt-check:
-    dprint check --config configs/dprint.json
-    stylua --config-path configs/stylua.toml --check .
+    dprint check
+    stylua . --check
 
 # Lint the codebase.
 lint:
-    typos --config configs/typos.toml
-    selene --config configs/selene.toml .
+    typos . --config configs/typos.toml
+    selene . --config configs/selene.toml --quiet
 
 # Create a release. Example `just release v0.1.0`
 release version:

@@ -10,21 +10,21 @@ jobs:
       fail-fast: false
 
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v4
+      - name: Checkout source code
+        uses: actions/checkout@v4
 
-    - uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@v2
 
-    - uses: taiki-e/install-action@just
-    - uses: taiki-e/install-action@dprint
-    - uses: taiki-e/install-action@v2
-      with:
-        tool: typos-cli,stylua,selene
+      - uses: taiki-e/install-action@just
+      - uses: taiki-e/install-action@dprint
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: typos-cli,stylua,selene
 
-    - name: Install prerequisites
-      run: |
-        just setup
+      - name: Install prerequisites
+        run: |
+          just setup
 
-    - name: Check
-      run: |
-        just check
+      - name: Check
+        run: |
+          just check

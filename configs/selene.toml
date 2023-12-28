@@ -1,4 +1,4 @@
-std="vim"
+std = "vim"
 
 [rules]
 # lazy.vim uses mixed table
