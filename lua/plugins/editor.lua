@@ -293,6 +293,8 @@ return {
         "folke/flash.nvim",
         event = "VeryLazy",
         commit = "48817af25f51c0590653bbc290866e4890fe1cbe",
+        ---@type Flash.Config
+        opts = {},
         -- stylua: ignore
         keys = {
            {"s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash"},
