@@ -31,7 +31,7 @@ fmt-check:
 # Lint the codebase.
 lint:
     typos --config configs/typos.toml
-    luacheck --config configs/luacheckrc --quiet .
+    selene --config configs/selene.toml .
 
 # Create a release. Example `just release v0.1.0`
 release version:

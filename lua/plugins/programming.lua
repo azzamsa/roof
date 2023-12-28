@@ -266,6 +266,8 @@ return {
                     -- Accept currently selected item. If none selected, `select` first item.
                     -- Set `select` to `false` to only confirm explicitly selected items.
                     ["<CR>"] = cmp.mapping.confirm({ select = true }),
+
+                    -- selene: allow(if_same_then_else)
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
@@ -414,6 +416,8 @@ return {
                     if config then
                         return { "--config-path", config }
                     end
+
+                    return ""
                 end,
                 -- Don't run in case `stylua.toml` doesn't exist
                 condition = function()
@@ -434,17 +438,22 @@ return {
                     python = { "black" },
                     fish = { "fish_indent" },
                     sh = { "shfmt" },
-                    ["javascript"] = { "prettier" },
-                    ["typescript"] = { "prettier" },
-                    ["vue"] = { "prettier" },
-                    ["css"] = { "prettier" },
-                    ["scss"] = { "prettier" },
-                    ["html"] = { "prettier" },
-                    ["json"] = { "prettier" },
-                    ["jsonc"] = { "prettier" },
-                    ["yaml"] = { "prettier" },
-                    ["markdown"] = { "prettier" },
-                    ["graphql"] = { "prettier" },
+                    javascript = { "prettier" },
+                    typescript = { "prettier" },
+                    vue = { "prettier" },
+                    css = { "prettier" },
+                    scss = { "prettier" },
+                    html = { "prettier" },
+                    json = { "prettier" },
+                    jsonc = { "prettier" },
+                    yaml = { "prettier" },
+                    markdown = { "prettier" },
+                    graphql = { "prettier" },
+                    -- Use the "*" filetype to run formatters on all filetypes.
+                    ["*"] = { "codespell" },
+                    -- Use the "_" filetype to run formatters on filetypes that don't
+                    -- have other formatters configured.
+                    ["_"] = { "trim_whitespace" },
                 },
             })
         end,

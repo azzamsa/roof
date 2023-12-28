@@ -1,0 +1,5 @@
+std="vim"
+
+[rules]
+# lazy.vim uses mixed table
+mixed_table = "allow"

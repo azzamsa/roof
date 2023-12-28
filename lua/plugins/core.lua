@@ -174,7 +174,16 @@ return {
                         end,
                         "Conceal",
                     },
-
+                    T = {
+                        function()
+                            if vim.b.ts_highlight then
+                                vim.treesitter.stop()
+                            else
+                                vim.treesitter.start()
+                            end
+                        end,
+                        "Treesitter",
+                    },
 
                     -- stylua: ignore start
                     d = { function() require("configs.utils").toggle_diagnostics() end, "Diagnostics" },
@@ -183,7 +192,6 @@ return {
                     l = { function() require("configs.utils").toggle_line_number() end, "Line numbers" },
                     L = { function() require("configs.utils").toggle_opt("relativenumber") end, "Relative line numbers" },
                     s = { function() require("configs.utils").toggle_opt("spell") end, "Spelling" },
-                    T = { function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, "Treesitter" },
                     w = { function() require("configs.utils").toggle_opt("wrap") end, "Word wrap" },
                     -- stylua: ignore end
                 },
