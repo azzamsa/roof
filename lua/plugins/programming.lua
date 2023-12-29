@@ -439,6 +439,7 @@ return {
                     css = { "prettier" },
                     scss = { "prettier" },
                     html = { "prettier" },
+                    htmldjango = { "prettier" },
                     json = { "prettier" },
                     jsonc = { "prettier" },
                     yaml = { "prettier" },

@@ -99,3 +99,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
         vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
     end,
 })
+
+-- Associate them to HTML
+vim.cmd([[autocmd BufRead,BufNewFile *.njk set filetype=htmldjango]])
