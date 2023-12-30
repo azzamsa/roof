@@ -5,7 +5,6 @@ vim.g.autoformat = true
 
 -- `autochdir` is not reliable enough
 -- It doesn't update the `pwd` even in the event of buffer change
---
 -- opt.autochdir = true
 
 -- Enable auto write
@@ -14,18 +13,11 @@ opt.autowrite = true
 opt.clipboard = "unnamedplus"
 -- Set completeopt for 'cmp' plugin
 opt.completeopt = "menu,menuone,noselect"
-
--- Hide * markup for bold and italic
--- opt.conceallevel = 3
-
 -- Confirm to save changes before exiting modified buffer
 opt.confirm = true
-
 -- Cursorline highlighting make the text somewhat hard to read
---
 -- Enable highlighting of the current line
--- opt.cursorline = true
-
+opt.cursorline = true
 -- Use spaces instead of tabs
 opt.expandtab = true
 -- Define format options
@@ -67,6 +59,8 @@ opt.shiftwidth = 2
 opt.shortmess:append({ W = true, I = true, c = true, C = true })
 -- Don't show mode since we have a statusline
 opt.showmode = false
+-- Don't show tabs
+opt.showtabline = 0
 -- Columns of context
 opt.sidescrolloff = 8
 -- Always show the signcolumn, otherwise it would shift the text each time
@@ -121,7 +115,7 @@ end
 if vim.g.neovide then
     -- Set the font for graphical Neovim applications
     -- Include the Emoji font to display colored emojis
-    opt.guifont = "Iosevka Nerd Font,Noto Sans Arabic,Noto Color Emoji:h19"
+    opt.guifont = "Iosevka Nerd Font,Noto Color Emoji:h19"
     vim.g.neovide_cursor_vfx_mode = "railgun"
 
     -- Unlike Terminals, Neovide doesn't add or remove any keybindings to Neovim.

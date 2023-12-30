@@ -1,6 +1,350 @@
 local Icons = require("configs.icons")
 
 return {
+    -- A formatter
+    {
+        "stevearc/conform.nvim",
+        version = "5.1.0",
+        event = { "BufWritePre" },
+        cmd = { "ConformInfo" },
+        config = function()
+            local conform = require("conform")
+
+            conform.formatters.prettier = {
+                -- When cwd is not found, don't run the formatter (default false)
+                require_cwd = true,
+            }
+            conform.formatters.stylua = {
+                require_cwd = true,
+            }
+
+            conform.setup({
+                format_on_save = function(_)
+                    if vim.g.autoformat then
+                        -- not recommended to change
+                        return { timeout_ms = 3000, async = false, quiet = false }
+                    end
+                    return nil
+                end,
+                formatters_by_ft = {
+                    lua = { "stylua" }, -- stylua trims trailing whitespace automatically
+                    python = { "black" },
+
+                    fish = { "fish_indent" },
+                    sh = { "shfmt" },
+
+                    javascript = { "prettier" },
+                    typescript = { "prettier" },
+                    vue = { "prettier" },
+                    css = { "prettier" },
+                    scss = { "prettier" },
+                    html = { "prettier" },
+                    htmldjango = { "djlint", "rustywind" },
+                    json = { "prettier" },
+                    jsonc = { "prettier" },
+                    graphql = { "prettier" },
+
+                    yaml = { "prettier" },
+                    markdown = { "dprint" },
+                    toml = { "dprint" },
+                    ["*"] = { "trim_whitespace" },
+                },
+            })
+        end,
+    },
+    -- A linter
+    {
+        "mfussenegger/nvim-lint",
+        event = { "BufWritePost", "BufReadPost", "InsertLeave" },
+        commit = "32f98300881f38f4e022391f240188fec42f74db",
+        config = function()
+            local lint = require("lint")
+
+            lint.linters_by_ft = {
+                lua = { "selene" },
+                yaml = { "actionlint" },
+                markdown = { "vale" },
+                bash = { "shellcheck" },
+                sh = { "shellcheck" },
+                ["*"] = { "typos" },
+            }
+        end,
+    },
+    -- Find the the linter errors
+    {
+        "folke/trouble.nvim",
+        opts = { use_diagnostic_signs = true },
+    },
+    -- Displays vertical lines to indicate indentation levels.
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        event = "VeryLazy",
+        commit = "9637670896b68805430e2f72cf5d16be5b97a22a",
+        config = function()
+            require("indent_blankline").setup({
+                buftype_exclude = { "terminal", "nofile" },
+                filetype_exclude = {
+                    "help",
+                    "startify",
+                    "dashboard",
+                    "lazy",
+                    "neogitstatus",
+                    "NvimTree",
+                    "Trouble",
+                    "text",
+                },
+                -- char = icons.ui.LineLeft,
+                char = Icons.ui.LineMiddle,
+                -- context_char = Icons.ui.LineLeft,
+                context_char = Icons.ui.LineMiddle,
+                show_trailing_blankline_indent = false,
+                show_first_indent_level = true,
+                use_treesitter = true,
+                show_current_context = true,
+            })
+        end,
+    },
+    -- Color highlighter. à la Emacs rainbow-mode
+    {
+        "NvChad/nvim-colorizer.lua",
+        event = "VeryLazy",
+        commit = "dde3084106a70b9a79d48f426f6d6fec6fd203f7",
+        config = function()
+            require("colorizer").setup({})
+        end,
+    },
+    -- Highlight matching word.
+    {
+        "RRethy/vim-illuminate",
+        event = "VeryLazy",
+        commit = "3bd2ab64b5d63b29e05691e624927e5ebbf0fb86",
+        config = function()
+            local function map(key, dir, buffer)
+                vim.keymap.set("n", key, function()
+                    require("illuminate")["goto_" .. dir .. "_reference"](false)
+                end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
+            end
+
+            map("]]", "next")
+            map("[[", "prev")
+
+            -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+            vim.api.nvim_create_autocmd("FileType", {
+                callback = function()
+                    local buffer = vim.api.nvim_get_current_buf()
+                    map("]]", "next", buffer)
+                    map("[[", "prev", buffer)
+                end,
+            })
+
+            require("illuminate").configure({
+                filetypes_denylist = {
+                    "mason",
+                    "harpoon",
+                    "DressingInput",
+                    "NeogitCommitMessage",
+                    "qf",
+                    "dirvish",
+                    "minifiles",
+                    "fugitive",
+                    "alpha",
+                    "NvimTree",
+                    "lazy",
+                    "NeogitStatus",
+                    "Trouble",
+                    "netrw",
+                    "lir",
+                    "DiffviewFiles",
+                    "Outline",
+                    "Jaq",
+                    "spectre_panel",
+                    "toggleterm",
+                    "DressingSelect",
+                    "TelescopePrompt",
+                },
+                delay = 200,
+                large_file_cutoff = 2000,
+                large_file_overrides = {
+                    providers = { "lsp" },
+                },
+            })
+        end,
+    },
+    -- Automatic pairing of brackets, quotes, etc.
+    {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        commit = "9fd41181693dd4106b3e414a822bb6569924de81",
+        config = function()
+            require("nvim-autopairs").setup({
+                map_char = {
+                    all = "(",
+                    tex = "{",
+                },
+                enable_check_bracket_line = false,
+                check_ts = true,
+                ts_config = {
+                    lua = { "string", "source" },
+                    javascript = { "string", "template_string" },
+                    java = false,
+                },
+                disable_filetype = { "TelescopePrompt", "spectre_panel" },
+                ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
+                enable_moveright = true,
+                disable_in_macro = false,
+                enable_afterquote = true,
+                map_bs = true,
+                map_c_w = false,
+                disable_in_visualblock = false,
+                fast_wrap = {
+                    map = "<M-e>",
+                    chars = { "{", "[", "(", '"', "'" },
+                    pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
+                    offset = 0, -- Offset from pattern match
+                    end_key = "$",
+                    keys = "qwertyuiopzxcvbnmasdfghjkl",
+                    check_comma = true,
+                    highlight = "Search",
+                    highlight_grey = "Comment",
+                },
+            })
+        end,
+    },
+    -- Show trailing whitespace
+    {
+        -- Using autocmd and hacky regex always match trailing whitespace
+        -- during typing.
+        "kaplanz/retrail.nvim",
+        event = "VeryLazy",
+        commit = "fda098e4b91b98dd4e04a9a87537cf70c25ea2ad",
+        config = function()
+            local retrail = require("retrail")
+
+            retrail.setup({
+                -- Enabled filetypes.
+                filetype = {
+                    -- Excluded filetype list. Overrides `include` list.
+                    exclude = {
+                        "toggleterm",
+                        "neo-tree",
+                        -- following are defaults that need to be added or they'll be overridden
+                        "",
+                        "alpha",
+                        "checkhealth",
+                        "diff",
+                        "help",
+                        "lspinfo",
+                        "man",
+                        "mason",
+                        "TelescopePrompt",
+                        "Trouble",
+                        "WhichKey",
+                    },
+                },
+                -- Trimming already handled by conform
+                trim = {
+                    -- Auto trim on BufWritePre
+                    auto = false,
+                },
+            })
+        end,
+    },
+    -- LSP servers package manager
+    {
+        "williamboman/mason-lspconfig.nvim",
+        commit = "e7b64c11035aa924f87385b72145e0ccf68a7e0a",
+        dependencies = {
+            {
+                "williamboman/mason.nvim",
+                commit = "41e75af1f578e55ba050c863587cffde3556ffa6",
+            },
+            {
+                "WhoIsSethDaniel/mason-tool-installer.nvim",
+                commit = "8b70e7f1e0a4119c1234c3bde4a01c241cabcc74",
+            },
+        },
+        config = function()
+            -- Get the package name here https://mason-registry.dev/registry/list
+            local servers = {
+                -- Lua
+                "lua_ls", -- language server
+                -- Rust
+                "rust_analyzer", -- language server
+                -- Yaml
+                "yamlls", -- language server
+                -- Markdown
+                "marksman", -- Markdown language server
+                -- Shell
+                "bashls", -- language server
+                -- FE
+                -- "html",
+                -- "cssls",
+                "tsserver", -- TypeScript language server
+                "jsonls", -- JSON language server
+                "tailwindcss", -- Tailwind language server
+                -- Python
+                "pyright", -- language server
+            }
+
+            require("mason").setup({
+                ui = {
+                    border = "rounded",
+                },
+            })
+            require("mason-lspconfig").setup({
+                ensure_installed = servers,
+            })
+            require("mason-tool-installer").setup({
+                ensure_installed = {
+                    -- Lua
+                    "stylua", -- formatter
+                    "luacheck", -- linter
+                    -- Yaml
+                    "actionlint", -- linter
+                    -- Shell
+                    "shfmt", -- formatter
+                    -- FE
+                    "prettier", -- formatter
+                    "eslint-lsp", -- linter
+                    "stylelint", -- linter
+                    "djlint", -- formatter, linter
+                    "rustywind", -- formatter
+                    -- Misc
+                    "dprint", -- formatter
+                    "cspell", -- spell checker
+                },
+            })
+        end,
+    },
+    -- Show symbols outline
+    {
+        "simrat39/symbols-outline.nvim",
+        cmd = "SymbolsOutline",
+        config = function()
+            require("symbols-outline").setup()
+        end,
+        opts = {
+            keymaps = {
+                fold = "z",
+                unfold = "Z",
+            },
+            lsp_blacklist = {},
+            symbol_blacklist = {},
+        },
+    },
+    -- Enhances commenting functionality.
+    {
+        "echasnovski/mini.comment",
+        event = "VeryLazy",
+        opts = {
+            options = {
+                custom_commentstring = function()
+                    return require("ts_context_commentstring.internal").calculate_commentstring()
+                        or vim.bo.commentstring
+                end,
+            },
+        },
+    },
     -- Treesitter support.
     {
         "nvim-treesitter/nvim-treesitter",
@@ -14,19 +358,9 @@ return {
                 commit = "ec1c5bdb3d87ac971749fa6c7dbc2b14884f1f6a",
             },
             {
-                "JoosepAlviste/nvim-ts-context-commentstring",
-                event = "VeryLazy",
-                commit = "1277b4a1f451b0f18c0790e1a7f12e1e5fdebfee",
-            },
-            {
                 "windwp/nvim-ts-autotag",
                 event = "VeryLazy",
                 commit = "8515e48a277a2f4947d91004d9aa92c29fdc5e18",
-            },
-            {
-                "windwp/nvim-autopairs",
-                event = "InsertEnter",
-                commit = "9fd41181693dd4106b3e414a822bb6569924de81",
             },
         },
         config = function()
@@ -236,7 +570,7 @@ return {
             local cmp = require("cmp")
             local luasnip = require("luasnip")
             require("luasnip/loaders/from_vscode").lazy_load()
-            require("luasnip").filetype_extend("typescriptreact", { "html" })
+            require("luasnip").filetype_extend("typescriptreact", { "html", "htmldjango" })
 
             local check_backspace = function()
                 local col = vim.fn.col(".") - 1
@@ -400,387 +734,5 @@ return {
                 require("cmp").event:on("confirm_done", on_confirm_done)
             end)
         end,
-    },
-    -- A formatter
-    {
-        "stevearc/conform.nvim",
-        commit = "86393c143b8d1b7bdae1449fd25de315fd967fd7",
-        event = { "BufWritePre" },
-        cmd = { "ConformInfo" },
-        config = function()
-            local conform = require("conform")
-
-            conform.formatters.prettier = {
-                -- When cwd is not found, don't run the formatter (default false)
-                require_cwd = true,
-            }
-            conform.formatters.stylua = {
-                require_cwd = true,
-            }
-
-            conform.setup({
-                format_on_save = function(_)
-                    if vim.g.autoformat then
-                        -- not recommended to change
-                        return { timeout_ms = 3000, async = false, quiet = false }
-                    end
-                    return nil
-                end,
-                formatters_by_ft = {
-                    lua = { "stylua" }, -- stylua trims trailing whitespace automatically
-                    python = { "black" },
-                    fish = { "fish_indent" },
-                    sh = { "shfmt" },
-
-                    -- Prettier
-                    javascript = { "prettier" },
-                    typescript = { "prettier" },
-                    vue = { "prettier" },
-                    css = { "prettier" },
-                    scss = { "prettier" },
-                    html = { "prettier" },
-                    htmldjango = { "prettier" },
-                    json = { "prettier" },
-                    jsonc = { "prettier" },
-                    yaml = { "prettier" },
-                    markdown = { "prettier" },
-                    graphql = { "prettier" },
-
-                    ["*"] = { "trim_whitespace" },
-                },
-            })
-        end,
-    },
-    -- A linter
-    {
-        "mfussenegger/nvim-lint",
-        events = { "BufWritePost", "BufReadPost", "InsertLeave" },
-        commit = "32f98300881f38f4e022391f240188fec42f74db",
-        config = function()
-            local lint = require("lint")
-
-            lint.linters_by_ft = {
-                lua = { "selene" },
-                yaml = { "actionlint" },
-                markdown = { "vale" },
-                bash = { "shellcheck" },
-                sh = { "shellcheck" },
-                ["*"] = { "typos" },
-            }
-        end,
-    },
-    -- Find the the linter errors
-    {
-        "folke/trouble.nvim",
-        opts = { use_diagnostic_signs = true },
-    },
-    -- Displays vertical lines to indicate indentation levels.
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        event = "VeryLazy",
-        commit = "9637670896b68805430e2f72cf5d16be5b97a22a",
-        config = function()
-            require("indent_blankline").setup({
-                buftype_exclude = { "terminal", "nofile" },
-                filetype_exclude = {
-                    "help",
-                    "startify",
-                    "dashboard",
-                    "lazy",
-                    "neogitstatus",
-                    "NvimTree",
-                    "Trouble",
-                    "text",
-                },
-                -- char = icons.ui.LineLeft,
-                char = Icons.ui.LineMiddle,
-                -- context_char = Icons.ui.LineLeft,
-                context_char = Icons.ui.LineMiddle,
-                show_trailing_blankline_indent = false,
-                show_first_indent_level = true,
-                use_treesitter = true,
-                show_current_context = true,
-            })
-        end,
-    },
-    -- Color highlighter. à la Emacs rainbow-mode
-    {
-        "NvChad/nvim-colorizer.lua",
-        event = "VeryLazy",
-        commit = "dde3084106a70b9a79d48f426f6d6fec6fd203f7",
-        config = function()
-            require("colorizer").setup({})
-        end,
-    },
-    -- Highlight matching word.
-    {
-        "RRethy/vim-illuminate",
-        event = "VeryLazy",
-        commit = "3bd2ab64b5d63b29e05691e624927e5ebbf0fb86",
-        config = function()
-            local function map(key, dir, buffer)
-                vim.keymap.set("n", key, function()
-                    require("illuminate")["goto_" .. dir .. "_reference"](false)
-                end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
-            end
-
-            map("]]", "next")
-            map("[[", "prev")
-
-            -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
-            vim.api.nvim_create_autocmd("FileType", {
-                callback = function()
-                    local buffer = vim.api.nvim_get_current_buf()
-                    map("]]", "next", buffer)
-                    map("[[", "prev", buffer)
-                end,
-            })
-
-            require("illuminate").configure({
-                filetypes_denylist = {
-                    "mason",
-                    "harpoon",
-                    "DressingInput",
-                    "NeogitCommitMessage",
-                    "qf",
-                    "dirvish",
-                    "minifiles",
-                    "fugitive",
-                    "alpha",
-                    "NvimTree",
-                    "lazy",
-                    "NeogitStatus",
-                    "Trouble",
-                    "netrw",
-                    "lir",
-                    "DiffviewFiles",
-                    "Outline",
-                    "Jaq",
-                    "spectre_panel",
-                    "toggleterm",
-                    "DressingSelect",
-                    "TelescopePrompt",
-                },
-                delay = 200,
-                large_file_cutoff = 2000,
-                large_file_overrides = {
-                    providers = { "lsp" },
-                },
-            })
-        end,
-    },
-    -- Automatic pairing of brackets, quotes, etc.
-    {
-        "windwp/nvim-autopairs",
-        event = "InsertEnter",
-        commit = "f6c71641f6f183427a651c0ce4ba3fb89404fa9e",
-        config = function()
-            require("nvim-autopairs").setup({
-                map_char = {
-                    all = "(",
-                    tex = "{",
-                },
-                enable_check_bracket_line = false,
-                check_ts = true,
-                ts_config = {
-                    lua = { "string", "source" },
-                    javascript = { "string", "template_string" },
-                    java = false,
-                },
-                disable_filetype = { "TelescopePrompt", "spectre_panel" },
-                ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
-                enable_moveright = true,
-                disable_in_macro = false,
-                enable_afterquote = true,
-                map_bs = true,
-                map_c_w = false,
-                disable_in_visualblock = false,
-                fast_wrap = {
-                    map = "<M-e>",
-                    chars = { "{", "[", "(", '"', "'" },
-                    pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
-                    offset = 0, -- Offset from pattern match
-                    end_key = "$",
-                    keys = "qwertyuiopzxcvbnmasdfghjkl",
-                    check_comma = true,
-                    highlight = "Search",
-                    highlight_grey = "Comment",
-                },
-            })
-        end,
-    },
-    -- Enhances commenting functionality.
-    {
-        "numToStr/Comment.nvim",
-        event = "VeryLazy",
-        lazy = false,
-        commit = "0236521ea582747b58869cb72f70ccfa967d2e89",
-        config = function()
-            require("Comment").setup({
-                ---Add a space b/w comment and the line
-                padding = true,
-                ---Whether the cursor should stay at its position
-                sticky = true,
-                ---Lines to be ignored while (un)comment
-                ignore = nil,
-                ---LHS of toggle mappings in NORMAL mode
-                toggler = {
-                    ---Line-comment toggle keymap
-                    line = "gcc",
-                    ---Block-comment toggle keymap
-                    block = "gbc",
-                },
-                ---LHS of operator-pending mappings in NORMAL and VISUAL mode
-                opleader = {
-                    ---Line-comment keymap
-                    line = "gc",
-                    ---Block-comment keymap
-                    block = "gb",
-                },
-                ---LHS of extra mappings
-                extra = {
-                    ---Add comment on the line above
-                    above = "gcO",
-                    ---Add comment on the line below
-                    below = "gco",
-                    ---Add comment at the end of line
-                    eol = "gcA",
-                },
-                ---Enable keybindings
-                ---NOTE: If given `false` then the plugin won't create any mappings
-                mappings = {
-                    ---Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
-                    basic = true,
-                    ---Extra mapping; `gco`, `gcO`, `gcA`
-                    extra = true,
-                },
-                ---Function to call before (un)comment
-                pre_hook = function(...)
-                    local loaded, ts_comment = pcall(require, "ts_context_commentstring.integrations.comment_nvim")
-                    if loaded and ts_comment then
-                        return ts_comment.create_pre_hook()(...)
-                    end
-                end,
-                ---Function to call after (un)comment
-                post_hook = nil,
-            })
-        end,
-    },
-    -- Show trailing whitespace
-    {
-        -- Using autocmd and hacky regex always match trailing whitespace
-        -- during typing.
-        "kaplanz/retrail.nvim",
-        event = "VeryLazy",
-        commit = "fda098e4b91b98dd4e04a9a87537cf70c25ea2ad",
-        config = function()
-            local retrail = require("retrail")
-
-            retrail.setup({
-                -- Enabled filetypes.
-                filetype = {
-                    -- Excluded filetype list. Overrides `include` list.
-                    exclude = {
-                        "toggleterm",
-                        "neo-tree",
-                        -- following are defaults that need to be added or they'll be overridden
-                        "",
-                        "alpha",
-                        "checkhealth",
-                        "diff",
-                        "help",
-                        "lspinfo",
-                        "man",
-                        "mason",
-                        "TelescopePrompt",
-                        "Trouble",
-                        "WhichKey",
-                    },
-                },
-                -- Trimming already handled by conform
-                trim = {
-                    -- Auto trim on BufWritePre
-                    auto = false,
-                },
-            })
-        end,
-    },
-    -- LSP servers package manager
-    {
-        "williamboman/mason-lspconfig.nvim",
-        commit = "e7b64c11035aa924f87385b72145e0ccf68a7e0a",
-        dependencies = {
-            {
-                "williamboman/mason.nvim",
-                commit = "41e75af1f578e55ba050c863587cffde3556ffa6",
-            },
-            {
-                "WhoIsSethDaniel/mason-tool-installer.nvim",
-                commit = "8b70e7f1e0a4119c1234c3bde4a01c241cabcc74",
-            },
-        },
-        config = function()
-            -- Get the package name here https://mason-registry.dev/registry/list
-            local servers = {
-                -- Lua
-                "lua_ls", -- language server
-                -- Rust
-                "rust_analyzer", -- language server
-                -- Yaml
-                "yamlls", -- language server
-                -- Markdown
-                "marksman", -- Markdown language server
-                -- Shell
-                "bashls", -- language server
-                -- FE
-                "tsserver", -- TypeScript language server
-                "jsonls", -- JSON language server
-                "tailwindcss", -- Tailwind language server
-                -- Python
-                "pyright", -- language server
-            }
-
-            require("mason").setup({
-                ui = {
-                    border = "rounded",
-                },
-            })
-            require("mason-lspconfig").setup({
-                ensure_installed = servers,
-            })
-            require("mason-tool-installer").setup({
-                ensure_installed = {
-                    -- Lua
-                    "stylua", -- formatter
-                    "luacheck", -- linter
-                    -- Yaml
-                    "actionlint", -- linter
-                    -- Shell
-                    "shfmt", -- formatting
-                    -- FE
-                    "prettier", -- formatter
-                    "eslint-lsp", -- linter
-                    "stylelint", -- linter
-                    -- Misc
-                    "cspell", -- spell checker
-                },
-            })
-        end,
-    },
-    --
-    {
-        "simrat39/symbols-outline.nvim",
-        cmd = "SymbolsOutline",
-        config = function()
-            require("symbols-outline").setup()
-        end,
-        opts = {
-            keymaps = {
-                fold = "z",
-                unfold = "Z",
-            },
-            lsp_blacklist = {},
-            symbol_blacklist = {},
-        },
     },
 }

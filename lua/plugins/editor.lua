@@ -92,7 +92,7 @@ return {
     {
         "stevearc/oil.nvim",
         event = "VeryLazy",
-        commit = "523b61430cb7365f8f86609c2ea60e48456bac63",
+        version = "2.5.0",
         config = function()
             require("oil").setup({
                 -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
@@ -304,22 +304,6 @@ return {
            {"<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search"},
         },
     },
-    -- Surround actions
-    {
-        "echasnovski/mini.surround",
-        commit = "7bf8915ba15d7a4f3c2afe7868d3c15a858d73f1",
-        opts = {
-            mappings = {
-                add = "gsa", -- Add surrounding in Normal and Visual modes
-                delete = "gsd", -- Delete surrounding
-                find = "gsf", -- Find surrounding (to the right)
-                find_left = "gsF", -- Find surrounding (to the left)
-                highlight = "gsh", -- Highlight surrounding
-                replace = "gsr", -- Replace surrounding
-                update_n_lines = "gsn", -- Update `n_lines`
-            },
-        },
-    },
     -- Multiple cursors
     {
         "smoka7/multicursors.nvim",
@@ -337,5 +321,21 @@ return {
                 hint_config = false,
             })
         end,
+    },
+    -- Surround actions
+    {
+        "echasnovski/mini.surround",
+        commit = "7bf8915ba15d7a4f3c2afe7868d3c15a858d73f1",
+        opts = {
+            mappings = {
+                add = "gza", -- Add surrounding in Normal and Visual modes
+                delete = "gzd", -- Delete surrounding
+                find = "gzf", -- Find surrounding (to the right)
+                find_left = "gzF", -- Find surrounding (to the left)
+                highlight = "gzh", -- Highlight surrounding
+                replace = "gzr", -- Replace surrounding
+                update_n_lines = "gzr", -- Update `n_lines`
+            },
+        },
     },
 }

@@ -13,4 +13,12 @@ return {
         event = "VeryLazy",
         commit = "c9b4de623d19a85b353ff70d2ae9c77143abe69c",
     },
+    {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        commit = "1277b4a1f451b0f18c0790e1a7f12e1e5fdebfee",
+        lazy = true,
+        opts = {
+            enable_autocmd = false,
+        },
+    },
 }

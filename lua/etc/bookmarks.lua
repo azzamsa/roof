@@ -4,6 +4,7 @@
 local M = {}
 
 M.bookmarks = {
+    "/",
     "~/",
     "~/.config",
     "~/.local",
