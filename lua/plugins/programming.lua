@@ -22,7 +22,7 @@ return {
                 format_on_save = function(_)
                     if vim.g.autoformat then
                         -- not recommended to change
-                        return { timeout_ms = 3000, async = false, quiet = false }
+                        return { timeout_ms = 3000, async = false, quiet = false, lsp_fallback = true }
                     end
                     return nil
                 end,
