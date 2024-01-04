@@ -46,6 +46,7 @@ return {
 
                     yaml = { "prettier" },
                     markdown = { "dprint" },
+                    dockerfile = { "dprint" },
                     toml = { "dprint" },
                     ["*"] = { "trim_whitespace" },
                 },
@@ -319,6 +320,7 @@ return {
     -- Show symbols outline
     {
         "simrat39/symbols-outline.nvim",
+        commit = "564ee65dfc9024bdde73a6621820866987cbb256",
         cmd = "SymbolsOutline",
         config = function()
             require("symbols-outline").setup()

@@ -30,6 +30,7 @@ return {
     -- Display VCS changes in the gutter.
     {
         "lewis6991/gitsigns.nvim",
+        version = "0.7",
         event = { "BufReadPost", "BufNewFile", "BufWritePre" },
         opts = {
             signs = {
@@ -267,6 +268,7 @@ return {
     -- Find and replace across files.
     {
         "AckslD/muren.nvim",
+        commit = "818c09097dba1322b2ca099e35f7471feccfef9",
         config = true,
     },
     -- NeoTree
@@ -277,6 +279,8 @@ return {
         config = function()
             require("neo-tree").setup({
                 filesystem = {
+                    -- Let `oil.nvim` handle it
+                    hijack_netrw_behavior = "disabled",
                     follow_current_file = {
                         -- This will use the OS level file watchers to detect changes
                         use_libuv_file_watcher = true,
