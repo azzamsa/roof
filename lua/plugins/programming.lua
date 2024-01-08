@@ -4,7 +4,7 @@ return {
     -- A formatter
     {
         "stevearc/conform.nvim",
-        version = "5.1.0",
+        commit = "0e61fc88f725b4411e63b43470a397c6102534c7",
         event = { "BufWritePre" },
         cmd = { "ConformInfo" },
         config = function()
@@ -17,7 +17,12 @@ return {
             conform.formatters.stylua = {
                 require_cwd = true,
             }
-
+            conform.formatters.dprint = {
+                require_cwd = true,
+            }
+            conform.formatters.djlint = {
+                require_cwd = true,
+            }
             conform.setup({
                 format_on_save = function(_)
                     if vim.g.autoformat then
