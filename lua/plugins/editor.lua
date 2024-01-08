@@ -1,3 +1,5 @@
+local Path = require("configs.utils.path")
+
 return {
     -- Git time machine.
     {
@@ -49,40 +51,31 @@ return {
         event = "VeryLazy",
         commit = "c80844fd52ba76f48fabf83e2b9f9b93273f418d",
         config = function()
-            local function get_previous_buffer_path()
-                local previous_bufnr = vim.fn.bufnr("#")
-                -- So far, there must be a previous buffer.
-                -- No need to check if there is a previous buffer `previous_bufnr ~= -1`.
-                return vim.fn.fnamemodify(vim.fn.bufname(previous_bufnr), ":p:h")
-            end
-
             require("toggleterm").setup({
                 open_mapping = [[<c-/>]],
                 direction = "float",
-                close_on_exit = true, -- close the terminal window when the process exits
-                -- Already set in "opt.shell"
-                shell = vim.o.shell, -- change the default shell
                 float_opts = {
                     border = "rounded",
                 },
 
                 -- Runs everytime ToggleTerm toggled
                 on_open = function(term)
-                    -- Can't use `require("configs.utils").file_path()` because it uses ToggleTerm buffer
-                    -- instead of the currently opened buffer.
-                    -- A helper function is needed to get previous buffer path.
-                    --
-                    -- Sometimes, I want to open the terminal in a non-project directory.
-                    local path = get_previous_buffer_path()
-                    -- Open from oily path too! Such as `oil.nvim`
-                    path = require("configs.utils.file").validate(path)
+                    -- Can't use `require("configs.utils.file").path()` because it returns
+                    -- ToggleTerm buffer path instead of current buffer path.
+                    local path = Path.previous_dir()
+                    if path then
+                        path = Path.validate(path)
+                    else
+                        -- Fallback to home if no previous directory found
+                        path = "~/"
+                    end
 
                     -- Use project root if available, otherwise use the plain path.
-                    path = require("configs.utils").project_root_or_cwd(path)
+                    -- Sometimes, I want to open the terminal in a non-project directory.
+                    path = Path.project_root_or_cwd(path)
                     if path ~= term.dir then
                         term:change_dir(path)
                     end
-
                     -- Start in insert mode
                     vim.cmd("startinsert!")
                 end,

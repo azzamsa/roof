@@ -1,13 +1,13 @@
 local opt = vim.opt
 
--- Enable roof! auto format
+-- roof! auto format
 vim.g.autoformat = true
 
 -- `autochdir` is not reliable enough
 -- It doesn't update the `pwd` even in the event of buffer change
 -- opt.autochdir = true
 
--- Enable auto write
+-- Auto write
 opt.autowrite = true
 -- Sync with system clipboard
 opt.clipboard = "unnamedplus"
@@ -15,8 +15,7 @@ opt.clipboard = "unnamedplus"
 opt.completeopt = "menu,menuone,noselect"
 -- Confirm to save changes before exiting modified buffer
 opt.confirm = true
--- Cursorline highlighting make the text somewhat hard to read
--- Enable highlighting of the current line
+-- Highlighting of the current line
 opt.cursorline = true
 -- Use spaces instead of tabs
 opt.expandtab = true
@@ -33,7 +32,7 @@ opt.inccommand = "nosplit"
 opt.laststatus = 3
 -- Show some invisible characters (tabs, spaces, and newlines)
 opt.list = true
--- Enable mouse mode
+-- Mouse mode
 opt.mouse = "a"
 -- Print line number
 opt.number = true
@@ -83,7 +82,7 @@ opt.tabstop = 2
 opt.termguicolors = true
 -- Set time to wait for a mapped sequence to complete
 opt.timeoutlen = 300
--- Enable persistent undo
+-- Persistent undo
 opt.undofile = true
 opt.undolevels = 10000
 -- Save swap file and trigger CursorHold
@@ -94,8 +93,8 @@ opt.virtualedit = "block"
 opt.wildmode = "longest:full,full"
 -- Minimum window width
 opt.winminwidth = 5
--- Disable line wrap
-opt.wrap = false
+-- Line wrap
+opt.wrap = true
 -- Customize fillchars
 opt.fillchars = {
     foldopen = "",

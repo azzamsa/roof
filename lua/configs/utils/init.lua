@@ -1,101 +1,75 @@
 local M = {}
-local File = require("configs.utils.file")
+local Ext = require("configs.utils.extension")
+local Path = require("configs.utils.path")
 
-function M.find_files(path)
-    require("telescope.builtin").find_files({
-        cwd = path,
-    })
-end
-
-function M.live_grep(path)
-    require("telescope.builtin").live_grep({
-        cwd = path,
-    })
-end
-
--- Find project root
--- Requires https://github.com/azzamsa/toor
----@param path? string
-function M.project_root(path)
-    if path then
-        path = File.validate(path)
-    end
-
-    if not path then
-        path = M.cwd()
-    end
-
-    local root = vim.fn.system("toor " .. path .. " 2>/dev/null")
-    root = vim.fn.trim(root)
-
-    if root == "" then
-        return
-    end
-
-    return root
-end
-
--- Get current working directory
-function M.cwd()
-    local dir_buffer = vim.fn.expand("%:p:h")
-    return File.validate(dir_buffer)
-end
-
--- Try to get project root. If fails fallback to cwd.
----@param path? string
-function M.project_root_or_cwd(path)
-    -- Set default @param path?
-    if not path then
-        path = M.cwd()
-    end
-
-    local root = M.project_root(path)
-    if root then
-        path = root
-    end
-
-    return path
+-- Open `target` with default app
+function M.open_with(target)
+    vim.fn.system("xdg-open " .. target)
 end
 
 -- Live grep from current buffer directory
 function M.grep_from_here()
-    M.live_grep(M.cwd())
+    local here = Path.validate(Path.current_dir())
+    Ext.live_grep(here)
 end
 
 -- Live grep from the project root.
 function M.grep_in_project()
-    M.live_grep(M.project_root_or_cwd())
+    local path = Path.validate(Path.current_dir())
+    Ext.live_grep(Path.project_root_or_cwd(path))
 end
 
 -- Find files from the directory of `config`
 function M.find_files_in_config()
-    M.find_files(vim.fn.stdpath("config"))
+    Ext.find_files(vim.fn.stdpath("config"))
 end
 
 -- Find files from the directory of the currently opened buffer.
 function M.find_files_from_here()
-    M.find_files(M.cwd())
+    local here = Path.validate(Path.current_dir())
+    Ext.find_files(here)
 end
 
 -- Find files from the project root.
 function M.find_files_in_project()
-    M.find_files(M.project_root_or_cwd())
+    local path = Path.validate(Path.current_dir())
+    path = Path.project_root_or_cwd(path)
+    Ext.find_files(path)
 end
 
+-- Simply using `("neogit").open()` doesn't work within the Oil directory.
+-- The `Path.validate()` function serves as a helper to provide a valid path based on the Oil path.
+-- While using the directory path functions correctly for Git commit and Git status,
+-- it encounters issues during hunk and file visit operations. For these operations,
+-- `Neogit` necessitates functioning from the `.git` (root) directory.
 --
--- Formatters and Linters
---
+-- I choose to name this function 'ngit' so that I won't need to alter the function name
+-- regardless of the extension changes.
+function M.ngit_here()
+    local path = Path.validate(Path.current_dir())
+    path = Path.project_root_or_cwd(path)
+    Ext.neogit_open(path)
+end
 
---- Get full config path located in custom directory.
---- Mostly the config for sormatters and linters.
--- Such as `configs/dprint.json`, `configs/stylua.toml`
----@param filename string
-function M.config_path(filename)
-    local root = M.project_root()
-    local path = vim.fs.find(filename, { path = root })[1]
-    if path then
-        return path
-    end
+-- Open neotree
+function M.ntree_here()
+    local path = Path.validate(Path.current_dir())
+    path = Path.project_root_or_cwd(path)
+    Ext.neotree_open(path)
+end
+
+-- Copy filename to clipboard
+function M.copy_filename_to_clipboard()
+    local path = Path.filename()
+    vim.fn.setreg("+", path)
+    vim.notify(path, vim.log.levels.INFO, { title = "Copied" })
+end
+
+-- Copy path to to_clipboard
+function M.copy_filepath_to_clipboard()
+    local path = Path.abs_path()
+    vim.fn.setreg("+", path)
+    vim.notify(path, vim.log.levels.INFO, { title = "Copied" })
 end
 
 --

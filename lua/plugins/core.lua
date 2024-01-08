@@ -1,3 +1,6 @@
+local Path = require("configs.utils.path")
+local Utils = require("configs.utils")
+
 return {
     {
         "folke/which-key.nvim",
@@ -9,10 +12,10 @@ return {
                 [","] = { "<cmd>Telescope buffers previewer=false<cr>", "Switch buffer" },
 
                 -- stylua: ignore start
-                ["."] = { function() require("configs.utils").find_files_in_project() end, "Find project file" },
-                ["<space>"] = { function() require("configs.utils").find_files_in_project() end, "Find project file" },
-                ["x"] = { function() require("configs.utils").toggle_scratch_buffer() end, "Open scratch buffer" },
-                ["/"] = { function() require("configs.utils").grep_in_project() end, "Search in project" },
+                ["."] = { function() Utils.find_files_in_project() end, "Find project file" },
+                ["<space>"] = { function() Utils.find_files_in_project() end, "Find project file" },
+                ["x"] = { function() Utils.toggle_scratch_buffer() end, "Open scratch buffer" },
+                ["/"] = { function() Utils.grep_in_project() end, "Search in project" },
                 -- stylua: ignore end
 
                 -- <leader> b --- buffer
@@ -51,34 +54,26 @@ return {
                     d = { "<cmd>Oil<cr>", "Find directory" },
                     D = { "<cmd>call delete(expand('%')) <bar> bdelete!<cr>", "Delete this file" },
                     r = { "<cmd>Telescope oldfiles<cr>", "Recent file" },
+                    R = { "<cmd>MurenToggle<cr>", "Replace in files" },
                     s = { "<cmd>w<cr>", "Save buffer" },
                     S = { "<cmd>wa<cr>", "Save all buffers" },
 
                     -- stylua: ignore start
-                    e = { function() require("configs.utils").find_files_in_config() end, "Find file in config" },
-                    f = { function() require("configs.utils").find_files_from_here() end, "Find file" },
-                    R = { "<cmd>MurenToggle<cr>", "Replace in files" },
-                    y = { function() require("configs.utils.file").copy_name() end, "Copy file name" },
-                    -- A helper function is needed to enable this key to work in the `Oil.nvim` buffer.
-                    Y = { function() require("configs.utils.file").copy_path() end, "Copy file path" },
+                    e = { function() Utils.find_files_in_config() end, "Find file in config" },
+                    f = { function() Utils.find_files_from_here() end, "Find file" },
+                    y = { function() Utils.copy_filename_to_clipboard() end, "Copy file name" },
+                    Y = { function() Utils.copy_filepath_to_clipboard() end, "Copy file path" },
                     -- stylua: ignore end
                 },
 
                 -- <leader> g --- version control
                 g = {
                     name = "VCS",
-                    g = {
-                        -- `("neogit").open()` doesn't work in the Oil directory.
-                        -- A helper function is needed to obtain the project root path.
-                        -- Using the directory path works for Git commit and Git status,
-                        -- but fails during hunk and file visit operations.
-                        function()
-                            local path = require("configs.utils").project_root_or_cwd()
-                            require("neogit").open({ cwd = path })
-                        end,
-                        "Neogit",
-                    },
+
                     t = { "<cmd>Tardis<cr>", "Git time machine" },
+                    -- stylua: ignore start
+                    g = { function() Utils.ngit_here() end, "Neogit" },
+                    -- stylua: ignore end
                 },
 
                 -- <leader> h --- help
@@ -103,20 +98,10 @@ return {
                     -- Open from current buffer by default
                     d = { "<cmd>Oil<cr>", "File manager from here" },
 
-                    p = {
-                        function()
-                            local root = require("configs.utils").project_root()
-                            require("neo-tree.command").execute({ toggle = true, dir = root })
-                        end,
-                        "Side panel",
-                    },
-                    x = {
-                        function()
-                            local cwd = require("configs.utils").cwd()
-                            vim.fn.system("xdg-open " .. cwd)
-                        end,
-                        "GUI File manager",
-                    },
+                    -- stylua: ignore start
+                    p = { function() Utils.ntree_here() end, "Side panel" },
+                    x = { function() Utils.open_with(Path.current_dir()) end, "GUI File manager" },
+                    -- stylua: ignore end
                 },
 
                 -- <leader> p --- project
@@ -125,8 +110,8 @@ return {
                     p = { "<cmd>Telescope projects<cr>", "Switch project" },
 
                     -- stylua: ignore start
-                    f = { function() require("configs.utils").find_files_in_project() end, "Find project file" },
-                    s = { function() require("configs.utils").grep_in_project() end, "Search in project" },
+                    f = { function() Utils.find_files_in_project() end, "Find project file" },
+                    s = { function() Utils.grep_in_project() end, "Search in project" },
                     -- stylua: ignore end
                 },
 
@@ -159,7 +144,7 @@ return {
                     },
 
                     -- stylua: ignore start
-                    g = { function() require("configs.utils").grep_from_here() end, "Search" },
+                    g = { function() Utils.grep_from_here() end, "Search" },
                     -- stylua: ignore end
                 },
 
@@ -168,12 +153,6 @@ return {
                     name = "Toggle",
                     C = { "<cmd>ColorizerToggle<cr>", "Rainbow color" },
 
-                    c = {
-                        function()
-                            require("configs.utils").toggle_opt("conceallevel")
-                        end,
-                        "Conceal",
-                    },
                     T = {
                         function()
                             if vim.b.ts_highlight then
@@ -186,13 +165,14 @@ return {
                     },
 
                     -- stylua: ignore start
-                    d = { function() require("configs.utils").toggle_diagnostics() end, "Diagnostics" },
-                    f = { function() require("configs.utils").toggle_autoformat() end, "Auto format" },
-                    h = { function() require("configs.utils").toggle_inlay_hints() end, "Inlay Hints" },
-                    l = { function() require("configs.utils").toggle_line_number() end, "Line numbers" },
-                    L = { function() require("configs.utils").toggle_opt("relativenumber") end, "Relative line numbers" },
-                    s = { function() require("configs.utils").toggle_opt("spell") end, "Spelling" },
-                    w = { function() require("configs.utils").toggle_opt("wrap") end, "Word wrap" },
+                    c = { function() Utils.toggle_opt("conceallevel") end, "Conceal" },
+                    d = { function() Utils.toggle_diagnostics() end, "Diagnostics" },
+                    f = { function() Utils.toggle_autoformat() end, "Auto format" },
+                    h = { function() Utils.toggle_inlay_hints() end, "Inlay Hints" },
+                    l = { function() Utils.toggle_line_number() end, "Line numbers" },
+                    L = { function() Utils.toggle_opt("relativenumber") end, "Relative line numbers" },
+                    s = { function() Utils.toggle_opt("spell") end, "Spelling" },
+                    w = { function() Utils.toggle_opt("wrap") end, "Word wrap" },
                     -- stylua: ignore end
                 },
 

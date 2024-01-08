@@ -257,7 +257,7 @@ return {
         dependencies = {
             {
                 "williamboman/mason.nvim",
-                commit = "41e75af1f578e55ba050c863587cffde3556ffa6",
+                version = "1.9.0",
             },
             {
                 "WhoIsSethDaniel/mason-tool-installer.nvim",
