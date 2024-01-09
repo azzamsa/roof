@@ -364,72 +364,64 @@ return {
                 event = "VeryLazy",
                 commit = "ec1c5bdb3d87ac971749fa6c7dbc2b14884f1f6a",
             },
-            {
-                "windwp/nvim-ts-autotag",
-                event = "VeryLazy",
-                commit = "8515e48a277a2f4947d91004d9aa92c29fdc5e18",
+            { "nushell/tree-sitter-nu", commit = "26bbaecda0039df4067861ab38ea8ea169f7f5aa" },
+        },
+        ---@type TSConfig
+        ---@diagnostic disable-next-line: missing-fields
+        opts = {
+            highlight = { enable = true },
+            indent = { enable = true },
+            ensure_installed = {
+                "bash",
+                "c",
+                "diff",
+                "html",
+                "javascript",
+                "jsdoc",
+                "json",
+                "jsonc",
+                "lua",
+                "luadoc",
+                "luap",
+                "markdown",
+                "markdown_inline",
+                "python",
+                "query",
+                "regex",
+                "toml",
+                "tsx",
+                "typescript",
+                "vim",
+                "vimdoc",
+                "yaml",
             },
         },
-        config = function()
-            require("ts_context_commentstring").setup({
-                ensure_installed = { "lua", "markdown", "markdown_inline", "bash", "python" }, -- put the language you want in this array
-                ignore_install = { "" },
-                sync_install = false,
-                highlight = {
-                    enable = true,
-                    disable = { "markdown" },
-                    additional_vim_regex_highlighting = false,
+        ---@param opts TSConfig
+        config = function(_, opts)
+            local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+            require("nvim-treesitter.install").compilers = { "clang", "gcc" }
+
+            parser_config.nu = {
+                install_info = {
+                    url = "https://github.com/nushell/tree-sitter-nu",
+                    files = { "src/parser.c" },
+                    branch = "main",
                 },
+                filetype = "nu",
+            }
 
-                indent = { enable = true },
-
-                matchup = {
-                    enable = { "astro" },
-                    disable = { "lua" },
-                },
-
-                autotag = { enable = true },
-
-                context_commentstring = {
-                    enable = true,
-                    enable_autocmd = false,
-                },
-
-                autopairs = { enable = true },
-
-                textobjects = {
-                    select = {
-                        enable = true,
-                        -- Automatically jump forward to textobj, similar to targets.vim
-                        lookahead = true,
-                        keymaps = {
-                            -- You can use the capture groups defined in textobjects.scm
-                            ["af"] = "@function.outer",
-                            ["if"] = "@function.inner",
-                            ["at"] = "@class.outer",
-                            ["it"] = "@class.inner",
-                            ["ac"] = "@call.outer",
-                            ["ic"] = "@call.inner",
-                            ["aa"] = "@parameter.outer",
-                            ["ia"] = "@parameter.inner",
-                            ["al"] = "@loop.outer",
-                            ["il"] = "@loop.inner",
-                            ["ai"] = "@conditional.outer",
-                            ["ii"] = "@conditional.inner",
-                            ["a/"] = "@comment.outer",
-                            ["i/"] = "@comment.inner",
-                            ["ab"] = "@block.outer",
-                            ["ib"] = "@block.inner",
-                            ["as"] = "@statement.outer",
-                            ["is"] = "@scopename.inner",
-                            ["aA"] = "@attribute.outer",
-                            ["iA"] = "@attribute.inner",
-                            ["aF"] = "@frame.outer",
-                            ["iF"] = "@frame.inner",
-                        },
-                    },
-                },
-            })
+            if type(opts.ensure_installed) == "table" then
+                ---@type table<string, boolean>
+                local added = {}
+                opts.ensure_installed = vim.tbl_filter(function(lang)
+                    if added[lang] then
+                        return false
+                    end
+                    added[lang] = true
+                    return true
+                end, opts.ensure_installed)
+            end
+            require("nvim-treesitter.configs").setup(opts)
         end,
     },
     -- LSP support.
