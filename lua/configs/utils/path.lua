@@ -56,8 +56,14 @@ end
 -- Find project root
 -- Requires https://github.com/azzamsa/toor
 ---@param path string
-function M.project_root(path)
-    local root = vim.fn.system("toor " .. path .. " 2>/dev/null")
+---@param pattern? string
+function M.project_root(path, pattern)
+    local command = "toor " .. path
+    if pattern then
+        command = command .. " --roots " .. pattern
+    end
+
+    local root = vim.fn.system(command .. " 2>/dev/null")
     root = vim.fn.trim(root)
 
     if root == "" then

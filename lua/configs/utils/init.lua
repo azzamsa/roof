@@ -37,18 +37,28 @@ function M.find_files_in_project()
     Ext.find_files(path)
 end
 
--- Simply using `("neogit").open()` doesn't work within the Oil directory.
--- The `Path.validate()` function serves as a helper to provide a valid path based on the Oil path.
--- While using the directory path functions correctly for Git commit and Git status,
--- it encounters issues during hunk and file visit operations. For these operations,
--- `Neogit` necessitates functioning from the `.git` (root) directory.
---
 -- I choose to name this function 'ngit' so that I won't need to alter the function name
 -- regardless of the extension changes.
 function M.ngit_here()
+    -- Simply using `("neogit").open()` doesn't work within the Oil directory.
+    -- The `Path.validate()` function serves as a helper to provide a valid path based on the Oil path.
     local path = Path.validate(Path.current_dir())
-    path = Path.project_root_or_cwd(path)
-    Ext.neogit_open(path)
+
+    -- it must be from VCS root!
+    -- Override other project root marks such as `.projectile`
+    local pattern = ".git"
+
+    -- ⚠️ Neogit must be executed from root directory!
+    --
+    -- While using the directory path functions correctly for Git commit and Git status,
+    -- it encounters issues during hunk and file visit operations. For these operations,
+    -- `Neogit` necessitates functioning from the `.git` (root) directory.
+    local root = Path.project_root(path, pattern)
+    if root then
+        Ext.neogit_open(root)
+    else
+        vim.notify("No .git directory found. \nPlease initialize a Git repository.", "warn", { title = "Roof!" })
+    end
 end
 
 -- Open neotree
