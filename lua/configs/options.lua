@@ -49,7 +49,7 @@ opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "glob
 -- Default $SHELL
 opt.shell = "fish"
 -- Larger recentfiles
-opt.shada = { "!", "'1000", "<50", "s10", "h" }
+opt.shada = { "!", "'500", "<50", "s10", "h" }
 -- Round indent
 opt.shiftround = true
 -- Size of an indent
