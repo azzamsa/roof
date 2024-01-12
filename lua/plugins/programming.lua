@@ -45,8 +45,8 @@ return {
                     scss = { "prettier" },
                     html = { "prettier" },
                     htmldjango = { "djlint", "rustywind" },
-                    json = { "prettier" },
-                    jsonc = { "prettier" },
+                    json = { "prettier", "dprint" },
+                    jsonc = { "prettier", "dprint" },
                     graphql = { "prettier" },
 
                     yaml = { "prettier" },
@@ -309,6 +309,8 @@ return {
                     "actionlint", -- linter
                     -- Shell
                     "shfmt", -- formatter
+                    -- Python
+                    "black", -- formatter
                     -- FE
                     "prettier", -- formatter
                     "eslint-lsp", -- linter

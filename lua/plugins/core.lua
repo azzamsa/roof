@@ -12,7 +12,7 @@ return {
                 [","] = { "<cmd>Telescope buffers previewer=false<cr>", "Switch buffer" },
 
                 -- stylua: ignore start
-                ["."] = { function() Utils.find_files_in_project() end, "Find project file" },
+                ["."] = { function() Utils.find_files_from_here() end, "Find project file" },
                 ["<space>"] = { function() Utils.find_files_in_project() end, "Find project file" },
                 ["x"] = { function() Utils.toggle_scratch_buffer() end, "Open scratch buffer" },
                 ["/"] = { function() Utils.grep_in_project() end, "Search in project" },
