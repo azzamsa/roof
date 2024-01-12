@@ -3,6 +3,10 @@ local M = {}
 function M.find_files(path)
     require("telescope.builtin").find_files({
         cwd = path,
+        -- Show hidden files by default. Most of them are important in my case.
+        -- Things like `dotfiles/.configs/*` are crucial.
+        -- I can put uninteresting files under `.ignore` if I wish.
+        hidden = true,
     })
 end
 

@@ -144,7 +144,7 @@ return {
                 local action_state = require("telescope.actions.state")
                 local line = action_state.get_current_line()
                 require("telescope.builtin").find_files({
-                    hidden = true,
+                    hidden = false,
                     default_text = line,
                 })
             end
