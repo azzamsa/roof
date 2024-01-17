@@ -4,6 +4,7 @@ local Path = require("configs.utils.path")
 
 -- Open `target` with default app
 function M.open_with(target)
+    target = Path.validate(target)
     vim.fn.system("xdg-open " .. target)
 end
 
