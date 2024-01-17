@@ -4,7 +4,7 @@ return {
     -- A formatter
     {
         "stevearc/conform.nvim",
-        commit = "0e61fc88f725b4411e63b43470a397c6102534c7",
+        tag = "stable",
         event = { "BufWritePre" },
         cmd = { "ConformInfo" },
         config = function()

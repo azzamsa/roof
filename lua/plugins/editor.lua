@@ -86,7 +86,7 @@ return {
     {
         "stevearc/oil.nvim",
         event = "VeryLazy",
-        version = "2.5.0",
+        tag = "stable",
         config = function()
             require("oil").setup({
                 -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
