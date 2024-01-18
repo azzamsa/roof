@@ -23,10 +23,25 @@ return {
     {
         "neogitorg/neogit",
         event = "VeryLazy",
-        commit = "801143ee4db4121fc11a6468daae6680ba9fab51",
+        commit = "38dd297a905ec6869f4c20ea9184a3e514316e3b",
         config = function()
             local neogit = require("neogit")
-            neogit.setup({})
+            neogit.setup({
+                mappings = {
+                    commit_editor = {
+                        ["<c-c><c-g>"] = "Abort",
+                        ["<c-c><c-k>"] = false,
+                    },
+                    rebase_editor = {
+                        -- `C-c C-k` doesn't work
+                        ["<c-c><c-g>"] = "Abort",
+                        ["<c-c><c-k>"] = false,
+
+                        ["ge"] = "MoveUp", -- default: gk
+                        ["gn"] = "MoveDown", -- default: gj
+                    },
+                },
+            })
         end,
     },
     -- Display VCS changes in the gutter.
