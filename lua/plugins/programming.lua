@@ -283,8 +283,8 @@ return {
                 -- Shell
                 "bashls", -- language server
                 -- FE
-                -- "html",
-                -- "cssls",
+                "html",
+                "cssls",
                 "tsserver", -- TypeScript language server
                 "jsonls", -- JSON language server
                 "tailwindcss", -- Tailwind language server
@@ -378,6 +378,8 @@ return {
                 "c",
                 "diff",
                 "html",
+                "css",
+                "scss",
                 "javascript",
                 "jsdoc",
                 "json",
@@ -484,6 +486,10 @@ return {
                 -- Markdown
                 marksman = {},
                 -- FE
+                html = {
+                    filetypes = { "html", "htmldjango" },
+                },
+                cssls = {},
                 jsonls = {},
                 tsserver = {},
                 tailwindcss = {},
@@ -512,6 +518,12 @@ return {
                 require("lspconfig")[server].setup(server_opts)
             end
         end,
+    },
+    -- Automatically add closing tags for HTML and JSX
+    {
+        "windwp/nvim-ts-autotag",
+        event = { "BufReadPre", "BufNewFile" },
+        opts = {},
     },
     --  Completion plugin
     {
