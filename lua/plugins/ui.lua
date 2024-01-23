@@ -124,10 +124,11 @@ return {
                 commit = "e4a2022f4fec2d5ebc79afa612f96d8b11c627b3",
                 config = function()
                     require("notify").setup({
-                        render = "simple",
-                        -- FIXME: timeout didn't get applied but render did.
+                        stages = "static", -- default: "fade_in_slide_out"
+                        -- Timeout will never work if `stages` is set to anything other than `static`.
                         timeout = 1000,
                         on_open = function(win)
+                            -- Set the window to be non-focusable; otherwise, `C-w w` will treat it as a window.
                             vim.api.nvim_win_set_config(win, { focusable = false })
                         end,
                     })
@@ -146,11 +147,11 @@ return {
                 },
                 -- you can enable a preset for easier configuration
                 presets = {
-                    bottom_search = true, -- use a classic bottom cmdline for search
-                    command_palette = true, -- position the cmdline and popupmenu together
-                    long_message_to_split = true, -- long messages will be sent to a split
-                    inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                    lsp_doc_border = false, -- add a border to hover docs and signature help
+                    -- bottom_search = true, -- use a classic bottom cmdline for search
+                    -- command_palette = true, -- position the cmdline and popupmenu together
+                    -- long_message_to_split = true, -- long messages will be sent to a split
+                    -- inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                    -- lsp_doc_border = false, -- add a border to hover docs and signature help
                 },
             })
         end,
