@@ -522,6 +522,7 @@ return {
     -- Automatically add closing tags for HTML and JSX
     {
         "windwp/nvim-ts-autotag",
+        commit = "a65b202cfd08e0e69e531eab737205ff5bc082a4",
         event = { "BufReadPre", "BufNewFile" },
         opts = {},
     },
@@ -567,6 +568,7 @@ return {
                 commit = "80a8528f084a97b624ae443a6f50ff8074ba486b",
                 dependencies = {
                     "rafamadriz/friendly-snippets",
+                    commit = "aced40b66b7bae9bc2c37fd7b11841d54727a7b0",
                 },
             },
             {
