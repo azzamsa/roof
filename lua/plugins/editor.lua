@@ -119,6 +119,9 @@ return {
                         { "mtime", "desc" },
                     },
                 },
+                keymaps = {
+                    ["<C-s>"] = "<cmd>w<cr><esc>",
+                },
             })
         end,
     },
