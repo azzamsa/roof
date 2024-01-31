@@ -49,7 +49,8 @@ opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "glob
 -- Default $SHELL
 opt.shell = "fish"
 -- Larger recentfiles
-opt.shada = { "!", "'500", "<50", "s10", "h" }
+-- Given 1000, 500, and 200, the speed remains noticeably slow.
+-- opt.shada = { "!", "'50", "<50", "s10", "h" } -- default: { "!", "'100", "<50", "s10", "h" }
 -- Round indent
 opt.shiftround = true
 -- Size of an indent
