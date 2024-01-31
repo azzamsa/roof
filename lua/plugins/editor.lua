@@ -333,7 +333,22 @@ return {
         config = function()
             require("multicursors").setup({
                 -- Any hint position has the potential to cover the target text.
-                hint_config = false,
+                -- hint_config = false,
+                hint_config = {
+                    border = "single",
+                    position = "top-left",
+                    type = "statusline",
+                },
+                generate_hints = {
+                    normal = true,
+                    insert = true,
+                    extend = true,
+                    config = {
+                        -- Enable these line if you use `type = window`
+                        -- column_count = 2,
+                        -- max_hint_length = 15,
+                    },
+                },
             })
         end,
     },
