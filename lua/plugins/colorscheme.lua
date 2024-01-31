@@ -12,7 +12,9 @@ return {
 
                 color_overrides = {
                     mocha = {
-                        base = "#24273a",
+                        base = "#24273a", -- macchiato: base
+                        -- mocha's surface0 is too dimmed on macchiato base
+                        surface0 = "#363a4f", --  macchiato: surface0
                     },
                 },
                 term_colors = true,
