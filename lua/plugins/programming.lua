@@ -4,7 +4,8 @@ return {
     -- A formatter
     {
         "stevearc/conform.nvim",
-        tag = "stable",
+        -- I use 'commit hash' for repos I regularly contribute to
+        commit = "4588008a7c5b57fbff97fdfb529c059235cdc7ee",
         event = { "BufWritePre" },
         cmd = { "ConformInfo" },
         config = function()
@@ -12,6 +13,9 @@ return {
 
             conform.formatters.prettier = {
                 -- When cwd is not found, don't run the formatter (default false)
+                require_cwd = true,
+            }
+            conform.formatters.biome = {
                 require_cwd = true,
             }
             conform.formatters.stylua = {
@@ -37,22 +41,25 @@ return {
 
                     fish = { "fish_indent" },
                     sh = { "shfmt" },
+                    just = { "just" },
 
-                    javascript = { "prettier" },
-                    typescript = { "prettier" },
-                    vue = { "prettier" },
-                    css = { "prettier" },
-                    scss = { "prettier" },
-                    html = { "prettier" },
+                    javascript = { "prettier", "biome" },
+                    typescript = { "prettier", "biome" },
+                    vue = { "prettier", "biome" },
+                    css = { "prettier", "biome" },
+                    scss = { "prettier", "biome" },
+                    html = { "prettier", "biome", "djlint" },
                     htmldjango = { "djlint", "rustywind" },
-                    json = { "prettier", "dprint" },
-                    jsonc = { "prettier", "dprint" },
-                    graphql = { "prettier" },
+                    json = { "prettier", "biome", "dprint" },
+                    jsonc = { "prettier", "biome", "dprint" },
+                    graphql = { "prettier", "biome" },
 
-                    yaml = { "prettier" },
+                    yaml = { "prettier", "biome" },
                     markdown = { "dprint" },
                     dockerfile = { "dprint" },
                     toml = { "dprint" },
+                    -- Can't use `[_]`. I always had trailing whitespace everywhre
+                    -- Most of formatter ignore trailing whitespace entirely
                     ["*"] = { "trim_whitespace" },
                 },
             })
