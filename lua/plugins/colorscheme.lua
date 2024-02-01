@@ -18,6 +18,15 @@ return {
                     },
                 },
                 term_colors = true,
+                integrations = {
+                    -- default: false
+                    notify = true,
+                    mason = true,
+                    noice = true,
+                    lsp_trouble = true,
+                    gitgutter = true,
+                    which_key = true,
+                },
             })
             vim.cmd.colorscheme("catppuccin")
         end,
