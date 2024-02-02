@@ -19,14 +19,14 @@ vim.g.maplocalleader = " "
 
 -- Navigation
 --     ^
+--     i
+-- < n   o >
 --     e
--- < m   i >
---     n
 --     v
-map({ "n", "v", "o" }, "m", "h", { desc = "" })
-map({ "n", "v", "o" }, "n", "j", { desc = "" })
-map({ "n", "v", "o" }, "e", "k", { desc = "" })
-map({ "n", "v", "o" }, "i", "l", { desc = "" })
+map({ "n", "v", "o" }, "n", "h", { desc = "" })
+map({ "n", "v", "o" }, "e", "j", { desc = "" })
+map({ "n", "v", "o" }, "i", "k", { desc = "" })
+map({ "n", "v", "o" }, "o", "l", { desc = "" })
 
 -- Search next/previous
 map({ "n", "v", "o" }, "k", "n", { desc = "" })
@@ -35,6 +35,9 @@ map({ "n", "v", "o" }, "K", "N", { desc = "" })
 -- Insert
 map({ "n", "v" }, "u", "i", { desc = "" })
 map({ "n", "v" }, "U", "I", { desc = "" })
+
+map({ "n", "v" }, "m", "o", { desc = "" })
+map({ "n", "v" }, "M", "O", { desc = "" })
 
 -- Undo operations
 map({ "n" }, "l", "u", { desc = "" })
@@ -64,30 +67,30 @@ map({ "n", "v", "o" }, "j", "T", { desc = "" })
 --
 
 -- Better up/down
-map({ "n", "x" }, "n", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map({ "n", "x" }, "e", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
-map({ "n", "x" }, "e", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+map({ "n", "x" }, "i", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- Move to window using the <ctrl> mnei keys
-map("n", "<C-m>", "<C-w>h", { desc = "Go to left window", remap = true })
-map("n", "<C-n>", "<C-w>j", { desc = "Go to lower window", remap = true })
-map("n", "<C-e>", "<C-w>k", { desc = "Go to upper window", remap = true })
-map("n", "<C-i>", "<C-w>l", { desc = "Go to right window", remap = true })
+map("n", "<C-n>", "<C-w>h", { desc = "Go to left window", remap = true })
+map("n", "<C-e>", "<C-w>j", { desc = "Go to lower window", remap = true })
+map("n", "<C-i>", "<C-w>k", { desc = "Go to upper window", remap = true })
+map("n", "<C-o>", "<C-w>l", { desc = "Go to right window", remap = true })
 
 -- Move Lines
-map("n", "<A-n>", "<cmd>m .+1<cr>==", { desc = "Move down" })
-map("n", "<A-e>", "<cmd>m .-2<cr>==", { desc = "Move up" })
+map("n", "<A-e>", "<cmd>m .+1<cr>==", { desc = "Move down" })
+map("n", "<A-i>", "<cmd>m .-2<cr>==", { desc = "Move up" })
 
 map("n", "<A-Down>", "<cmd>m .+1<cr>==", { desc = "Move down" })
 map("n", "<A-Up>", "<cmd>m .-2<cr>==", { desc = "Move up" })
 
-map("i", "<A-n>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
-map("i", "<A-e>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
+map("i", "<A-e>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
+map("i", "<A-i>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
 
-map("v", "<A-n>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
-map("v", "<A-e>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
+map("v", "<A-e>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
+map("v", "<A-i>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 -- Clear search with <esc>
 map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
