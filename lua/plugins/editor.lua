@@ -289,16 +289,24 @@ return {
         cmd = "Neotree",
         config = function()
             require("neo-tree").setup({
+                window = {
+                    width = 25,
+                    mappings = {
+                        ["R"] = "refresh",
+                        ["<C-l>"] = "refresh",
+                    },
+                },
                 filesystem = {
                     -- Let `oil.nvim` handle it
                     hijack_netrw_behavior = "disabled",
-                    follow_current_file = {
-                        -- This will use the OS level file watchers to detect changes
-                        use_libuv_file_watcher = true,
+                    -- This will use the OS level file watchers to detect changes
+                    use_libuv_file_watcher = true,
+                    window = {
+                        mappings = {
+                            ["H"] = "toggle_hidden",
+                            ["g."] = "toggle_hidden",
+                        },
                     },
-                },
-                window = {
-                    width = 25,
                 },
             })
         end,
