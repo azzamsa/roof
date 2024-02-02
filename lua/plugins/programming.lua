@@ -319,7 +319,8 @@ return {
                     -- Python
                     "black", -- formatter
                     -- FE
-                    "prettier", -- formatter
+                    "prettier",
+                    "biome", -- formatter
                     "eslint-lsp", -- linter
                     "stylelint", -- linter
                     "djlint", -- formatter, linter
