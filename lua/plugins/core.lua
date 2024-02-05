@@ -8,7 +8,8 @@ return {
         commit = "ce741eb559c924d72e3a67d2189ad3771a231414",
         config = function()
             local mappings = {
-                -- Every keymap that uses a custom function means the default `Telescope <*>` always starts from the `cwd`.
+                -- Every keymap that uses a custom function means the default `Telescope <*>`
+                -- always starts from the `cwd`.
                 [","] = { "<cmd>Telescope buffers previewer=false<cr>", "Switch buffer" },
 
                 -- stylua: ignore start
@@ -128,7 +129,6 @@ return {
                     c = { "<cmd>Telescope command_history<cr>", "Command history" },
                     C = { "<cmd>Telescope commands<cr>", "Commands" },
                     K = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-                    m = { "<cmd>MCstart<cr>", "Multiple cursors" },
                     r = { "<cmd>Telescope registers<cr>", "Registers" },
                     R = { "<cmd>Telescope resume<cr>", "Resume" },
                     u = { "<cmd>Telescope undo<cr>", "Visual undo" },
@@ -216,9 +216,8 @@ return {
                     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
                 },
 
-                -- <leader> s --- search
-                s = {
-                    name = "Search",
+                -- <leader> e --- editor
+                e = {
                     m = { "<cmd>MCstart<cr>", "Multiple cursors" },
                 },
             }
@@ -296,4 +295,5 @@ return {
             which_key.register(vmappings, vopts)
         end,
     },
+    "",
 }

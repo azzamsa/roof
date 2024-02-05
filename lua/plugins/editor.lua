@@ -320,8 +320,8 @@ return {
         opts = {},
         -- stylua: ignore
         keys = {
-           {"s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash"},
-           {"S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter"},
+           {"gz", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash"},
+           {"gZ", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter"},
         },
     },
     -- Multiple cursors
@@ -357,22 +357,6 @@ return {
             })
         end,
     },
-    -- Surround actions
-    {
-        "echasnovski/mini.surround",
-        commit = "7bf8915ba15d7a4f3c2afe7868d3c15a858d73f1",
-        opts = {
-            mappings = {
-                add = "gza", -- Add surrounding in Normal and Visual modes
-                delete = "gzd", -- Delete surrounding
-                find = "gzf", -- Find surrounding (to the right)
-                find_left = "gzF", -- Find surrounding (to the left)
-                highlight = "gzh", -- Highlight surrounding
-                replace = "gzr", -- Replace surrounding
-                update_n_lines = "gzr", -- Update `n_lines`
-            },
-        },
-    },
     -- Save all files silently on focus lost or buffer leave
     -- It is the 21st century; should I save files manually?
     {
@@ -384,5 +368,22 @@ return {
             local savior = require("savior")
             savior.setup({})
         end,
+    },
+    -- Surround
+    {
+        "echasnovski/mini.surround",
+        commit = "5ceb6a12d3761bc719fbdad5432c89333deb1498",
+        opts = {
+            mappings = {
+                -- Normal: gsa-uw-<char>
+                add = "sa", -- Add surrounding in Normal and Visual modes
+                delete = "sd", -- Delete surrounding
+                find = "sf", -- Find surrounding (to the right)
+                find_left = "sF", -- Find surrounding (to the left)
+                highlight = "sh", -- Highlight surrounding
+                replace = "sr", -- Replace surrounding
+                update_n_lines = "sn", -- Update `n_lines`
+            },
+        },
     },
 }
