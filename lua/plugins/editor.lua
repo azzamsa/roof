@@ -375,12 +375,15 @@ return {
         commit = "5ceb6a12d3761bc719fbdad5432c89333deb1498",
         opts = {
             mappings = {
-                -- Normal: gsa-uw-<char>
+                -- Normal: sa-uw-<char>
+                -- Visual: sa-<char>
                 add = "sa", -- Add surrounding in Normal and Visual modes
+                -- Normal: sd-<char>
                 delete = "sd", -- Delete surrounding
                 find = "sf", -- Find surrounding (to the right)
                 find_left = "sF", -- Find surrounding (to the left)
                 highlight = "sh", -- Highlight surrounding
+                -- Normal: sr-<char>-<char>
                 replace = "sr", -- Replace surrounding
                 update_n_lines = "sn", -- Update `n_lines`
             },
