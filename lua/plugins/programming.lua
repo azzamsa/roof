@@ -269,7 +269,7 @@ return {
         dependencies = {
             {
                 "williamboman/mason.nvim",
-                version = "1.9.0",
+                tag = "stable",
             },
             {
                 "WhoIsSethDaniel/mason-tool-installer.nvim",
