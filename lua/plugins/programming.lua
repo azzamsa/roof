@@ -374,7 +374,6 @@ return {
                 event = "VeryLazy",
                 commit = "ec1c5bdb3d87ac971749fa6c7dbc2b14884f1f6a",
             },
-            { "nushell/tree-sitter-nu", commit = "26bbaecda0039df4067861ab38ea8ea169f7f5aa" },
         },
         ---@type TSConfig
         ---@diagnostic disable-next-line: missing-fields
@@ -412,15 +411,6 @@ return {
         config = function(_, opts)
             local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
             require("nvim-treesitter.install").compilers = { "clang", "gcc" }
-
-            parser_config.nu = {
-                install_info = {
-                    url = "https://github.com/nushell/tree-sitter-nu",
-                    files = { "src/parser.c" },
-                    branch = "main",
-                },
-                filetype = "nu",
-            }
 
             if type(opts.ensure_installed) == "table" then
                 ---@type table<string, boolean>
