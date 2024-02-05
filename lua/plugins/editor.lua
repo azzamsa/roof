@@ -373,4 +373,16 @@ return {
             },
         },
     },
+    -- Save all files silently on focus lost or buffer leave
+    -- It is the 21st century; should I save files manually?
+    {
+        "willothy/savior.nvim",
+        commit = "1df5afb930a3a97aec87bbb99b5063e165adc4b0",
+        dependencies = { "j-hui/fidget.nvim", version = "1.3.0" },
+        event = { "InsertEnter", "TextChanged" },
+        config = function()
+            local savior = require("savior")
+            savior.setup({})
+        end,
+    },
 }

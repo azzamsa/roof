@@ -83,12 +83,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     end,
 })
 
--- Save all files silently on focus lost or buffer leave
--- It is the 21st century; should I save files manually?
-vim.api.nvim_create_autocmd({ "FocusLost", "BufLeave" }, {
-    command = "silent! wa",
-})
-
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     callback = function(event)
