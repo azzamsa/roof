@@ -13,11 +13,21 @@ return {
                 [","] = { "<cmd>Telescope buffers previewer=false<cr>", "Switch buffer" },
 
                 -- stylua: ignore start
-                ["."] = { function() Utils.find_files_from_here() end, "Find project file" },
+                ["."] = { function() Utils.find_files_from_here() end, "Find file from here" },
                 ["<space>"] = { function() Utils.find_files_in_project() end, "Find project file" },
                 ["x"] = { function() Utils.toggle_scratch_buffer() end, "Open scratch buffer" },
                 ["/"] = { function() Utils.grep_in_project() end, "Search in project" },
+                ["'"] = { "<cmd>Telescope resume<cr>", "Resume last search" },
+                ["`"] = { "<cmd>buffer#<cr>", "Switch to last buffer" },
                 -- stylua: ignore end
+
+                ["<cr>"] = {
+                    function()
+                        local bookmarks = require("etc.bookmarks").bookmarks
+                        require("configs.utils.picker").bookmarks({ bookmarks = bookmarks })
+                    end,
+                    "Jump to bookmark",
+                },
 
                 -- <leader> b --- buffer
                 b = {
@@ -61,7 +71,8 @@ return {
 
                     -- stylua: ignore start
                     e = { function() Utils.find_files_in_config() end, "Find file in config" },
-                    f = { function() Utils.find_files_from_here() end, "Find file" },
+                    f = { function() Utils.find_files_in_project() end, "Find file" },
+                    F = { function() Utils.find_files_from_here() end, "Find file from here" },
                     y = { function() Utils.copy_filename_to_clipboard() end, "Copy file name" },
                     Y = { function() Utils.copy_filepath_to_clipboard() end, "Copy file path" },
                     -- stylua: ignore end
@@ -130,18 +141,9 @@ return {
                     C = { "<cmd>Telescope commands<cr>", "Commands" },
                     K = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
                     r = { "<cmd>Telescope registers<cr>", "Registers" },
-                    R = { "<cmd>Telescope resume<cr>", "Resume" },
                     u = { "<cmd>Telescope undo<cr>", "Visual undo" },
                     s = { "<cmd>Telescope spell_suggest<cr>", "Spell candidate" },
                     ['"'] = { "<cmd>Telescope registers<cr>", "Registers" },
-
-                    b = {
-                        function()
-                            local bookmarks = require("etc.bookmarks").bookmarks
-                            require("configs.utils.picker").bookmarks({ bookmarks = bookmarks })
-                        end,
-                        "Bookmarks",
-                    },
 
                     -- stylua: ignore start
                     g = { function() Utils.grep_from_here() end, "Search" },
