@@ -353,7 +353,6 @@ return {
         },
         ---@param opts TSConfig
         config = function(_, opts)
-            local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
             require("nvim-treesitter.install").compilers = { "clang", "gcc" }
 
             if type(opts.ensure_installed) == "table" then
