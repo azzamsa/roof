@@ -23,4 +23,10 @@ return {
             vim.cmd([[do FileType]])
         end,
     },
+    {
+        "kaarmu/typst.vim",
+        commit = "e28d440c7ba4df2516d7d7f908c4fb664a8cf86c",
+        event = "VeryLazy",
+        ft = "typst",
+    },
 }
