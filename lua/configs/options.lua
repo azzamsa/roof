@@ -46,7 +46,7 @@ opt.relativenumber = true
 opt.scrolloff = 4
 -- Define session options
 opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
--- Default $SHELL
+-- Default $SHELL is always BASH
 opt.shell = "fish"
 -- Larger recentfiles
 -- Given 1000, 500, and 200, the speed remains noticeably slow.
