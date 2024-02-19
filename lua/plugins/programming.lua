@@ -296,6 +296,7 @@ return {
     {
         "echasnovski/mini.comment",
         event = "VeryLazy",
+        commit = "68a1e9de2ea47268205503ab1dcd48ff79648251",
         opts = {
             options = {
                 custom_commentstring = function()
