@@ -220,6 +220,7 @@ return {
 
                 -- <leader> e --- editor
                 e = {
+                    name = "Editor",
                     m = { "<cmd>MCstart<cr>", "Multiple cursors" },
                 },
             }
