@@ -23,7 +23,7 @@ return {
     {
         "neogitorg/neogit",
         event = "VeryLazy",
-        commit = "38dd297a905ec6869f4c20ea9184a3e514316e3b",
+        commit = "536b4cfc009fc6d8bd771f010f04d48204533fae",
         config = function()
             local neogit = require("neogit")
             neogit.setup({
@@ -37,8 +37,8 @@ return {
                         ["<c-c><c-g>"] = "Abort",
                         ["<c-c><c-k>"] = false,
 
-                        ["ge"] = "MoveUp", -- default: gk
-                        ["gn"] = "MoveDown", -- default: gj
+                        ["gi"] = "MoveUp", -- default: gk
+                        ["ge"] = "MoveDown", -- default: gj
                     },
                 },
             })
