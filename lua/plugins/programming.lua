@@ -5,7 +5,8 @@ return {
     {
         "stevearc/conform.nvim",
         -- I use 'commit hash' for repos I regularly contribute to
-        commit = "4588008a7c5b57fbff97fdfb529c059235cdc7ee",
+        -- commit = "4588008a7c5b57fbff97fdfb529c059235cdc7ee",
+        tag = "stable",
         event = { "BufWritePre" },
         cmd = { "ConformInfo" },
         config = function()
