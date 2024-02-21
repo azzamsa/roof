@@ -328,7 +328,7 @@ return {
     {
         "smoka7/multicursors.nvim",
         event = "VeryLazy",
-        commit = "8e876fe9db46c1b76c151202b418df21eca07bad",
+        version = "0.12.0",
         dependencies = {
             "smoka7/hydra.nvim",
             commit = "3ced42c0b6a6c85583ff0f221635a7f4c1ab0dd0",
