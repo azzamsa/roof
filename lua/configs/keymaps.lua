@@ -74,10 +74,10 @@ map({ "n", "x" }, "i", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true
 map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- Move to window using the <ctrl> mnei keys
-map("n", "<C-n>", "<C-w>h", { desc = "Go to left window", remap = true })
-map("n", "<C-e>", "<C-w>j", { desc = "Go to lower window", remap = true })
-map("n", "<C-i>", "<C-w>k", { desc = "Go to upper window", remap = true })
-map("n", "<C-o>", "<C-w>l", { desc = "Go to right window", remap = true })
+map("n", "<C-w>n", "<C-w>h", { desc = "Go to left window", remap = true })
+map("n", "<C-w>e", "<C-w>j", { desc = "Go to lower window", remap = true })
+map("n", "<C-w>i", "<C-w>k", { desc = "Go to upper window", remap = true })
+map("n", "<C-w>o", "<C-w>l", { desc = "Go to right window", remap = true })
 
 -- Move Lines
 map("n", "<A-e>", "<cmd>m .+1<cr>==", { desc = "Move down" })
