@@ -361,12 +361,15 @@ return {
     -- It is the 21st century; should I save files manually?
     {
         "willothy/savior.nvim",
-        commit = "1df5afb930a3a97aec87bbb99b5063e165adc4b0",
-        dependencies = { "j-hui/fidget.nvim", version = "1.3.0" },
+        commit = "b5ab8a692ab1b9ed911b7e43237f84d294fd6df3",
+        dependencies = { "j-hui/fidget.nvim", version = "1.4.1" },
         event = { "InsertEnter", "TextChanged" },
         config = function()
             local savior = require("savior")
-            savior.setup({})
+            savior.setup({
+                -- Set to false to disable fidget.nvim notifications
+                notify = false,
+            })
         end,
     },
     -- Surround
