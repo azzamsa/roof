@@ -23,7 +23,7 @@ return {
     {
         "neogitorg/neogit",
         event = "VeryLazy",
-        commit = "536b4cfc009fc6d8bd771f010f04d48204533fae",
+        commit = "0cae7abc30cb91d661f28257c331fcb5b5198e31",
         config = function()
             local neogit = require("neogit")
             neogit.setup({
