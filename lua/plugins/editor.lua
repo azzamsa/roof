@@ -5,7 +5,6 @@ return {
     {
         "fredeeb/tardis.nvim",
         event = "VeryLazy",
-        commit = "21a92fbc5b3a389ab09cea6beee8784b39c99099",
         config = function()
             require("tardis-nvim").setup({
                 keymap = {
@@ -23,7 +22,6 @@ return {
     {
         "neogitorg/neogit",
         event = "VeryLazy",
-        commit = "0cae7abc30cb91d661f28257c331fcb5b5198e31",
         config = function()
             local neogit = require("neogit")
             neogit.setup({
@@ -47,7 +45,6 @@ return {
     -- Display VCS changes in the gutter.
     {
         "lewis6991/gitsigns.nvim",
-        version = "0.7",
         event = { "BufReadPost", "BufNewFile", "BufWritePre" },
         opts = {
             signs = {
@@ -64,7 +61,6 @@ return {
     {
         "akinsho/toggleterm.nvim",
         event = "VeryLazy",
-        commit = "c80844fd52ba76f48fabf83e2b9f9b93273f418d",
         config = function()
             require("toggleterm").setup({
                 open_mapping = [[<c-/>]],
@@ -128,7 +124,6 @@ return {
     -- Fuzzy find things.
     {
         "nvim-telescope/telescope.nvim",
-        commit = "74ce793a60759e3db0d265174f137fb627430355",
         lazy = true,
         cmd = "Telescope",
         dependencies = {
@@ -136,11 +131,9 @@ return {
                 "nvim-telescope/telescope-fzf-native.nvim",
                 build = "make",
                 lazy = true,
-                commit = "6c921ca12321edaa773e324ef64ea301a1d0da62",
             },
             {
                 "debugloop/telescope-undo.nvim",
-                commit = "d3afc1c105535a90caec092ce27a113f77ba7b84",
                 config = function()
                     require("telescope").load_extension("undo")
                 end,
@@ -242,7 +235,6 @@ return {
     {
         "ahmedkhalf/project.nvim",
         event = "VeryLazy",
-        commit = "8c6bad7d22eef1b71144b401c9f74ed01526a4fb",
         config = function()
             require("project_nvim").setup({
                 active = true,
@@ -271,7 +263,6 @@ return {
         build = false,
         cmd = "Spectre",
         opts = { open_cmd = "noswapfile vnew" },
-        commit = "d8906855f1949ac97b1e77aaf8d3fe12ed158ddc",
         config = function()
             require("spectre").setup({ is_block_ui_break = true })
         end,
@@ -279,13 +270,11 @@ return {
     -- Find and replace across files.
     {
         "AckslD/muren.nvim",
-        commit = "818c09097dba1322b2ca099e35f7471feccfef9",
         config = true,
     },
     -- NeoTree
     {
         "nvim-neo-tree/neo-tree.nvim",
-        commit = "77d9f484b88fd380386b46ed9206e5374d69d9d8",
         cmd = "Neotree",
         config = function()
             require("neo-tree").setup({
@@ -315,14 +304,13 @@ return {
     {
         "folke/flash.nvim",
         event = "VeryLazy",
-        commit = "48817af25f51c0590653bbc290866e4890fe1cbe",
         ---@type Flash.Config
         opts = {},
-        -- stylua: ignore
-        keys = {
-           {"gs", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash"},
-           {"gS", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter"},
-        },
+    -- stylua: ignore
+    keys = {
+      {"gs", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash"},
+      {"gS", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter"},
+    },
     },
     -- Multiple cursors
     {
@@ -331,7 +319,6 @@ return {
         version = "0.12.0",
         dependencies = {
             "smoka7/hydra.nvim",
-            commit = "3ced42c0b6a6c85583ff0f221635a7f4c1ab0dd0",
         },
         opts = {},
         cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
@@ -357,25 +344,24 @@ return {
             })
         end,
     },
+    -- Super-save
     -- Save all files silently on focus lost or buffer leave
     -- It is the 21st century; should I save files manually?
-    {
-        "willothy/savior.nvim",
-        commit = "b5ab8a692ab1b9ed911b7e43237f84d294fd6df3",
-        dependencies = { "j-hui/fidget.nvim", version = "1.4.1" },
-        event = { "InsertEnter", "TextChanged" },
-        config = function()
-            local savior = require("savior")
-            savior.setup({
-                -- Set to false to disable fidget.nvim notifications
-                notify = false,
-            })
-        end,
-    },
+    -- {
+    --     "willothy/savior.nvim",
+    --     dependencies = { "j-hui/fidget.nvim", version = "1.4.1" },
+    --     event = { "InsertEnter", "TextChanged" },
+    --     config = function()
+    --         local savior = require("savior")
+    --         savior.setup({
+    --             -- Set to false to disable fidget.nvim notifications
+    --             notify = false,
+    --         })
+    --     end,
+    -- },
     -- Surround
     {
         "echasnovski/mini.surround",
-        commit = "5ceb6a12d3761bc719fbdad5432c89333deb1498",
         opts = {
             mappings = {
                 -- Normal: sa-uw-<char>
@@ -391,5 +377,10 @@ return {
                 update_n_lines = "sn", -- Update `n_lines`
             },
         },
+    },
+    -- Sudo
+    {
+        "lambdalisue/suda.vim",
+        event = "VeryLazy",
     },
 }

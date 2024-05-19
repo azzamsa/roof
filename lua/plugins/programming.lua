@@ -4,8 +4,6 @@ return {
     -- A formatter
     {
         "stevearc/conform.nvim",
-        -- I use 'commit hash' for repos I regularly contribute to
-        -- commit = "4588008a7c5b57fbff97fdfb529c059235cdc7ee",
         tag = "stable",
         event = { "BufWritePre" },
         cmd = { "ConformInfo" },
@@ -70,7 +68,6 @@ return {
     {
         "mfussenegger/nvim-lint",
         event = { "BufWritePost", "BufReadPost", "InsertLeave" },
-        commit = "32f98300881f38f4e022391f240188fec42f74db",
         config = function()
             local lint = require("lint")
 
@@ -93,7 +90,6 @@ return {
     {
         "lukas-reineke/indent-blankline.nvim",
         event = "VeryLazy",
-        commit = "9637670896b68805430e2f72cf5d16be5b97a22a",
         config = function()
             require("indent_blankline").setup({
                 buftype_exclude = { "terminal", "nofile" },
@@ -122,7 +118,6 @@ return {
     {
         "NvChad/nvim-colorizer.lua",
         event = { "BufWritePost", "BufReadPost", "InsertLeave" },
-        commit = "dde3084106a70b9a79d48f426f6d6fec6fd203f7",
         config = function()
             require("colorizer").setup({})
         end,
@@ -131,7 +126,6 @@ return {
     {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
-        commit = "9fd41181693dd4106b3e414a822bb6569924de81",
         config = function()
             require("nvim-autopairs").setup({
                 map_char = {
@@ -173,7 +167,6 @@ return {
         -- during typing.
         "kaplanz/retrail.nvim",
         event = "VeryLazy",
-        commit = "fda098e4b91b98dd4e04a9a87537cf70c25ea2ad",
         config = function()
             local retrail = require("retrail")
 
@@ -209,7 +202,6 @@ return {
     -- LSP servers package manager
     {
         "williamboman/mason-lspconfig.nvim",
-        commit = "e7b64c11035aa924f87385b72145e0ccf68a7e0a",
         dependencies = {
             {
                 "williamboman/mason.nvim",
@@ -217,7 +209,6 @@ return {
             },
             {
                 "WhoIsSethDaniel/mason-tool-installer.nvim",
-                commit = "8b70e7f1e0a4119c1234c3bde4a01c241cabcc74",
             },
         },
         config = function()
@@ -279,7 +270,6 @@ return {
     -- Show symbols outline
     {
         "simrat39/symbols-outline.nvim",
-        commit = "564ee65dfc9024bdde73a6621820866987cbb256",
         cmd = "SymbolsOutline",
         config = function()
             require("symbols-outline").setup()
@@ -297,7 +287,6 @@ return {
     {
         "echasnovski/mini.comment",
         event = "VeryLazy",
-        commit = "68a1e9de2ea47268205503ab1dcd48ff79648251",
         opts = {
             options = {
                 custom_commentstring = function()
@@ -311,13 +300,11 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         event = { "BufReadPost", "BufNewFile" },
-        commit = "d496c5e08e853dadedc7f5d0a6541288d0441fd3",
         build = ":TSUpdate",
         dependencies = {
             {
                 "nvim-treesitter/nvim-treesitter-textobjects",
                 event = "VeryLazy",
-                commit = "ec1c5bdb3d87ac971749fa6c7dbc2b14884f1f6a",
             },
         },
         ---@type TSConfig
@@ -374,11 +361,9 @@ return {
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
-        commit = "e49b1e90c1781ce372013de3fa93a91ea29fc34a",
         dependencies = {
             {
                 "folke/neodev.nvim",
-                commit = "b094a663ccb71733543d8254b988e6bebdbdaca4",
                 opts = {},
             },
         },
@@ -464,7 +449,6 @@ return {
     -- Automatically add closing tags for HTML and JSX
     {
         "windwp/nvim-ts-autotag",
-        commit = "a65b202cfd08e0e69e531eab737205ff5bc082a4",
         event = { "BufReadPre", "BufNewFile" },
         opts = {},
     },
@@ -472,50 +456,40 @@ return {
     {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
-        commit = "d3a3056204e1a9dbb7c7fe36c114dc43b681768c",
         dependencies = {
             {
                 "hrsh7th/cmp-nvim-lsp",
                 event = "InsertEnter",
-                commit = "44b16d11215dce86f253ce0c30949813c0a90765",
             },
             {
                 "hrsh7th/cmp-emoji",
                 event = "InsertEnter",
-                commit = "19075c36d5820253d32e2478b6aaf3734aeaafa0",
             },
             {
                 "hrsh7th/cmp-buffer",
                 event = "InsertEnter",
-                commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa",
             },
             {
                 "hrsh7th/cmp-path",
                 event = "InsertEnter",
-                commit = "91ff86cd9c29299a64f968ebb45846c485725f23",
             },
             {
                 "hrsh7th/cmp-cmdline",
                 event = "InsertEnter",
-                commit = "8ee981b4a91f536f52add291594e89fb6645e451",
             },
             {
                 "saadparwaiz1/cmp_luasnip",
                 event = "InsertEnter",
-                commit = "05a9ab28b53f71d1aece421ef32fee2cb857a843",
             },
             {
                 "L3MON4D3/LuaSnip",
                 event = "InsertEnter",
-                commit = "80a8528f084a97b624ae443a6f50ff8074ba486b",
                 dependencies = {
                     "rafamadriz/friendly-snippets",
-                    commit = "aced40b66b7bae9bc2c37fd7b11841d54727a7b0",
                 },
             },
             {
                 "hrsh7th/cmp-nvim-lua",
-                commit = "f12408bdb54c39c23e67cab726264c10db33ada8",
             },
         },
         config = function()

@@ -5,7 +5,6 @@ return {
     {
         "goolord/alpha-nvim",
         event = "VimEnter",
-        commit = "234822140b265ec4ba3203e3e0be0e0bb826dff5",
         config = function()
             local function random_quote()
                 return require("etc.quotes").random()
@@ -64,7 +63,6 @@ return {
     -- Status line.
     {
         "nvim-lualine/lualine.nvim",
-        commit = "7533b0ead663d80452210c0c089e5105089697e5",
         config = function()
             --- Multi cursor
             local function mc_is_active()
@@ -108,7 +106,6 @@ return {
     {
         "petertriho/nvim-scrollbar",
         event = "VeryLazy",
-        commit = "35f99d559041c7c0eff3a41f9093581ceea534e8",
         config = function()
             require("scrollbar").setup()
         end,
@@ -117,12 +114,10 @@ return {
     {
         "folke/noice.nvim",
         event = "VeryLazy",
-        commit = "92433164e2f7118d4122c7674c3834d9511722ba",
         dependencies = {
             {
                 "rcarriga/nvim-notify",
                 event = "VeryLazy",
-                commit = "e4a2022f4fec2d5ebc79afa612f96d8b11c627b3",
                 config = function()
                     require("notify").setup({
                         stages = "static", -- default: "fade_in_slide_out"
@@ -160,13 +155,11 @@ return {
     -- A winbar that uses LSP to display current code context.
     {
         "LunarVim/breadcrumbs.nvim",
-        commit = "1033b354f65206793831207d5c9047fc059e35c3",
         config = function()
             require("breadcrumbs").setup()
         end,
         dependencies = {
             "SmiteshP/nvim-navic",
-            commit = "0ffa7ffe6588f3417e680439872f5049e38a24db",
             config = function()
                 require("nvim-navic").setup({
                     icons = Icons.kind,

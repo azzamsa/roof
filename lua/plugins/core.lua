@@ -5,7 +5,6 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
-        commit = "ce741eb559c924d72e3a67d2189ad3771a231414",
         config = function()
             local mappings = {
                 -- Every keymap that uses a custom function means the default `Telescope <*>`
@@ -102,6 +101,7 @@ return {
                     name = "Insert",
                     f = { "<cmd>put =expand('%:t')<cr>", "Current file name" },
                     F = { "<cmd>put =expand('%:p')<cr>", "Current file path" },
+                    d = { "<cmd>put =strftime('%Y-%m-%d %H:%M')<cr>", "Current date and time" },
                 },
 
                 -- <leader> o --- open
