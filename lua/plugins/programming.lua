@@ -90,29 +90,29 @@ return {
     {
         "lukas-reineke/indent-blankline.nvim",
         event = "VeryLazy",
-        config = function()
-            require("indent_blankline").setup({
-                buftype_exclude = { "terminal", "nofile" },
-                filetype_exclude = {
+        opts = {
+            indent = {
+                char = "│",
+                tab_char = "│",
+            },
+            scope = { show_start = false, show_end = false },
+            exclude = {
+                filetypes = {
                     "help",
-                    "startify",
+                    "alpha",
                     "dashboard",
-                    "lazy",
-                    "neogitstatus",
-                    "NvimTree",
+                    "neo-tree",
                     "Trouble",
-                    "text",
+                    "trouble",
+                    "lazy",
+                    "mason",
+                    "notify",
+                    "toggleterm",
+                    "lazyterm",
                 },
-                -- char = icons.ui.LineLeft,
-                char = Icons.ui.LineMiddle,
-                -- context_char = Icons.ui.LineLeft,
-                context_char = Icons.ui.LineMiddle,
-                show_trailing_blankline_indent = false,
-                show_first_indent_level = true,
-                use_treesitter = true,
-                show_current_context = true,
-            })
-        end,
+            },
+        },
+        main = "ibl",
     },
     -- Color highlighter. à la Emacs rainbow-mode
     {
