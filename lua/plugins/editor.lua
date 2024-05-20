@@ -316,7 +316,6 @@ return {
     {
         "smoka7/multicursors.nvim",
         event = "VeryLazy",
-        version = "0.12.0",
         dependencies = {
             "smoka7/hydra.nvim",
         },
@@ -347,18 +346,18 @@ return {
     -- Super-save
     -- Save all files silently on focus lost or buffer leave
     -- It is the 21st century; should I save files manually?
-    -- {
-    --     "willothy/savior.nvim",
-    --     dependencies = { "j-hui/fidget.nvim", version = "1.4.1" },
-    --     event = { "InsertEnter", "TextChanged" },
-    --     config = function()
-    --         local savior = require("savior")
-    --         savior.setup({
-    --             -- Set to false to disable fidget.nvim notifications
-    --             notify = false,
-    --         })
-    --     end,
-    -- },
+    {
+        "willothy/savior.nvim",
+        dependencies = { "j-hui/fidget.nvim" },
+        event = { "InsertEnter", "TextChanged" },
+        config = function()
+            local savior = require("savior")
+            savior.setup({
+                -- Set to false to disable fidget.nvim notifications
+                notify = false,
+            })
+        end,
+    },
     -- Surround
     {
         "echasnovski/mini.surround",
