@@ -95,13 +95,12 @@ return {
                     k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
                     m = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
                 },
-
                 -- <leader> i --- insert
                 i = {
                     name = "Insert",
-                    f = { "<cmd>put =expand('%:t')<cr>", "Current file name" },
-                    F = { "<cmd>put =expand('%:p')<cr>", "Current file path" },
-                    d = { "<cmd>put =strftime('%Y-%m-%d %H:%M')<cr>", "Current date and time" },
+                    f = { "<cmd>exec 'normal! a' . expand('%:t')<cr>", "Current file name" },
+                    F = { "<cmd>exec 'normal! a' . expand('%:p')<cr>", "Current file path" },
+                    d = { "<cmd>exec 'normal! a' . strftime('%Y-%m-%d %H:%M')<cr>", "Current date and time" },
                 },
 
                 -- <leader> o --- open
