@@ -35,6 +35,7 @@ return {
                     k = { "<cmd>bd<cr>", "Kill buffer" },
                     K = { "<cmd>%bd!<cr>", "Kill all buffer" },
                     O = { "<cmd>%bd <bar> e#<cr>", "Kill other buffers" },
+                    r = { "<cmd>edit!<cr>", "Revert buffer" },
                     -- Doom use both `<leader> b s` and `<leader> f s` to save file
                     s = { "<cmd>w<cr>", "Save buffer" },
                     S = { "<cmd>wa<cr>", "Save all buffers" },
@@ -234,7 +235,6 @@ return {
             }
 
             local which_key = require("which-key")
-
             which_key.setup({
                 plugins = {
                     marks = false, -- shows a list of your marks on ' and `
