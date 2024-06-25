@@ -297,5 +297,4 @@ return {
             which_key.register(vmappings, vopts)
         end,
     },
-    "",
 }
