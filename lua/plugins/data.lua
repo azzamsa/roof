@@ -4,6 +4,10 @@ return {
         event = "VeryLazy",
     },
     {
+        "ron-rs/ron.vim",
+        event = "VeryLazy",
+    },
+    {
         -- The `IndianBoy42/tree-sitter-just` plugin doesn't reliably
         -- highlight Justfiles. Instead, I use `vim-just`.
         "NoahTheDuke/vim-just",
