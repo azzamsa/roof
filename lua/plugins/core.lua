@@ -36,6 +36,7 @@ return {
                     K = { "<cmd>%bd!<cr>", "Kill all buffer" },
                     O = { "<cmd>%bd <bar> e#<cr>", "Kill other buffers" },
                     r = { "<cmd>edit!<cr>", "Revert buffer" },
+                    u = { "<cmd>SudaWrite<cr>", "Save buffer as root" },
                     -- Doom use both `<leader> b s` and `<leader> f s` to save file
                     s = { "<cmd>w<cr>", "Save buffer" },
                     S = { "<cmd>wa<cr>", "Save all buffers" },
