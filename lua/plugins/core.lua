@@ -25,7 +25,8 @@ return {
                         local bookmarks = require("etc.bookmarks").bookmarks
                         require("configs.utils.picker").bookmarks({ bookmarks = bookmarks })
                     end,
-                    "Jump to bookmark",
+                    desc = "Jump to bookmark",
+                    icon = "󰃁",
                 },
 
                 -- <leader> b --- buffer
@@ -82,7 +83,7 @@ return {
                 -- <leader> g --- version control
                 g = {
                     name = "VCS",
-
+                    icon = "",
                     t = { "<cmd>Tardis<cr>", "Git time machine" },
                     -- stylua: ignore start
                     g = { function() Utils.ngit_here() end, "Neogit" },
@@ -92,6 +93,7 @@ return {
                 -- <leader> h --- help
                 h = {
                     name = "Help",
+                    icon = "󰞋",
                     c = { "<cmd>Telescope commands<cr>", "Commands" },
                     h = { "<cmd>Telescope help_tags<cr>", "Help" },
                     k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
@@ -100,6 +102,7 @@ return {
                 -- <leader> i --- insert
                 i = {
                     name = "Insert",
+                    icon = "󰏪",
                     f = { "<cmd>exec 'normal! a' . expand('%:t')<cr>", "Current file name" },
                     F = { "<cmd>exec 'normal! a' . expand('%:p')<cr>", "Current file path" },
                     d = { "<cmd>exec 'normal! a' . strftime('%Y-%m-%d %H:%M')<cr>", "Current date and time" },
@@ -108,6 +111,7 @@ return {
                 -- <leader> o --- open
                 o = {
                     name = "Open",
+                    icon = " ",
                     -- Open from current buffer by default
                     d = { "<cmd>Oil<cr>", "File manager from here" },
 
@@ -120,6 +124,7 @@ return {
                 -- <leader> p --- project
                 p = {
                     name = "Project",
+                    icon = "",
                     p = { "<cmd>Telescope projects<cr>", "Switch project" },
 
                     -- stylua: ignore start
