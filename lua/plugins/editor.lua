@@ -296,6 +296,21 @@ return {
                             ["g."] = "toggle_hidden",
                         },
                     },
+                    filtered_items = {
+                        never_show = {
+                            ".git",
+                            "cdata", -- container data
+                            -- too generic to ignore
+                            -- "data", -- container data
+                            "target", -- rust build directory
+                            "node_modules",
+                            "pnpm-lock.yaml",
+                            ".svelte-kit",
+                        },
+                        never_show_by_pattern = {
+                            "*.lock",
+                        },
+                    },
                 },
             })
         end,
