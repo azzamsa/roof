@@ -6,301 +6,495 @@ return {
         "folke/which-key.nvim",
         event = "VeryLazy",
         config = function()
-            local mappings = {
-                -- Every keymap that uses a custom function means the default `Telescope <*>`
+            local which_key = require("which-key")
+            which_key.setup({})
+            which_key.add({
+                -- Every keymap that uses a custom functionmeans the default `Telescope <*>`
                 -- always starts from the `cwd`.
-                [","] = { "<cmd>Telescope buffers previewer=false<cr>", "Switch buffer" },
-
-                -- stylua: ignore start
-                ["."] = { function() Utils.find_files_from_here() end, "Find file from here" },
-                ["<space>"] = { function() Utils.find_files_in_project() end, "Find project file" },
-                ["x"] = { function() Utils.toggle_scratch_buffer() end, "Open scratch buffer" },
-                ["/"] = { function() Utils.grep_in_project() end, "Search in project" },
-                ["'"] = { "<cmd>Telescope resume<cr>", "Resume last search" },
-                ["`"] = { "<cmd>buffer#<cr>", "Switch to last buffer" },
-                -- stylua: ignore end
-
-                ["<cr>"] = {
+                {
+                    "<leader>x",
+                    function()
+                        Utils.toggle_scratch_buffer()
+                    end,
+                    desc = "Open scratch buffer",
+                    nowait = true,
+                    remap = false,
+                },
+                { "<leader>'", "<cmd>Telescope resume<cr>", desc = "Resume last search", nowait = true, remap = false },
+                {
+                    "<leader>,",
+                    "<cmd>Telescope buffers previewer=false<cr>",
+                    desc = "Switch buffer",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>.",
+                    function()
+                        Utils.find_files_from_here()
+                    end,
+                    desc = "Find file from here",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>/",
+                    function()
+                        Utils.grep_in_project()
+                    end,
+                    desc = "Search in project",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader><cr>",
                     function()
                         local bookmarks = require("etc.bookmarks").bookmarks
                         require("configs.utils.picker").bookmarks({ bookmarks = bookmarks })
                     end,
                     desc = "Jump to bookmark",
-                    icon = "󰃁",
+                    nowait = true,
+                    remap = false,
                 },
+                {
+                    "<leader><space>",
+                    function()
+                        Utils.find_files_in_project()
+                    end,
+                    desc = "Find project file",
+                    nowait = true,
+                    remap = false,
+                },
+                { "<leader>`", "<cmd>buffer#<cr>", desc = "Switch to last buffer", nowait = true, remap = false },
 
                 -- <leader> b --- buffer
-                b = {
-                    name = "Buffers",
-                    b = { "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", "Switch buffer" },
-                    k = { "<cmd>bd<cr>", "Kill buffer" },
-                    K = { "<cmd>%bd!<cr>", "Kill all buffer" },
-                    O = { "<cmd>%bd <bar> e#<cr>", "Kill other buffers" },
-                    r = { "<cmd>edit!<cr>", "Revert buffer" },
-                    u = { "<cmd>SudaWrite<cr>", "Save buffer as root" },
-                    -- Doom use both `<leader> b s` and `<leader> f s` to save file
-                    s = { "<cmd>w<cr>", "Save buffer" },
-                    S = { "<cmd>wa<cr>", "Save all buffers" },
+                { "<leader>b", group = "Buffers", nowait = true, remap = false },
+                { "<leader>bK", "<cmd>%bd!<cr>", desc = "Kill all buffer", nowait = true, remap = false },
+                { "<leader>bO", "<cmd>%bd <bar> e#<cr>", desc = "Kill other buffers", nowait = true, remap = false },
+                { "<leader>bS", "<cmd>wa<cr>", desc = "Save all buffers", nowait = true, remap = false },
+                {
+                    "<leader>bb",
+                    "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
+                    desc = "Switch buffer",
+                    nowait = true,
+                    remap = false,
                 },
+                { "<leader>bk", "<cmd>bd<cr>", desc = "Kill buffer", nowait = true, remap = false },
+                { "<leader>br", "<cmd>edit!<cr>", desc = "Revert buffer", nowait = true, remap = false },
+                { "<leader>bs", "<cmd>w<cr>", desc = "Save buffer", nowait = true, remap = false },
+                { "<leader>bu", "<cmd>SudaWrite<cr>", desc = "Save buffer as root", nowait = true, remap = false },
 
                 -- <leader> c --- code
-                c = {
-                    name = "Code",
-                    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-                    d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "Jump to definition" },
-                    e = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Line Diagnostics" },
-                    p = { "<cmd>MarkdownPreviewToggle<cr>", "Markdown Preview" },
-                    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-                    S = { "<cmd>SymbolsOutline<cr>", "Symbols" },
-                    w = { "<cmd>Trim<cr>", "Delete trailing whitespaces" },
-                    x = { "<cmd>TroubleToggle document_diagnostics<cr>", "Diagnostics" },
-                    X = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Project diagnostics" },
-
-                    -- stylua: ignore start
-                    f = { function() require("conform").format({ async = false, lsp_fallback = false }) end, "Format" },
-                    -- stylua: ignore end
+                { "<leader>c", group = "Code", nowait = true, remap = false },
+                { "<leader>cS", "<cmd>SymbolsOutline<cr>", desc = "Symbols", nowait = true, remap = false },
+                {
+                    "<leader>cX",
+                    "<cmd>TroubleToggle workspace_diagnostics<cr>",
+                    desc = "Project diagnostics",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>ca",
+                    "<cmd>lua vim.lsp.buf.code_action()<cr>",
+                    desc = "Code Action",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>cd",
+                    "<cmd>lua vim.lsp.buf.definition()<cr>",
+                    desc = "Jump to definition",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>ce",
+                    "<cmd>lua vim.diagnostic.open_float()<cr>",
+                    desc = "Line Diagnostics",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>cf",
+                    function()
+                        require("conform").format({ async = false, lsp_fallback = false })
+                    end,
+                    desc = "Format",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>cp",
+                    "<cmd>MarkdownPreviewToggle<cr>",
+                    desc = "Markdown Preview",
+                    nowait = true,
+                    remap = false,
+                },
+                { "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "Rename", nowait = true, remap = false },
+                { "<leader>cw", "<cmd>Trim<cr>", desc = "Delete trailing whitespaces", nowait = true, remap = false },
+                {
+                    "<leader>cx",
+                    "<cmd>TroubleToggle document_diagnostics<cr>",
+                    desc = "Diagnostics",
+                    nowait = true,
+                    remap = false,
                 },
 
                 -- <leader> f --- file
-                f = {
-                    name = "File",
-                    d = { "<cmd>Oil<cr>", "Find directory" },
-                    D = { "<cmd>call delete(expand('%')) <bar> bdelete!<cr>", "Delete this file" },
-                    r = { "<cmd>Telescope oldfiles<cr>", "Recent file" },
-                    R = { "<cmd>MurenToggle<cr>", "Replace in files" },
-                    s = { "<cmd>w<cr>", "Save buffer" },
-                    S = { "<cmd>wa<cr>", "Save all buffers" },
-
-                    -- stylua: ignore start
-                    e = { function() Utils.find_files_in_config() end, "Find file in config" },
-                    f = { function() Utils.find_files_in_project() end, "Find file" },
-                    F = { function() Utils.find_files_from_here() end, "Find file from here" },
-                    y = { function() Utils.copy_filename_to_clipboard() end, "Copy file name" },
-                    Y = { function() Utils.copy_filepath_to_clipboard() end, "Copy file path" },
-                    -- stylua: ignore end
+                { "<leader>f", group = "File", nowait = true, remap = false },
+                {
+                    "<leader>fD",
+                    "<cmd>call delete(expand('%')) <bar> bdelete!<cr>",
+                    desc = "Delete this file",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>fF",
+                    function()
+                        Utils.find_files_from_here()
+                    end,
+                    desc = "Find file from here",
+                    nowait = true,
+                    remap = false,
+                },
+                { "<leader>fR", "<cmd>MurenToggle<cr>", desc = "Replace in files", nowait = true, remap = false },
+                { "<leader>fS", "<cmd>wa<cr>", desc = "Save all buffers", nowait = true, remap = false },
+                {
+                    "<leader>fY",
+                    function()
+                        Utils.copy_filepath_to_clipboard()
+                    end,
+                    desc = "Copy file path",
+                    nowait = true,
+                    remap = false,
+                },
+                { "<leader>fd", "<cmd>Oil<cr>", desc = "Find directory", nowait = true, remap = false },
+                {
+                    "<leader>fe",
+                    function()
+                        Utils.find_files_in_config()
+                    end,
+                    desc = "Find file in config",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>ff",
+                    function()
+                        Utils.find_files_in_project()
+                    end,
+                    desc = "Find file",
+                    nowait = true,
+                    remap = false,
+                },
+                { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent file", nowait = true, remap = false },
+                { "<leader>fs", "<cmd>w<cr>", desc = "Save buffer", nowait = true, remap = false },
+                {
+                    "<leader>fy",
+                    function()
+                        Utils.copy_filename_to_clipboard()
+                    end,
+                    desc = "Copy file name",
+                    nowait = true,
+                    remap = false,
                 },
 
                 -- <leader> g --- version control
-                g = {
-                    name = "VCS",
+                { "<leader>g", group = "VCS", icon = "", nowait = true, remap = false },
+                {
+                    "<leader>gg",
+                    function()
+                        Utils.ngit_here()
+                    end,
+                    desc = "Neogit",
                     icon = "",
-                    t = { "<cmd>Tardis<cr>", "Git time machine" },
-                    -- stylua: ignore start
-                    g = { function() Utils.ngit_here() end, "Neogit" },
-                    -- stylua: ignore end
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>gt",
+                    "<cmd>Tardis<cr>",
+                    desc = "Git time machine",
+                    icon = "",
+                    nowait = true,
+                    remap = false,
                 },
 
                 -- <leader> h --- help
-                h = {
-                    name = "Help",
+                { "<leader>h", group = "Help", icon = "󰞋", nowait = true, remap = false },
+                {
+                    "<leader>hc",
+                    "<cmd>Telescope commands<cr>",
+                    desc = "Commands",
                     icon = "󰞋",
-                    c = { "<cmd>Telescope commands<cr>", "Commands" },
-                    h = { "<cmd>Telescope help_tags<cr>", "Help" },
-                    k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-                    m = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
+                    nowait = true,
+                    remap = false,
                 },
+                {
+                    "<leader>hh",
+                    "<cmd>Telescope help_tags<cr>",
+                    desc = "Help",
+                    icon = "󰞋",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>hk",
+                    "<cmd>Telescope keymaps<cr>",
+                    desc = "Keymaps",
+                    icon = "󰞋",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>hm",
+                    "<cmd>Telescope man_pages<cr>",
+                    desc = "Man Pages",
+                    icon = "󰞋",
+                    nowait = true,
+                    remap = false,
+                },
+
                 -- <leader> i --- insert
-                i = {
-                    name = "Insert",
+                { "<leader>i", group = "Insert", icon = "󰏪", nowait = true, remap = false },
+                {
+                    "<leader>iF",
+                    "<cmd>exec 'normal! a' . expand('%:p')<cr>",
+                    desc = "Current file path",
                     icon = "󰏪",
-                    f = { "<cmd>exec 'normal! a' . expand('%:t')<cr>", "Current file name" },
-                    F = { "<cmd>exec 'normal! a' . expand('%:p')<cr>", "Current file path" },
-                    d = { "<cmd>exec 'normal! a' . strftime('%Y-%m-%d %H:%M')<cr>", "Current date and time" },
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>id",
+                    "<cmd>exec 'normal! a' . strftime('%Y-%m-%d %H:%M')<cr>",
+                    desc = "Current date and time",
+                    icon = "󰏪",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>if",
+                    "<cmd>exec 'normal! a' . expand('%:t')<cr>",
+                    desc = "Current file name",
+                    icon = "󰏪",
+                    nowait = true,
+                    remap = false,
                 },
 
                 -- <leader> o --- open
-                o = {
-                    name = "Open",
+                { "<leader>o", group = "Open", icon = " ", nowait = true, remap = false },
+                {
+                    "<leader>od",
+                    "<cmd>Oil<cr>",
+                    desc = "File manager from here",
                     icon = " ",
-                    -- Open from current buffer by default
-                    d = { "<cmd>Oil<cr>", "File manager from here" },
-
-                    -- stylua: ignore start
-                    p = { function() Utils.ntree_here() end, "Side panel" },
-                    x = { function() Utils.open_with(Path.current_dir()) end, "GUI File manager" },
-                    -- stylua: ignore end
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>op",
+                    function()
+                        Utils.ntree_here()
+                    end,
+                    desc = "Side panel",
+                    icon = " ",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>ox",
+                    function()
+                        Utils.open_with(Path.current_dir())
+                    end,
+                    desc = "GUI File manager",
+                    icon = " ",
+                    nowait = true,
+                    remap = false,
                 },
 
                 -- <leader> p --- project
-                p = {
-                    name = "Project",
+                { "<leader>p", group = "Project", icon = "", nowait = true, remap = false },
+                {
+                    "<leader>pf",
+                    function()
+                        Utils.find_files_in_project()
+                    end,
+                    desc = "Find project file",
                     icon = "",
-                    p = { "<cmd>Telescope projects<cr>", "Switch project" },
-
-                    -- stylua: ignore start
-                    f = { function() Utils.find_files_in_project() end, "Find project file" },
-                    s = { function() Utils.grep_in_project() end, "Search in project" },
-                    -- stylua: ignore end
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>pp",
+                    "<cmd>Telescope projects<cr>",
+                    desc = "Switch project",
+                    icon = "",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>ps",
+                    function()
+                        Utils.grep_in_project()
+                    end,
+                    desc = "Search in project",
+                    icon = "",
+                    nowait = true,
+                    remap = false,
                 },
 
                 -- <leader> q --- quit
-                q = {
-                    name = "Quit",
-                    -- Avoid accidental presses of lowercase 'q'
-                    Q = { "<cmd>wa <bar> qa<cr>", "Quit" },
-                },
+                { "<leader>q", group = "Quit", nowait = true, remap = false },
+
+                -- Avoid accidental presses of lowercase 'q'
+                { "<leader>qQ", "<cmd>wa <bar> qa<cr>", desc = "Quit", nowait = true, remap = false },
 
                 -- <leader> s --- search
-                s = {
-                    name = "Search",
-                    c = { "<cmd>Telescope command_history<cr>", "Command history" },
-                    C = { "<cmd>Telescope commands<cr>", "Commands" },
-                    K = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-                    r = { "<cmd>Telescope registers<cr>", "Registers" },
-                    u = { "<cmd>Telescope undo<cr>", "Visual undo" },
-                    s = { "<cmd>Telescope spell_suggest<cr>", "Spell candidate" },
-                    ['"'] = { "<cmd>Telescope registers<cr>", "Registers" },
-
-                    -- stylua: ignore start
-                    g = { function() Utils.grep_from_here() end, "Search" },
-                    -- stylua: ignore end
+                { "<leader>s", group = "Search", nowait = true, remap = false },
+                { '<leader>s"', "<cmd>Telescope registers<cr>", desc = "Registers", nowait = true, remap = false },
+                { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands", nowait = true, remap = false },
+                { "<leader>sK", "<cmd>Telescope keymaps<cr>", desc = "Keymaps", nowait = true, remap = false },
+                {
+                    "<leader>sc",
+                    "<cmd>Telescope command_history<cr>",
+                    desc = "Command history",
+                    nowait = true,
+                    remap = false,
                 },
+                {
+                    "<leader>sg",
+                    function()
+                        Utils.grep_from_here()
+                    end,
+                    desc = "Search",
+                    nowait = true,
+                    remap = false,
+                },
+                { "<leader>sr", "<cmd>Telescope registers<cr>", desc = "Registers", nowait = true, remap = false },
+                {
+                    "<leader>ss",
+                    "<cmd>Telescope spell_suggest<cr>",
+                    desc = "Spell candidate",
+                    nowait = true,
+                    remap = false,
+                },
+                { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Visual undo", nowait = true, remap = false },
 
                 -- <leader> t --- toggle
-                t = {
-                    name = "Toggle",
-                    C = { "<cmd>ColorizerToggle<cr>", "Rainbow color" },
-
-                    T = {
-                        function()
-                            if vim.b.ts_highlight then
-                                vim.treesitter.stop()
-                            else
-                                vim.treesitter.start()
-                            end
-                        end,
-                        "Treesitter",
-                    },
-
-                    -- stylua: ignore start
-                    c = { function() Utils.toggle_opt("conceallevel") end, "Conceal" },
-                    d = { function() Utils.toggle_diagnostics() end, "Diagnostics" },
-                    f = { function() Utils.toggle_autoformat() end, "Auto format" },
-                    h = { function() Utils.toggle_inlay_hints() end, "Inlay Hints" },
-                    l = { function() Utils.toggle_line_number() end, "Line numbers" },
-                    L = { function() Utils.toggle_opt("relativenumber") end, "Relative line numbers" },
-                    s = { function() Utils.toggle_opt("spell") end, "Spelling" },
-                    w = { function() Utils.toggle_opt("wrap") end, "Word wrap" },
-                    -- stylua: ignore end
+                { "<leader>t", group = "Toggle", nowait = true, remap = false },
+                { "<leader>tC", "<cmd>ColorizerToggle<cr>", desc = "Rainbow color", nowait = true, remap = false },
+                {
+                    "<leader>tL",
+                    function()
+                        Utils.toggle_opt("relativenumber")
+                    end,
+                    desc = "Relative line numbers",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>tT",
+                    function()
+                        if vim.b.ts_highlight then
+                            vim.treesitter.stop()
+                        else
+                            vim.treesitter.start()
+                        end
+                    end,
+                    desc = "Treesitter",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>tc",
+                    function()
+                        Utils.toggle_opt("conceallevel")
+                    end,
+                    desc = "Conceal",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>td",
+                    function()
+                        Utils.toggle_diagnostics()
+                    end,
+                    desc = "Diagnostics",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>tf",
+                    function()
+                        Utils.toggle_autoformat()
+                    end,
+                    desc = "Auto format",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>th",
+                    function()
+                        Utils.toggle_inlay_hints()
+                    end,
+                    desc = "Inlay Hints",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>tl",
+                    function()
+                        Utils.toggle_line_number()
+                    end,
+                    desc = "Line numbers",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>ts",
+                    function()
+                        Utils.toggle_opt("spell")
+                    end,
+                    desc = "Spelling",
+                    nowait = true,
+                    remap = false,
+                },
+                {
+                    "<leader>tw",
+                    function()
+                        Utils.toggle_opt("wrap")
+                    end,
+                    desc = "Word wrap",
+                    nowait = true,
+                    remap = false,
                 },
 
                 -- <leader> w --- window
-                w = {
-                    name = "Window",
-                    d = { "<c-w>c", "Delete window" },
-                    o = { "<c-w>o", "Delete other window" },
-                    ["<c-o>"] = { "<c-w>o", "Delete other window" },
-                    s = { "<c-w>s", "Horizontal Split" },
-                    -- `C-W p` doesn't work if the next buffer is opened via `Telescope`.
-                    -- However, it works when opened from `oil.nvim` or `:e .`.
-                    -- I am not the only one experiencing this issue; others have resorted to using `C-w hjkl`.
-                    -- But my Doom Emacs muscle memory is so strong that I don't want to abandon it.
-                    -- Thus, the wizards of the Neovim core team come to my rescue with this `expr` hackery.
-                    -- Thank you, Sean Dewar (seandewar).
-                    w = {
-                        "winnr('#') != 0 && winnr('#') != winnr() ? '<C-W>p' : '<C-W>w'",
-                        "Other window",
-                        expr = true,
-                    },
-                    v = { "<c-w>v", "Vertical Split" },
-                },
-            }
-
-            local opts = {
-                mode = "n", -- NORMAL mode
-                prefix = "<leader>",
-                buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-                silent = true, -- use `silent` when creating keymaps
-                noremap = true, -- use `noremap` when creating keymaps
-                nowait = true, -- use `nowait` when creating keymaps
-            }
-
-            -- NOTE: Prefer using : over <cmd> as the latter avoids going back in normal-mode.
-            -- see https://neovim.io/doc/user/map.html#:map-cmd
-            local vmappings = {
-                -- <leader> c --- code
-                c = {
-                    name = "Code",
-                    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-                },
-
-                -- <leader> e --- editor
-                e = {
-                    name = "Editor",
-                    m = { "<cmd>MCstart<cr>", "Multiple cursors" },
-                },
-            }
-
-            local vopts = {
-                mode = "v", -- VISUAL mode
-                prefix = "<leader>",
-                buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-                silent = true, -- use `silent` when creating keymaps
-                noremap = true, -- use `noremap` when creating keymaps
-                nowait = true, -- use `nowait` when creating keymaps
-            }
-
-            local which_key = require("which-key")
-            which_key.setup({
-                plugins = {
-                    marks = false, -- shows a list of your marks on ' and `
-                    registers = false, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
-                    spelling = {
-                        enabled = true,
-                        suggestions = 20,
-                    }, -- use which-key for spelling hints
-                    -- the presets plugin, adds help for a bunch of default keybindings in Neovim
-                    -- No actual key bindings are created
-                    presets = {
-                        operators = false, -- adds help for operators like d, y, ...
-                        motions = false, -- adds help for motions
-                        text_objects = false, -- help for text objects triggered after entering an operator
-                        windows = false, -- default bindings on <c-w>
-                        nav = false, -- misc bindings to work with windows
-                        z = false, -- bindings for folds, spelling and others prefixed with z
-                        g = false, -- bindings for prefixed with g
-                    },
-                },
-                popup_mappings = {
-                    scroll_down = "<c-d>", -- binding to scroll down inside the popup
-                    scroll_up = "<c-u>", -- binding to scroll up inside the popup
-                },
-                window = {
-                    border = "rounded", -- none, single, double, shadow
-                    position = "bottom", -- bottom, top
-                    margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-                    padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-                    winblend = 0,
-                },
-                layout = {
-                    height = { min = 4, max = 25 }, -- min and max height of the columns
-                    width = { min = 20, max = 50 }, -- min and max width of the columns
-                    spacing = 3, -- spacing between columns
-                    align = "left", -- align columns left, center or right
-                },
-                ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
-                hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
-                show_help = true, -- show help message on the command line when the popup is visible
-                show_keys = true, -- show the currently pressed key and its label as a message in the command line
-                triggers = "auto", -- automatically setup triggers
-                -- triggers = {"<leader>"} -- or specify a list manually
-                triggers_blacklist = {
-                    -- list of mode / prefixes that should never be hooked by WhichKey
-                    -- this is mostly relevant for key maps that start with a native binding
-                    -- most people should not need to change this
-                    i = { "j", "k" },
-                    v = { "j", "k" },
-                },
-                -- disable the WhichKey popup for certain buf types and file types.
-                -- Disabled by default for Telescope
-                disable = {
-                    buftypes = {},
-                    filetypes = { "TelescopePrompt" },
+                { "<leader>w", group = "Window", nowait = true, remap = false },
+                { "<leader>w<c-o>", "<c-w>o", desc = "Delete other window", nowait = true, remap = false },
+                { "<leader>wd", "<c-w>c", desc = "Delete window", nowait = true, remap = false },
+                { "<leader>wo", "<c-w>o", desc = "Delete other window", nowait = true, remap = false },
+                { "<leader>ws", "<c-w>s", desc = "Horizontal Split", nowait = true, remap = false },
+                { "<leader>wv", "<c-w>v", desc = "Vertical Split", nowait = true, remap = false },
+                -- `C-W p` doesn't work if the next buffer is opened via `Telescope`.
+                -- However, it works when opened from `oil.nvim` or `:e .`.
+                -- I am not the only one experiencing this issue; others have resorted to using `C-w hjkl`.
+                -- But my Doom Emacs muscle memory is so strong that I don't want to abandon it.
+                -- Thus, the wizards of the Neovim core team come to my rescue with this `expr` hackery.
+                -- Thank you, Sean Dewar (seandewar).
+                {
+                    "<leader>ww",
+                    "winnr('#') != 0 && winnr('#') != winnr() ? '<C-W>p' : '<C-W>w'",
+                    desc = "Other window",
+                    expr = true,
+                    nowait = true,
+                    remap = false,
+                    replace_keycodes = false,
                 },
             })
-
-            which_key.register(mappings, opts)
-            which_key.register(vmappings, vopts)
         end,
     },
 }
