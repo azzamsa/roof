@@ -142,6 +142,14 @@ function M.toggle_autoformat()
     end
 end
 
+function M.toggle_treesitter()
+    if vim.b.ts_highlight then
+        vim.treesitter.stop()
+    else
+        vim.treesitter.start()
+    end
+end
+
 --
 -- scratch
 --

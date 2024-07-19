@@ -18,7 +18,7 @@ return {
                 { "<leader>,", "<cmd>Telescope buffers previewer=false<cr>", desc = "Switch buffer", nowait = true, remap = false },
                 { "<leader>.", function() Utils.find_files_from_here() end, desc = "Find file from here", nowait = true, remap = false },
                 { "<leader>/", function() Utils.grep_in_project() end, desc = "Search in project", nowait = true, remap = false },
-                { "<leader><cr>", function() local bookmarks = require("etc.bookmarks").bookmarks require("configs.utils.picker").bookmarks({ bookmarks = bookmarks }) end, desc = "Jump to bookmark", nowait = true, remap = false },
+                { "<leader><cr>", function() require("configs.utils.picker").bookmarks({ bookmarks = require("etc.bookmarks").bookmarks }) end, desc = "Jump to bookmark", nowait = true, remap = false },
                 { "<leader><space>", function() Utils.find_files_in_project() end, desc = "Find project file", nowait = true, remap = false },
                 { "<leader>`", "<cmd>buffer#<cr>", desc = "Switch to last buffer", nowait = true, remap = false },
 
@@ -116,7 +116,7 @@ return {
                 { "<leader>tL", function() Utils.toggle_opt("relativenumber") end, desc = "Relative line numbers", nowait = true, remap = false },
                 { "<leader>ts", function() Utils.toggle_opt("spell") end, desc = "Spelling", nowait = true, remap = false },
                 { "<leader>tw", function() Utils.toggle_opt("wrap") end, desc = "Word wrap", nowait = true, remap = false },
-                { "<leader>tT", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, desc = "Treesitter", nowait = true, remap = false },
+                { "<leader>tT", function() Utils.toggle_treesitter() end, desc = "Treesitter", nowait = true, remap = false },
 
                 -- <leader> w --- window
                 { "<leader>w", group = "Window", nowait = true, remap = false },
