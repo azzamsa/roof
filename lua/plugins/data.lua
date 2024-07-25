@@ -15,6 +15,13 @@ return {
         ft = { "just" },
     },
     {
+        "MeanderingProgrammer/markdown.nvim",
+        -- main module, see https://lazy.folke.io/spec
+        main = "render-markdown",
+        opts = {},
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+    },
+    {
         "iamcco/markdown-preview.nvim",
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
         build = function()
