@@ -8,10 +8,11 @@ return {
         config = function()
             require("tardis-nvim").setup({
                 keymap = {
-                    ["next"] = "<C-n>", -- next entry in log (older)
-                    ["prev"] = "<C-e>", -- previous entry in log (newer)
+                    ["next"] = "<C-e>", -- next entry in log (older)
+                    ["prev"] = "<C-i>", -- previous entry in log (newer)
                     ["quit"] = "q", -- quit all
                     ["revision_message"] = "m", -- show revision message for current revision
+                    ["commit"] = "<C-g>", -- replace contents of origin buffer with contents of tardis buffer
                 },
                 initial_revisions = 10, -- initial revisions to create buffers for
                 max_revisions = 256, -- max number of revisions to load
