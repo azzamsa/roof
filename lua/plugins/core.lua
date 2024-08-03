@@ -35,7 +35,7 @@ return {
 
                 -- <leader> c --- code
                 { "<leader>c", group = "Code", nowait = true, remap = false },
-                { "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "Code Action", nowait = true, remap = false },
+                { "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "Code Action", mode = { "n", "v" }, nowait = true, remap = false },
                 { "<leader>cd", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "Jump to definition", nowait = true, remap = false },
                 { "<leader>ce", "<cmd>lua vim.diagnostic.open_float()<cr>", desc = "Line Diagnostics", nowait = true, remap = false },
                 { "<leader>cf", function() require("conform").format({ async = false, lsp_fallback = false }) end, desc = "Format", nowait = true, remap = false },
@@ -44,6 +44,10 @@ return {
                 { "<leader>cw", "<cmd>Trim<cr>", desc = "Delete trailing whitespaces", nowait = true, remap = false }, { "<leader>cx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Diagnostics", nowait = true, remap = false },
                 { "<leader>cS", "<cmd>SymbolsOutline<cr>", desc = "Symbols", nowait = true, remap = false },
                 { "<leader>cX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Project diagnostics", nowait = true, remap = false },
+
+                -- <leader> e --- editor
+                { "<leader>e", group = "Editor", nowait = true, remap = false },
+                { "<leader>em", "<cmd>MCstart<cr>", desc = "Multiple cursors", mode = "v", nowait = true, remap = false },
 
                 -- <leader> f --- file
                 { "<leader>f", group = "File", nowait = true, remap = false },
