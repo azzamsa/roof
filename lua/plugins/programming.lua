@@ -230,6 +230,7 @@ return {
                 "tsserver", -- TypeScript language server
                 "jsonls", -- JSON language server
                 "tailwindcss", -- Tailwind language server
+                "svelte", -- Svelte language server
                 -- Python
                 "pyright", -- language server
             }
@@ -332,6 +333,7 @@ return {
                 "query",
                 "regex",
                 "scss",
+                "svelte",
                 "toml",
                 "tsx",
                 "typescript",
