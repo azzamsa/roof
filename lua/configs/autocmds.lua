@@ -7,6 +7,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
         vim.highlight.on_yank({ higroup = "Visual", timeout = 40 })
+        vim.notify("📋 Copied to clipboard", "info", { title = "Clipboard", timeout = 300 })
     end,
 })
 
