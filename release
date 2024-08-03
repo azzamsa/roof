@@ -1,0 +1,33 @@
+#!/usr/bin/env nu
+
+# Create a release.
+# Usage: ./release --help
+
+def main [
+  tag: string, # tag. e.g v1.0.0
+  ] {
+
+    # Check for untracked files
+    let untracked_files = (git ls-files . --exclude-standard --others)
+    if not ($untracked_files | is-empty) {
+        echo "Error: Please stash or remove the untracked files!"
+        exit 1
+    }
+
+    # Update the changelog
+    print "Updating the changelog"
+    git-cliff --config .cliff.toml --tag $tag --output CHANGELOG.md
+
+    # Format the newly created changelog file
+    just fmt
+
+    # Write the new_version to a file 'version'
+    $tag | save version --force
+
+    # Commit a release
+    git add --all
+    git commit --message $tag
+    git show
+    git tag --sign --annotate $tag --message "For details, see the CHANGELOG.md"
+    git tag --verify $tag
+}

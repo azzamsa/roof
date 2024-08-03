@@ -35,4 +35,4 @@ lint:
 
 # Create a release. Example `just release v0.1.0`
 release version:
-    python scripts/release.py {{ version }}
+    ./release {{ version }}
