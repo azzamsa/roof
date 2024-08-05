@@ -34,7 +34,7 @@ end
 -- Get a valid PATH for `cd` argument
 -- Remove any app previxes such as `oil://`
 ---@param path string
-function M.validate(path)
+function M.sanitize(path)
     -- Is this `Oil` path?
     local is_oil_path = string.match(path, "^oil://")
     if is_oil_path then

@@ -76,7 +76,7 @@ return {
                     -- ToggleTerm buffer path instead of current buffer path.
                     local path = Path.previous_dir()
                     if path then
-                        path = Path.validate(path)
+                        path = Path.sanitize(path)
                     else
                         -- Fallback to home if no previous directory found
                         path = "~/"

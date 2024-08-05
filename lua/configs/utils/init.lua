@@ -4,19 +4,19 @@ local Path = require("configs.utils.path")
 
 -- Open `target` with default app
 function M.open_with(target)
-    target = Path.validate(target)
+    target = Path.sanitize(target)
     vim.fn.system("xdg-open " .. target)
 end
 
 -- Live grep from current buffer directory
 function M.grep_from_here()
-    local here = Path.validate(Path.current_dir())
+    local here = Path.sanitize(Path.current_dir())
     Ext.live_grep(here)
 end
 
 -- Live grep from the project root.
 function M.grep_in_project()
-    local path = Path.validate(Path.current_dir())
+    local path = Path.sanitize(Path.current_dir())
     Ext.live_grep(Path.project_root_or_cwd(path))
 end
 
@@ -27,13 +27,13 @@ end
 
 -- Find files from the directory of the currently opened buffer.
 function M.find_files_from_here()
-    local here = Path.validate(Path.current_dir())
+    local here = Path.sanitize(Path.current_dir())
     Ext.find_files(here)
 end
 
 -- Find files from the project root.
 function M.find_files_in_project()
-    local path = Path.validate(Path.current_dir())
+    local path = Path.sanitize(Path.current_dir())
     path = Path.project_root_or_cwd(path)
     Ext.find_files(path)
 end
@@ -43,7 +43,7 @@ end
 function M.ngit_here()
     -- Simply using `("neogit").open()` doesn't work within the Oil directory.
     -- The `Path.validate()` function serves as a helper to provide a valid path based on the Oil path.
-    local path = Path.validate(Path.current_dir())
+    local path = Path.sanitize(Path.current_dir())
 
     -- it must be from VCS root!
     -- Override other project root marks such as `.projectile`
@@ -64,7 +64,7 @@ end
 
 -- Open neotree
 function M.ntree_here()
-    local path = Path.validate(Path.current_dir())
+    local path = Path.sanitize(Path.current_dir())
     path = Path.project_root_or_cwd(path)
     Ext.neotree_open(path)
 end
