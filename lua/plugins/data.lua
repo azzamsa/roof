@@ -16,7 +16,7 @@ return {
     },
     {
         "MeanderingProgrammer/markdown.nvim",
-        -- main module, see https://lazy.folke.io/spec
+        enabled = false,
         main = "render-markdown",
         opts = {},
         dependencies = { "nvim-treesitter/nvim-treesitter" },
