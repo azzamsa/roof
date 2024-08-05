@@ -22,12 +22,14 @@ end
 -- Get absolute path of current file
 function M.abs_path()
     local path = vim.fn.expand("%:p")
+    path = M.sanitize(path)
     return path
 end
 
 -- Get a name of the current file
 function M.filename()
     local path = vim.fn.expand("%:t")
+    path = M.sanitize(path)
     return path
 end
 
@@ -42,13 +44,8 @@ function M.sanitize(path)
         path = string.gsub(path, "^oil://", "")
     end
 
-    -- Is the path contains whitespace?
-    -- local is_contains_whitespace = string.find(path, "%s")
-    local is_contains_whitespace = string.find(path, "%s") ~= nil
-    if is_contains_whitespace then
-        -- Escape spaces in the path
-        path = vim.fn.shellescape(path)
-    end
+    -- Espace whitespace, parens, etc
+    path = vim.fn.shellescape(path)
 
     return path
 end
