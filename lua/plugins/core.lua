@@ -35,7 +35,7 @@ return {
 
                 -- <leader> c --- code
                 { "<leader>c", group = "Code", nowait = true, remap = false },
-                { "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "Code Action", mode = { "n", "v" }, nowait = true, remap = false },
+                { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
                 { "<leader>cd", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "Jump to definition", nowait = true, remap = false },
                 { "<leader>ce", "<cmd>lua vim.diagnostic.open_float()<cr>", desc = "Line Diagnostics", nowait = true, remap = false },
                 { "<leader>cf", function() require("conform").format({ async = false, lsp_fallback = false }) end, desc = "Format", nowait = true, remap = false },
