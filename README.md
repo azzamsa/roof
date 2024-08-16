@@ -2,11 +2,6 @@
 
 # Roof!
 
-<a href="https://github.com/neovim/neovim">
-    <img src="https://img.shields.io/badge/nvim-v0.9.4-blue" alt="NVIM v0.9.4" />
-</a>
-<br/><br/>
-
 _Code beneath my own roof!_
 
 **Roof!** features:
