@@ -30,7 +30,7 @@ fmt-check:
 
 # Lint the codebase.
 lint:
-    typos . --config configs/typos.toml
+    typos
     selene . --quiet
 
 # Create a release. Example `just release v0.1.0`
