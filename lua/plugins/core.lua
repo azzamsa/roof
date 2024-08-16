@@ -35,19 +35,15 @@ return {
 
                 -- <leader> c --- code
                 { "<leader>c", group = "Code", nowait = true, remap = false },
-                { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
-                { "<leader>cd", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "Jump to definition", nowait = true, remap = false },
-                { "<leader>ce", "<cmd>lua vim.diagnostic.open_float()<cr>", desc = "Line Diagnostics", nowait = true, remap = false },
+                { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" } },
+                { "<leader>cd", vim.lsp.buf.definition, desc = "Jump to definition", nowait = true, remap = false },
+                { "<leader>ce", vim.diagnostic.open_float, desc = "Line Diagnostics", nowait = true, remap = false },
                 { "<leader>cf", function() require("conform").format({ async = false, lsp_fallback = false }) end, desc = "Format", nowait = true, remap = false },
                 { "<leader>cp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview", nowait = true, remap = false },
-                { "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "Rename", nowait = true, remap = false },
+                { "<leader>cr", vim.lsp.buf.rename, desc = "Rename", nowait = true, remap = false },
                 { "<leader>cw", "<cmd>Trim<cr>", desc = "Delete trailing whitespaces", nowait = true, remap = false }, { "<leader>cx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Diagnostics", nowait = true, remap = false },
                 { "<leader>cS", "<cmd>SymbolsOutline<cr>", desc = "Symbols", nowait = true, remap = false },
                 { "<leader>cX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Project diagnostics", nowait = true, remap = false },
-
-                -- <leader> e --- editor
-                { "<leader>e", group = "Editor", nowait = true, remap = false },
-                { "<leader>em", "<cmd>MCstart<cr>", desc = "Multiple cursors", mode = "v", nowait = true, remap = false },
 
                 -- <leader> f --- file
                 { "<leader>f", group = "File", nowait = true, remap = false },
@@ -136,6 +132,9 @@ return {
                 -- Thus, the wizards of the Neovim core team come to my rescue with this `expr` hackery.
                 -- Thank you, Sean Dewar (seandewar).
                 { "<leader>ww", "winnr('#') != 0 && winnr('#') != winnr() ? '<C-W>p' : '<C-W>w'", desc = "Other window", expr = true, nowait = true, remap = false, replace_keycodes = false },
+
+                -- misc
+                { "<leader>m", "<cmd>MCstart<cr>", desc = "Multiple cursors", mode = "v", nowait = true, remap = false },
             })
             -- stylua: ignore end
         end,
