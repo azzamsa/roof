@@ -44,7 +44,7 @@ function M.sanitize(path)
         path = string.gsub(path, "^oil://", "")
     end
 
-    -- Espace whitespace, parens, etc
+    -- Escape whitespace, parens, etc
     path = vim.fn.shellescape(path)
 
     return path
