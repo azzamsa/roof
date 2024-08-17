@@ -39,25 +39,37 @@ map({ "n", "v" }, "U", "I", { desc = "" })
 map({ "n", "v" }, "m", "o", { desc = "" })
 map({ "n", "v" }, "M", "O", { desc = "" })
 
+-- Marks
+map({ "n" }, "h", "m", { desc = "" })
+map({ "n" }, "h", "m", { desc = "" })
+
 -- Undo operations
 map({ "n" }, "l", "u", { desc = "" })
+
 -- Join lines
 map({ "n", "v" }, "N", "J", { desc = "" })
+
 -- Lookup
 map({ "n", "v" }, "E", "K", { desc = "" })
+
 -- Jump to bottom of window
 map({ "n", "v", "o" }, "I", "L", { desc = "" })
+
 -- Downcase/upcase
 map({ "v" }, "l", "u", { desc = "" })
 map({ "v" }, "L", "U", { desc = "" })
+
 -- Inner text object keymap
 map({ "o" }, "u", "i", { desc = "" })
+
 -- Jump to end of word
 map({ "n", "v", "o" }, "f", "e", { desc = "" })
 map({ "n", "v", "o" }, "F", "E", { desc = "" })
+
 -- Jump to character
 map({ "n", "v", "o" }, "t", "f", { desc = "" })
 map({ "n", "v", "o" }, "T", "F", { desc = "" })
+
 -- jump until character
 map({ "n", "v", "o" }, "j", "T", { desc = "" })
 map({ "n", "v", "o" }, "j", "T", { desc = "" })

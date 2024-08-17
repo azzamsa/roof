@@ -99,7 +99,7 @@ return {
                 { "<leader>sc", "<cmd>FzfLua command_history<cr>", desc = "Command history", nowait = true, remap = false },
                 { "<leader>sC", "<cmd>FzfLua commands<cr>", desc = "Commands", nowait = true, remap = false },
                 { "<leader>sg", function() Utils.grep_from_here() end, desc = "Search", nowait = true, remap = false },
-                { "<leader>sr", "<cmd>FzfLua registers<cr>", desc = "Registers", nowait = true, remap = false },
+                { "<leader>sr", "<cmd>FzfLua marks<cr>", desc = "Marks", nowait = true, remap = false },
                 { "<leader>ss", "<cmd>FzfLua spell_suggest<cr>", desc = "Spell candidate", nowait = true, remap = false },
                 { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Visual undo", nowait = true, remap = false },
                 { "<leader>sK", "<cmd>FzfLua keymaps<cr>", desc = "Keymaps", nowait = true, remap = false },
