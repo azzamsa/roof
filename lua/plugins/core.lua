@@ -11,20 +11,20 @@ return {
 
             -- stylua: ignore start
             which_key.add({
-                -- Every keymap that uses a custom functionmeans the default `Telescope <*>`
+                -- Every keymap that uses a custom functionmeans the default `FzfLua ...`
                 -- always starts from the `cwd`.
                 { "<leader>x", function() Utils.toggle_scratch_buffer() end, desc = "Open scratch buffer", nowait = true, remap = false },
-                { "<leader>'", "<cmd>Telescope resume<cr>", desc = "Resume last search", nowait = true, remap = false },
-                { "<leader>,", "<cmd>Telescope buffers previewer=false<cr>", desc = "Switch buffer", nowait = true, remap = false },
+                { "<leader>'", "<cmd>FzfLua live_grep_resume<cr>", desc = "Resume last search", nowait = true, remap = false },
+                { "<leader>,", "<cmd>FzfLua buffers previewer=false<cr>", desc = "Switch buffer", nowait = true, remap = false },
                 { "<leader>.", function() Utils.find_files_from_here() end, desc = "Find file from here", nowait = true, remap = false },
                 { "<leader>/", function() Utils.grep_in_project() end, desc = "Search in project", nowait = true, remap = false },
-                { "<leader><cr>", function() require("configs.utils.picker").bookmarks({ bookmarks = require("etc.bookmarks").bookmarks }) end, desc = "Jump to bookmark", nowait = true, remap = false },
+                { "<leader><cr>", function() Utils.bookmarks() end, desc = "Jump to bookmark", nowait = true, remap = false },
                 { "<leader><space>", function() Utils.find_files_in_project() end, desc = "Find project file", nowait = true, remap = false },
                 { "<leader>`", "<cmd>buffer#<cr>", desc = "Switch to last buffer", nowait = true, remap = false },
 
                 -- <leader> b --- buffer
                 { "<leader>b", group = "Buffers", nowait = true, remap = false },
-                { "<leader>bb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Switch buffer", nowait = true, remap = false },
+                { "<leader>bb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "Switch buffer", nowait = true, remap = false },
                 { "<leader>bk", "<cmd>bd<cr>", desc = "Kill buffer", nowait = true, remap = false },
                 { "<leader>bK", "<cmd>%bd!<cr>", desc = "Kill all buffer", nowait = true, remap = false },
                 { "<leader>br", "<cmd>edit!<cr>", desc = "Revert buffer", nowait = true, remap = false },
@@ -54,7 +54,7 @@ return {
                 { "<leader>fe", function() Utils.find_files_in_config() end, desc = "Find file in config", nowait = true, remap = false },
                 { "<leader>ff", function() Utils.find_files_in_project() end, desc = "Find file", nowait = true, remap = false },
                 { "<leader>fF", function() Utils.find_files_from_here() end, desc = "Find file from here", nowait = true, remap = false },
-                { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent file", nowait = true, remap = false },
+                { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent file", nowait = true, remap = false },
                 { "<leader>fR", "<cmd>MurenToggle<cr>", desc = "Replace in files", nowait = true, remap = false },
                 { "<leader>fs", "<cmd>w<cr>", desc = "Save buffer", nowait = true, remap = false },
                 { "<leader>fS", "<cmd>wa<cr>", desc = "Save all buffers", nowait = true, remap = false },
@@ -66,10 +66,10 @@ return {
 
                 -- <leader> h --- help
                 { "<leader>h", group = "Help", icon = "󰞋", nowait = true, remap = false },
-                { "<leader>hc", "<cmd>Telescope commands<cr>", desc = "Commands", icon = "󰞋", nowait = true, remap = false },
-                { "<leader>hh", "<cmd>Telescope help_tags<cr>", desc = "Help", icon = "󰞋", nowait = true, remap = false },
-                { "<leader>hk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps", icon = "󰞋", nowait = true, remap = false },
-                { "<leader>hm", "<cmd>Telescope man_pages<cr>", desc = "Man Pages", icon = "󰞋", nowait = true, remap = false },
+                { "<leader>hc", "<cmd>FzfLua commands<cr>", desc = "Commands", icon = "󰞋", nowait = true, remap = false },
+                { "<leader>hh", "<cmd>FzfLua help_tags<cr>", desc = "Help", icon = "󰞋", nowait = true, remap = false },
+                { "<leader>hk", "<cmd>FzfLua keymaps<cr>", desc = "Keymaps", icon = "󰞋", nowait = true, remap = false },
+                { "<leader>hm", "<cmd>FzfLua man_pages<cr>", desc = "Man Pages", icon = "󰞋", nowait = true, remap = false },
 
                 -- <leader> i --- insert
                 { "<leader>i", group = "Insert", icon = "󰏪", nowait = true, remap = false },
@@ -86,7 +86,7 @@ return {
                 -- <leader> p --- project
                 { "<leader>p", group = "Project", icon = "", nowait = true, remap = false },
                 { "<leader>pf", function() Utils.find_files_in_project() end, desc = "Find project file", icon = "", nowait = true, remap = false },
-                { "<leader>pp", "<cmd>Telescope projects<cr>", desc = "Switch project", icon = "", nowait = true, remap = false },
+                { "<leader>pp", function() Utils.projects() end, desc = "Switch project", icon = "", nowait = true, remap = false },
                 { "<leader>ps", function() Utils.grep_in_project() end, desc = "Search in project", icon = "", nowait = true, remap = false },
 
                 -- <leader> q --- quit
@@ -96,14 +96,13 @@ return {
 
                 -- <leader> s --- search
                 { "<leader>s", group = "Search", nowait = true, remap = false },
-                { '<leader>s"', "<cmd>Telescope registers<cr>", desc = "Registers", nowait = true, remap = false },
-                { "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command history", nowait = true, remap = false },
-                { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands", nowait = true, remap = false },
+                { "<leader>sc", "<cmd>FzfLua command_history<cr>", desc = "Command history", nowait = true, remap = false },
+                { "<leader>sC", "<cmd>FzfLua commands<cr>", desc = "Commands", nowait = true, remap = false },
                 { "<leader>sg", function() Utils.grep_from_here() end, desc = "Search", nowait = true, remap = false },
-                { "<leader>sr", "<cmd>Telescope registers<cr>", desc = "Registers", nowait = true, remap = false },
-                { "<leader>ss", "<cmd>Telescope spell_suggest<cr>", desc = "Spell candidate", nowait = true, remap = false },
+                { "<leader>sr", "<cmd>FzfLua registers<cr>", desc = "Registers", nowait = true, remap = false },
+                { "<leader>ss", "<cmd>FzfLua spell_suggest<cr>", desc = "Spell candidate", nowait = true, remap = false },
                 { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Visual undo", nowait = true, remap = false },
-                { "<leader>sK", "<cmd>Telescope keymaps<cr>", desc = "Keymaps", nowait = true, remap = false },
+                { "<leader>sK", "<cmd>FzfLua keymaps<cr>", desc = "Keymaps", nowait = true, remap = false },
 
                 -- <leader> t --- toggle
                 { "<leader>t", group = "Toggle", nowait = true, remap = false },

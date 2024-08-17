@@ -226,10 +226,19 @@ return {
                             override_generic_sorter = true, -- override the generic sorter
                             override_file_sorter = true, -- override the file sorter
                             case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+                            theme = "ivy",
                         },
                     },
                 },
             })
+        end,
+    },
+    -- Fuzzy find things.
+    {
+        "ibhagwan/fzf-lua",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            require("fzf-lua").setup({})
         end,
     },
     -- Project management.

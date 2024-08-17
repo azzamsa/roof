@@ -38,6 +38,17 @@ function M.find_files_in_project()
     Ext.find_files(path)
 end
 
+-- Open projects
+function M.projects()
+    Ext.projects()
+end
+
+-- Open bookmarks
+function M.bookmarks()
+    local paths = require("etc.bookmarks").bookmarks
+    Ext.bookmarks(paths)
+end
+
 -- I choose to name this function 'ngit' so that I won't need to alter the function name
 -- regardless of the extension changes.
 function M.ngit_here()
