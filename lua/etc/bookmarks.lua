@@ -10,13 +10,15 @@ M.bookmarks = {
     "~/playground",
     "~/projects",
     "~/office",
+    "~/Downloads/",
 }
 
 local personal_bookmarks = require("configs.personal").bookmarks
 
--- Concatenate the two bookmarks
+-- Concatenate and sort the two bookmarks
 for _, bookmark in ipairs(personal_bookmarks) do
     table.insert(M.bookmarks, bookmark)
+    table.sort(M.bookmarks)
 end
 
 return M
