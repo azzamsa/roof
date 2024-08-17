@@ -33,7 +33,7 @@ return {
             dashboard.section.buttons.val = {
                 -- stylua: ignore start
                 button("f", Icons.ui.Files .. " Find file", ":FzfLua find_files <CR>"),
-                button( "p", Icons.git.Repo .. " Find project", ":lua require('telescope').extensions.projects.projects()<CR>"),
+                button("p", Icons.git.Repo .. " Find project", function() require("configs.utils").bookmarks() end),
                 button("r", Icons.ui.History .. " Recent files", ":FzfLua oldfiles <CR>"),
                 button("Q", Icons.ui.SignOut .. " Quit", ":qa<CR>"),
                 -- stylua: ignore end
