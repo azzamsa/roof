@@ -1,11 +1,12 @@
 local M = {}
 
 function M.find_files(path)
-    require("fzf-lua").files()
+    require("fzf-lua").files({ cwd = path })
 end
 
 function M.live_grep(path)
     require("fzf-lua").live_grep({
+        cwd = path,
         winopts = {
             fullscreen = true,
             preview = {
