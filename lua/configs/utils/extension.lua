@@ -8,11 +8,8 @@ function M.live_grep(path)
     require("fzf-lua").live_grep({
         cwd = path,
         winopts = {
-            fullscreen = true,
             preview = {
-                vertical = "up:80%",
                 layout = "vertical",
-                scrollbar = false,
             },
         },
     })

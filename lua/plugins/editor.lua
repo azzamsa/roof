@@ -238,7 +238,23 @@ return {
         "ibhagwan/fzf-lua",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
-            require("fzf-lua").setup({})
+            require("fzf-lua").setup({
+                winopts = {
+                    -- I have small monitors
+                    height = 0.90,
+                    width = 0.98,
+                    preview = {
+                        -- I have long path names, and the preview is not that important.
+                        horizontal = "right:40%",
+                        vertical = "up:80%",
+                    },
+                },
+                previewers = {
+                    git_diff = {
+                        pager = "delta",
+                    },
+                },
+            })
         end,
     },
     -- Find and replace across files.
