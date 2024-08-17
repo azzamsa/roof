@@ -23,7 +23,7 @@ function M.bookmarks(paths)
         prompt = "🔖 Bookmarks> ",
         actions = {
             ["default"] = function(selection)
-              require("oil").open(selection[1])
+                require("oil").open(selection[1])
             end,
         },
     })
@@ -39,7 +39,7 @@ function M.projects()
         prompt = "🗜️ Projects> ",
         actions = {
             ["default"] = function(selection)
-              require("oil").open(selection[1])
+                require("oil").open(selection[1])
             end,
             ["ctrl-d"] = function(x)
                 local selection = vim.fn.confirm("Delete '" .. #x .. "' projects? ", "&Yes\n&No", 2)
