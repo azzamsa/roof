@@ -32,7 +32,7 @@ return {
 
             dashboard.section.buttons.val = {
                 -- stylua: ignore start
-                button("f", Icons.ui.Files .. " Find file", ":FzfLua find_files <CR>"),
+                button("f", Icons.ui.Files .. " Find file", ":FzfLua files <CR>"),
                 button("p", Icons.git.Repo .. " Find project", function() require("configs.utils").bookmarks() end),
                 button("r", Icons.ui.History .. " Recent files", ":FzfLua oldfiles <CR>"),
                 button("Q", Icons.ui.SignOut .. " Quit", ":qa<CR>"),
@@ -112,6 +112,7 @@ return {
     -- Replaces the UI for messages, cmdline and the popupmenu.
     {
         "folke/noice.nvim",
+        tag = "stable",
         event = "VeryLazy",
         dependencies = {
             {

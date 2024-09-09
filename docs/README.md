@@ -5,6 +5,7 @@
 ```lua
 {
     "folke/tokyonight.nvim",
+    tag = "stable",
     lazy = false,
     priority = 1000,
     opts = {},

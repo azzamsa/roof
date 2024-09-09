@@ -84,6 +84,7 @@ return {
     -- Find the the linter errors
     {
         "folke/trouble.nvim",
+        tag = "stable",
         opts = { use_diagnostic_signs = true },
     },
     -- Displays vertical lines to indicate indentation levels.
@@ -227,7 +228,7 @@ return {
                 -- FE
                 "html",
                 "cssls",
-                "tsserver", -- TypeScript language server
+                "ts_ls", -- TypeScript language server
                 "jsonls", -- JSON language server
                 "tailwindcss", -- Tailwind language server
                 "svelte", -- Svelte language server
@@ -366,7 +367,9 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             {
-                "folke/neodev.nvim",
+                "folke/lazydev.nvim",
+                tag = "stable",
+                ft = "lua",
                 opts = {},
             },
         },
@@ -421,7 +424,7 @@ return {
                 },
                 cssls = {},
                 jsonls = {},
-                tsserver = {},
+                ts_ls = {},
                 tailwindcss = {},
                 -- Python
                 pyright = {},

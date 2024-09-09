@@ -4,6 +4,7 @@ local Utils = require("configs.utils")
 return {
     {
         "folke/which-key.nvim",
+        tag = "stable",
         event = "VeryLazy",
         config = function()
             local which_key = require("which-key")

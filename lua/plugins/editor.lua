@@ -318,6 +318,7 @@ return {
     -- Jump around (à la Avy)
     {
         "folke/flash.nvim",
+        tag = "stable",
         event = "VeryLazy",
         ---@type Flash.Config
         opts = {},
