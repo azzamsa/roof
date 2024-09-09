@@ -9,8 +9,8 @@ M.bookmarks = {
     "~/.local",
     "~/playground",
     "~/projects",
-    "~/office",
-    "~/Downloads/",
+    "~/canteen",
+    "~/Downloads",
 }
 
 local personal_bookmarks = require("configs.personal").bookmarks
