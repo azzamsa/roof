@@ -36,6 +36,9 @@ map({ "n", "v", "o" }, "K", "N", { desc = "" })
 map({ "n", "v" }, "u", "i", { desc = "" })
 map({ "n", "v" }, "U", "I", { desc = "" })
 
+-- Inner text object keymap
+map({ "o" }, "u", "i", { desc = "" })
+
 map({ "n", "v" }, "m", "o", { desc = "" })
 map({ "n", "v" }, "M", "O", { desc = "" })
 
@@ -46,6 +49,10 @@ map({ "n" }, "h", "m", { desc = "" })
 -- Undo operations
 map({ "n" }, "l", "u", { desc = "" })
 
+-- Downcase/upcase
+map({ "v" }, "l", "u", { desc = "" })
+map({ "v" }, "L", "U", { desc = "" })
+
 -- Join lines
 map({ "n", "v" }, "N", "J", { desc = "" })
 
@@ -54,13 +61,6 @@ map({ "n", "v" }, "E", "K", { desc = "" })
 
 -- Jump to bottom of window
 map({ "n", "v", "o" }, "I", "L", { desc = "" })
-
--- Downcase/upcase
-map({ "v" }, "l", "u", { desc = "" })
-map({ "v" }, "L", "U", { desc = "" })
-
--- Inner text object keymap
-map({ "o" }, "u", "i", { desc = "" })
 
 -- Jump to end of word
 map({ "n", "v", "o" }, "f", "e", { desc = "" })
