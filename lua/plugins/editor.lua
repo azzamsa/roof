@@ -23,6 +23,9 @@ return {
     {
         "neogitorg/neogit",
         event = "VeryLazy",
+        dependencies = {
+            "sindrets/diffview.nvim", -- optional - Diff integration
+        },
         config = function()
             local neogit = require("neogit")
             neogit.setup({
@@ -39,6 +42,10 @@ return {
                         ["gi"] = "MoveUp", -- default: gk
                         ["ge"] = "MoveDown", -- default: gj
                     },
+                },
+                integrations = {
+                    diffview = true,
+                    fzf_lua = true,
                 },
             })
         end,
@@ -377,6 +384,7 @@ return {
     -- Surround
     {
         "echasnovski/mini.surround",
+        enabled = false,
         opts = {
             mappings = {
                 -- Normal: sa-uw-<char>

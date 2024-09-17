@@ -7,7 +7,6 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
         vim.highlight.on_yank({ higroup = "Visual", timeout = 40 })
-        vim.notify("📋 Copied to clipboard", "info", { title = "Clipboard", timeout = 300 })
     end,
 })
 
@@ -48,18 +47,15 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = {
         "netrw",
-        "Jaq",
-        "qf",
         "git",
         "help",
         "man",
         "lspinfo",
+        "notify",
         "spectre_panel",
-        "lir",
-        "DressingSelect",
         "tsplayground",
         "NeogitConsole",
-        "",
+        "checkhealth",
     },
     callback = function()
         vim.cmd([[

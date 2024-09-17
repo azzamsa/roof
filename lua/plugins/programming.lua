@@ -672,4 +672,16 @@ return {
             end)
         end,
     },
+    -- Show 💡 for available code-action in current line
+    {
+        "kosayoda/nvim-lightbulb",
+        config = function()
+            require("nvim-lightbulb").setup({
+                autocmd = { enabled = true },
+            })
+        end,
+    },
+    {
+        "aznhe21/actions-preview.nvim",
+    },
 }

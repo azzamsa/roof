@@ -109,28 +109,31 @@ return {
             require("scrollbar").setup()
         end,
     },
+    {
+        "rcarriga/nvim-notify",
+        enabled = false,
+        event = "VeryLazy",
+        config = function()
+            require("notify").setup({
+                stages = "static", -- default: "fade_in_slide_out"
+                -- Timeout will never work if `stages` is set to anything other than `static`.
+                timeout = 3000,
+                -- on_open = function(win)
+                --     vim.api.nvim_win_set_config(win, { zindex = 100 })
+                -- end,
+                -- on_open = function(win)
+                --     -- Set the window to be non-focusable; otherwise, `C-w w` will treat it as a window.
+                --     vim.api.nvim_win_set_config(win, { focusable = false })
+                -- end,
+            })
+        end,
+    },
     -- Replaces the UI for messages, cmdline and the popupmenu.
     {
         "folke/noice.nvim",
         tag = "stable",
         event = "VeryLazy",
-        dependencies = {
-            {
-                "rcarriga/nvim-notify",
-                event = "VeryLazy",
-                config = function()
-                    require("notify").setup({
-                        stages = "static", -- default: "fade_in_slide_out"
-                        -- Timeout will never work if `stages` is set to anything other than `static`.
-                        timeout = 1000,
-                        on_open = function(win)
-                            -- Set the window to be non-focusable; otherwise, `C-w w` will treat it as a window.
-                            vim.api.nvim_win_set_config(win, { focusable = false })
-                        end,
-                    })
-                end,
-            },
-        },
+        dependencies = {},
         config = function()
             require("noice").setup({
                 lsp = {
@@ -140,14 +143,6 @@ return {
                         ["vim.lsp.util.stylize_markdown"] = true,
                         ["cmp.entry.get_documentation"] = true,
                     },
-                },
-                -- you can enable a preset for easier configuration
-                presets = {
-                    -- bottom_search = true, -- use a classic bottom cmdline for search
-                    -- command_palette = true, -- position the cmdline and popupmenu together
-                    -- long_message_to_split = true, -- long messages will be sent to a split
-                    -- inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                    -- lsp_doc_border = false, -- add a border to hover docs and signature help
                 },
             })
         end,

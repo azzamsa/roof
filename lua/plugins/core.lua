@@ -35,8 +35,8 @@ return {
                 { "<leader>bO", "<cmd>%bd <bar> e#<cr>", desc = "Kill other buffers" },
 
                 -- <leader> c --- code
-                { "<leader>c", group = "Code" },
-                { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" } },
+                { "<leader>c", group = "Code", desc = "Code" },
+                { "<leader>ca", function() require("actions-preview").code_actions() end, desc = "Code Action", mode = { "n", "v" } },
                 { "<leader>cd", vim.lsp.buf.definition, desc = "Jump to definition" },
                 { "<leader>ce", vim.diagnostic.open_float, desc = "Line Diagnostics" },
                 { "<leader>cf", function() require("conform").format({ async = false, lsp_fallback = false }) end, desc = "Format" },
