@@ -15,11 +15,9 @@ return {
         ft = { "just" },
     },
     {
-        "MeanderingProgrammer/markdown.nvim",
-        enabled = false,
-        main = "render-markdown",
-        opts = {},
-        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        "OXY2DEV/markview.nvim",
+        lazy = false,
+        ft = { "markdown", "norg", "rmd", "org" },
     },
     {
         "iamcco/markdown-preview.nvim",
