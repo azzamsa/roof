@@ -14,12 +14,6 @@
     config = function()
         require("tokyonight").setup({
             style = "moon",
-            -- style = "day",
-            on_colors = function(colors)
-                -- Kanagawa fujiWhite is brighter to me than the default `fg`
-                colors.fg = "#dcd7ba" -- Kanagawa fujiWhite
-                -- colors.fg = "#c8c093" -- Kanagawa oldWhite
-                end,
         })
         vim.cmd.colorscheme("tokyonight")
     end,
