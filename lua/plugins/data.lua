@@ -15,21 +15,6 @@ return {
         ft = { "just" },
     },
     {
-        "OXY2DEV/markview.nvim",
-        lazy = false,
-        ft = { "markdown", "norg", "rmd", "org" },
-    },
-    {
-        "iamcco/markdown-preview.nvim",
-        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-        build = function()
-            vim.fn["mkdp#util#install"]()
-        end,
-        config = function()
-            vim.cmd([[do FileType]])
-        end,
-    },
-    {
         "kaarmu/typst.vim",
         event = "VeryLazy",
         ft = "typst",
@@ -53,6 +38,5 @@ return {
                 },
             },
         },
-        keys = {},
     },
 }
