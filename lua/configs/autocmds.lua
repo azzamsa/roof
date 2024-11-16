@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 -- Go to last loc when opening a buffer (à la save-place mode)
 vim.api.nvim_create_autocmd("BufReadPost", {
     callback = function(event)
-        local exclude = { "gitcommit", "NeogitStatus", "NeogitCommitMessage" }
+        local exclude = { "gitcommit", "NeogitStatus" }
         local buf = event.buf
         if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].roof_last_loc then
             return
@@ -74,7 +74,7 @@ vim.api.nvim_create_autocmd({ "CmdWinEnter" }, {
 
 -- Wrap and `spell check` in these filetype
 vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = { "gitcommit", "markdown", "NeogitCommitMessage" },
+    pattern = { "gitcommit", "markdown" },
     callback = function()
         vim.opt_local.wrap = true
         vim.opt_local.spell = true
