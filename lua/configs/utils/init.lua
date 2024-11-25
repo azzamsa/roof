@@ -80,6 +80,13 @@ function M.ntree_here()
     Ext.neotree_open(path)
 end
 
+-- Spectre from here
+function M.spectre_here()
+    local path = Path.sanitize(Path.current_dir())
+    path = Path.project_root_or_cwd(path)
+    Ext.spectre_open(path)
+end
+
 -- Copy filename to clipboard
 function M.copy_filename_to_clipboard()
     local path = Path.filename()

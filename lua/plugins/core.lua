@@ -56,7 +56,7 @@ return {
                 { "<leader>ff", function() Utils.find_files_in_project() end, desc = "Find file" },
                 { "<leader>fF", function() Utils.find_files_from_here() end, desc = "Find file from here" },
                 { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent file" },
-                { "<leader>fR", "<cmd>MurenToggle<cr>", desc = "Replace in files" },
+                { "<leader>fR", function() Utils.spectre_here() end, desc = "Replace in files" },
                 { "<leader>fs", "<cmd>w<cr>", desc = "Save buffer" },
                 { "<leader>fS", "<cmd>wa<cr>", desc = "Save all buffers" },
 

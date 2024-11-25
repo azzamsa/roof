@@ -59,4 +59,10 @@ function M.neotree_open(path)
     require("neo-tree.command").execute({ toggle = true, dir = path })
 end
 
+function M.spectre_open(path)
+    require("spectre").open({
+        cwd = path,
+    })
+end
+
 return M
