@@ -274,11 +274,6 @@ return {
             require("spectre").setup({ is_block_ui_break = true })
         end,
     },
-    -- Find and replace across files.
-    {
-        "AckslD/muren.nvim",
-        config = true,
-    },
     -- NeoTree
     {
         "nvim-neo-tree/neo-tree.nvim",
