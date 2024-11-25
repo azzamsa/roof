@@ -265,6 +265,7 @@ return {
                     -- Misc
                     "dprint", -- formatter
                     "cspell", -- spell checker
+                    "openscad-lsp", -- CAD
                 },
             })
         end,
