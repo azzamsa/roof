@@ -12,6 +12,10 @@ return {
                     mocha = {
                         -- overlay0 was too dim, so I switched to overlay1.
                         overlay0 = "#7f849c",
+                        -- Catppuccin black
+                        base = "#000000",
+                        mantle = "#000000",
+                        crust = "#000000",
                     },
                 },
             })
