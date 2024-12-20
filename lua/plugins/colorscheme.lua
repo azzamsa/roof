@@ -1,25 +1,19 @@
 -- Color scheme
 return {
     {
-        "catppuccin/nvim",
-        name = "catppuccin",
+        "folke/tokyonight.nvim",
+        tag = "stable",
+        lazy = false,
         priority = 1000,
+        opts = {},
         config = function()
-            require("catppuccin").setup({
-                flavour = "mocha",
-                term_colors = true,
-                color_overrides = {
-                    mocha = {
-                        -- overlay0 was too dim, so I switched to overlay1.
-                        overlay0 = "#7f849c",
-                        -- Catppuccin black
-                        base = "#000000",
-                        mantle = "#000000",
-                        crust = "#000000",
-                    },
-                },
+            require("tokyonight").setup({
+                style = "moon",
+                on_colors = function(colors)
+                    colors.bg = "#000000"
+                end,
             })
-            vim.cmd.colorscheme("catppuccin")
+            vim.cmd.colorscheme("tokyonight")
         end,
     },
 }
