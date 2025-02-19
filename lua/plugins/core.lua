@@ -82,7 +82,7 @@ return {
                 { "<leader>o", group = "Open", icon = " " },
                 { "<leader>od", "<cmd>Oil<cr>", desc = "File manager from here", icon = " " },
                 { "<leader>op", function() Utils.ntree_here() end, desc = "Side panel", icon = " " },
-                { "<leader>ox", function() Utils.open_with(Path.current_dir()) end, desc = "GUI File manager", icon = " " },
+                { "<leader>oo", function() Utils.open_with(Path.current_dir()) end, desc = "GUI File manager", icon = " " },
 
                 -- <leader> p --- project
                 { "<leader>p", group = "Project", icon = "" },
