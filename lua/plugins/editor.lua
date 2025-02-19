@@ -419,4 +419,8 @@ return {
         "lambdalisue/suda.vim",
         event = "VeryLazy",
     },
+    {
+        "folke/snacks.nvim",
+        event = "VeryLazy",
+    },
 }

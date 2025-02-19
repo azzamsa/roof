@@ -14,7 +14,7 @@ return {
             which_key.add({
                 -- Every keymap that uses a custom functionmeans the default `FzfLua ...`
                 -- always starts from the `cwd`.
-                { "<leader>x", function() Utils.toggle_scratch_buffer() end, desc = "Open scratch buffer" },
+                { "<leader>x", function() require("snacks").scratch() end, desc = "Toggle scratch buffer" },
                 { "<leader>'", "<cmd>FzfLua live_grep_resume<cr>", desc = "Resume last search" },
                 { "<leader>,", "<cmd>FzfLua buffers previewer=false<cr>", desc = "Switch buffer" },
                 { "<leader>.", function() Utils.find_files_from_here() end, desc = "Find file from here" },
