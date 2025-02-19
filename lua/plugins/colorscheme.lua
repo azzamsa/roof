@@ -1,19 +1,15 @@
 -- Color scheme
 return {
     {
-        "folke/tokyonight.nvim",
-        tag = "stable",
+        "miikanissi/modus-themes.nvim",
         lazy = false,
         priority = 1000,
         opts = {},
         config = function()
-            require("tokyonight").setup({
-                style = "moon",
-                on_colors = function(colors)
-                    colors.bg = "#000000"
-                end,
+            require("modus-themes").setup({
+                variant = "default",
             })
-            vim.cmd.colorscheme("tokyonight")
+            vim.cmd([[colorscheme modus_vivendi]])
         end,
     },
 }
