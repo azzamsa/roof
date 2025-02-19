@@ -308,23 +308,7 @@ return {
         end,
     },
     -- Project manager
-    {
-        "coffebar/neovim-project",
-        opts = {
-            projects = {
-                -- "~/playground/*",
-                "~/projects/*",
-                "~/canteen/*",
-                "~/.config/*",
-            },
-            picker = {
-                type = "fzf-lua",
-            },
-        },
-        dependencies = {
-            { "Shatur/neovim-session-manager" },
-        },
-    },
+    {},
     -- Jump around (à la Avy)
     {
         "folke/flash.nvim",
