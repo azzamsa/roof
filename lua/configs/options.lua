@@ -122,7 +122,7 @@ if vim.g.neovide then
     local map = vim.keymap.set
     -- This is so strange, it doesn't work when I only try to put one of the mode.
     -- I need to put them all.
-    map({ "c", "n", "v", "i" }, "<C-y>", "<c-r>*", { desc = "Paste" }) -- In search prompt, telescope.
+    map({ "c", "n", "v", "i" }, "<C-y>", "<c-r>+", { desc = "Paste" }) -- In search prompt, telescope.
     map({ "t" }, "<C-y>", '<C-\\><C-o>"+p', { desc = "Paste" }) -- In Terminal.
 
     -- Unlike Terminals...
