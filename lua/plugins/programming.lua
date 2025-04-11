@@ -228,12 +228,17 @@ return {
                 -- FE
                 "html",
                 "cssls",
-                "ts_ls", -- TypeScript language server
                 "jsonls", -- JSON language server
                 "tailwindcss", -- Tailwind language server
                 "svelte", -- Svelte language server
                 -- Python
                 "pyright", -- language server
+                -- Ts
+                "ts_ls", -- TypeScript language server
+                -- Golang
+                "gopls",
+                -- zig
+                "zls",
             }
 
             require("mason").setup({
