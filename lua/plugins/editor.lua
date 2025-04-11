@@ -32,6 +32,11 @@ return {
                         ["gi"] = "MoveUp", -- default: gk
                         ["ge"] = "MoveDown", -- default: gj
                     },
+                    status = {
+                        ["s"] = "Stage",
+                        -- Magit uses `S`
+                        ["S"] = "StageAll", -- default: C-s
+                    },
                 },
                 integrations = {
                     diffview = true,
