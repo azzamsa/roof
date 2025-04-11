@@ -133,6 +133,13 @@ return {
                 -- Thank you, Sean Dewar (seandewar).
                 { "<leader>ww", "winnr('#') != 0 && winnr('#') != winnr() ? '<C-W>p' : '<C-W>w'", desc = "Other window", expr = true, replace_keycodes = false },
 
+
+                -- <leader> W --- Workspace
+                { "<leader>W", group = "Workspace" },
+                { "<leader>Wa", function() Utils.add_cwd_to_workspace() end, desc = "Add Workspace" },
+                { "<leader>Wx", function() Utils.remove_cwd_from_workspace() end, desc = "Remove Workspace" },
+                { "<leader>Ww", function() Utils.workspaces() end, desc = "Open Workspace" },
+
                 -- misc
                 { "<leader>m", "<cmd>MCstart<cr>", desc = "Multiple cursors", mode = "v" },
             })

@@ -45,6 +45,7 @@ function M.sanitize(path)
     end
 
     -- Escape whitespace, parens, etc
+    -- This functions add single quote to path for safe command-line execution
     path = vim.fn.shellescape(path)
 
     return path

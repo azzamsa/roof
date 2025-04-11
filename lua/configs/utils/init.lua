@@ -49,6 +49,18 @@ function M.bookmarks()
     Ext.bookmarks(paths)
 end
 
+-- Open Workspace
+function M.workspaces()
+    local workspace_list = require("workspaces").get()
+
+    local names = {}
+    for _, workspace in ipairs(workspace_list) do
+        table.insert(names, workspace.name)
+    end
+
+    Ext.workspaces(names)
+end
+
 -- I choose to name this function 'ngit' so that I won't need to alter the function name
 -- regardless of the extension changes.
 function M.ngit_here()
@@ -85,6 +97,28 @@ function M.spectre_here()
     local path = Path.sanitize(Path.current_dir())
     path = Path.project_root_or_cwd(path)
     Ext.spectre_open(path)
+end
+
+-- Add cwd to workspace
+function M.add_cwd_to_workspace()
+    local path = Path.sanitize(Path.current_dir())
+
+    -- Remove surrounding single quotes from `path`
+    -- Added by `vim.fn.shellescape` in `sanitize`
+    -- Workspace prepends `/`, causing issues with quotes.
+    path = path:gsub("^'(.-)'$", "%1")
+
+    -- Use last directory as workspace name
+    local name = vim.fn.fnamemodify(path, ":t")
+
+    Ext.workspace_add(path, name)
+end
+
+-- Remove cwd from workspace
+function M.remove_cwd_from_workspace()
+    local path = Path.sanitize(Path.current_dir())
+    local name = vim.fn.fnamemodify(path, ":t")
+    Ext.workspace_remove(name)
 end
 
 -- Copy filename to clipboard
@@ -132,7 +166,7 @@ function M.toggle_diagnostics()
         vim.diagnostic.enable()
         vim.notify("Enabled diagnostics", "info")
     else
-        vim.diagnostic.disable()
+        vim.diagnostic.enable(false)
         vim.notify("Disabled diagnostics", "info")
     end
 end
@@ -166,27 +200,6 @@ function M.toggle_treesitter()
     else
         vim.treesitter.start()
     end
-end
-
---
--- scratch
---
-
-local scratch_file = "~/.local/share/meta/**scratch**.md"
-
--- Toggle the scratch buffer.
-function M.toggle_scratch_buffer()
-    for _, win in ipairs(vim.fn.getwininfo()) do
-        local buf_name = vim.fn.bufname(win.bufnr)
-        -- Close scratch buffer if it is currently open
-        if string.find(buf_name, "**scratch**") then
-            vim.cmd(win.winnr .. "wincmd w")
-            vim.cmd("bd! " .. win.bufnr)
-            return
-        end
-    end
-
-    vim.cmd("vsplit " .. scratch_file)
 end
 
 return M

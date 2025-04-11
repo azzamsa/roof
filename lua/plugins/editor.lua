@@ -225,6 +225,7 @@ return {
                             case_mode = "smart_case", -- or "ignore_case" or "respect_case"
                             theme = "ivy",
                         },
+                        workspaces = {},
                     },
                 },
             })
@@ -393,8 +394,16 @@ return {
         "lambdalisue/suda.vim",
         event = "VeryLazy",
     },
+    -- Handy utils
     {
         "folke/snacks.nvim",
         event = "VeryLazy",
+        opts = {},
+    },
+    -- Workspace
+    {
+        "natecraddock/workspaces.nvim",
+        event = "VeryLazy",
+        opts = {},
     },
 }
