@@ -364,8 +364,10 @@ return {
     -- It is the 21st century; should I save files manually?
     {
         "okuuva/auto-save.nvim",
-        cmd = "ASToggle",
-        event = { "InsertLeave", "TextChanged" },
+        cmd = "ASToggle", -- optional for lazy loading on command
+        event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
+        -- Doens't work without `opts`!
+        opts = {},
     },
     -- Surround
     {
