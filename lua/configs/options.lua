@@ -115,8 +115,8 @@ end
 if vim.g.neovide then
     -- Set the font for graphical Neovim applications
     -- Include the Emoji font to display colored emojis
-    opt.guifont = "Maple Mono NF,Noto Color Emoji:h20" -- default: h16
-    vim.g.neovide_cursor_vfx_mode = "railgun"
+    opt.guifont = "Maple Mono NF,Noto Color Emoji:h19" -- default: h16
+    vim.g.neovide_cursor_vfx_mode = "torpedo"
 
     -- Unlike Terminals, Neovide doesn't add or remove any keybindings to Neovim.
     local map = vim.keymap.set
