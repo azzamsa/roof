@@ -333,30 +333,12 @@ return {
         "smoka7/multicursors.nvim",
         event = "VeryLazy",
         dependencies = {
-            "smoka7/hydra.nvim",
+            "nvimtools/hydra.nvim",
         },
         opts = {},
         cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
         config = function()
-            require("multicursors").setup({
-                -- Any hint position has the potential to cover the target text.
-                -- hint_config = false,
-                hint_config = {
-                    border = "single",
-                    position = "top-left",
-                    type = "statusline",
-                },
-                generate_hints = {
-                    normal = true,
-                    insert = true,
-                    extend = true,
-                    config = {
-                        -- Enable these line if you use `type = window`
-                        -- column_count = 2,
-                        -- max_hint_length = 15,
-                    },
-                },
-            })
+            require("multicursors").setup({})
         end,
     },
     -- Super-save
