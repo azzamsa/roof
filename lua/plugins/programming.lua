@@ -422,6 +422,8 @@ return {
                 yamlls = {},
                 -- Rust
                 rust_analyzer = {},
+                -- Go
+                gopls = {},
                 -- Markdown
                 marksman = {},
                 -- FE
