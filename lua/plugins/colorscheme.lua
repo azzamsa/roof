@@ -1,23 +1,24 @@
 -- Color scheme
 return {
     {
-        "folke/tokyonight.nvim",
-        tag = "stable",
+        "miikanissi/modus-themes.nvim",
         lazy = false,
         priority = 1000,
         opts = {},
         config = function()
-            require("tokyonight").setup({
-                -- `night` has the most darker bg
-                style = "moon",
+            require("modus-themes").setup({
+                variant = "tinted",
                 on_colors = function(colors)
-                    colors.bg = "#000000"
-                    colors.fg = "#ffffff"
-                    -- default color is not WCAG AAA compliant
-                    colors.comment = "#a9b1d6"
+                    -- https://github.com/miikanissi/modus-themes.nvim/blob/master/lua/modus-themes/colors.lua#L348
+                    colors.bg_main = "#000000"
+                    colors.bg_dim = "#11111b"
+                    colors.bg_hl_line = "#1e1e2e"
+                end,
+                on_highlights = function(highlights, colors)
+                    highlights.WinBarNC = { bg = colors.bg_tab_current }
                 end,
             })
-            vim.cmd.colorscheme("tokyonight")
+            vim.cmd([[colorscheme modus_vivendi]])
         end,
     },
 }
