@@ -87,13 +87,12 @@ return {
                 -- <leader> p --- project
                 { "<leader>p", group = "Project", icon = "" },
                 { "<leader>pf", function() Utils.find_files_in_project() end, desc = "Find project file", icon = "" },
-                { "<leader>pp", function() Utils.bookmarks() end, desc = "Open workdirs", icon = "" },
+                { "<leader>pp", "<cmd>NeovimProjectDiscover history<cr>", desc = "Open workdirs", icon = "" },
                 { "<leader>ps", function() Utils.grep_in_project() end, desc = "Search in project", icon = "" },
 
                 -- <leader> q --- quit
                 { "<leader>q", group = "Quit" },
-                -- Avoid accidental presses of lowercase 'q'
-                { "<leader>qQ", "<cmd>wa <bar> qa<cr>", desc = "Quit" },
+                { "<leader>qq", "<cmd>wa <bar> qa<cr>", desc = "Quit" },
 
                 -- <leader> s --- search
                 { "<leader>s", group = "Search" },
