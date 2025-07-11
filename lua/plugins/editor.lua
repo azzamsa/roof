@@ -373,7 +373,7 @@ return {
         "okuuva/auto-save.nvim",
         cmd = "ASToggle", -- optional for lazy loading on command
         event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
-        -- Doens't work without `opts`!
+        -- Doesn't work without `opts` block!
         opts = {},
     },
     -- Surround
