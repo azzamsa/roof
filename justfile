@@ -36,3 +36,11 @@ lint:
 # Create a release. Example `just release v0.1.0`
 release version:
     ./release {{ version }}
+
+[doc('Check dependencies health. Pass `--write` to upgrade dependencies')]
+[unix]
+up arg="":
+    #!/usr/bin/env bash
+    if [ "{{ arg }}" = "--write" ]; then
+        dprint config update
+    fi;
