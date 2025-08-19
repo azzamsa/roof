@@ -15,17 +15,6 @@ function M.live_grep(path)
     })
 end
 
-function M.bookmarks(paths)
-    require("fzf-lua").fzf_exec(paths, {
-        prompt = "🔖 Bookmarks> ",
-        actions = {
-            ["default"] = function(selection)
-                require("oil").open(selection[1])
-            end,
-        },
-    })
-end
-
 function M.projects()
     local contents = require("project_nvim").get_recent_projects()
     local reverse = {}

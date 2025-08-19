@@ -35,7 +35,7 @@ return {
                     Snacks.picker.files()
                 end),
                 button("p", Icons.git.Repo .. " Find project", function()
-                    require("configs.utils").bookmarks()
+                    Snacks.picker.projects()
                 end),
                 button("r", Icons.ui.History .. " Recent files", ":FzfLua oldfiles <CR>"),
                 button("Q", Icons.ui.SignOut .. " Quit", ":qa<CR>"),
