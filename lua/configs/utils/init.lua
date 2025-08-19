@@ -11,13 +11,13 @@ end
 -- Live grep from current buffer directory
 function M.grep_from_here()
     local here = Path.sanitize(Path.current_dir())
-    Ext.grep(here)
+    Ext.live_grep(here)
 end
 
 -- Live grep from the project root.
 function M.grep_in_project()
     local path = Path.sanitize(Path.current_dir())
-    Ext.grep(Path.project_root_or_cwd(path))
+    Ext.live_grep(Path.project_root_or_cwd(path))
 end
 
 -- Find files from the directory of `config`
@@ -48,7 +48,7 @@ end
 
 -- I choose to name this function 'ngit' so that I won't need to alter the function name
 -- regardless of the extension changes.
-function M.ngit_here()
+function M.vcs_status()
     -- Simply using `("neogit").open()` doesn't work within the Oil directory.
     -- The `Path.validate()` function serves as a helper to provide a valid path based on the Oil path.
     local path = Path.sanitize(Path.current_dir())
@@ -64,17 +64,17 @@ function M.ngit_here()
     -- `Neogit` necessitates functioning from the `.git` (root) directory.
     local root = Path.project_root(path, pattern)
     if root then
-        Ext.neogit_open(root)
+        Ext.vcs_status(root)
     else
         vim.notify("No .git directory found. \nPlease initialize a Git repository.", "warn", { title = "Roof!" })
     end
 end
 
 -- Open neotree
-function M.ntree_here()
+function M.file_tree()
     local path = Path.sanitize(Path.current_dir())
     path = Path.project_root_or_cwd(path)
-    Ext.neotree_open(path)
+    Ext.file_tree(path)
 end
 
 -- Spectre from here
@@ -85,7 +85,7 @@ function M.spectre_here()
 end
 
 -- Spectre from here
-function M.teminal_here()
+function M.terminal()
     local path = Path.sanitize(Path.current_dir())
     path = Path.project_root_or_cwd(path)
     Ext.terminal(path)

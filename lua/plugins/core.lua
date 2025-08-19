@@ -68,7 +68,7 @@ return {
 
                 -- <leader> g --- version control
                 { "<leader>g", group = "VCS", icon = "" },
-                { "<leader>gg", function() Utils.ngit_here() end, desc = "Neogit", icon = "" },
+                { "<leader>gg", function() Utils.vcs_status() end, desc = "Neogit", icon = "" },
                 { "<leader>gt", "<cmd>Tardis<cr>", desc = "Git time machine", icon = "" },
 
                 -- <leader> h --- help
@@ -84,7 +84,7 @@ return {
 
                 -- <leader> o --- open
                 { "<leader>o", group = "Open", icon = " " },
-                { "<leader>op", function() Utils.ntree_here() end, desc = "Side panel", icon = " " },
+                { "<leader>op", function() Utils.file_tree() end, desc = "Side panel", icon = " " },
                 { "<leader>oo", function() Utils.open_with(Path.current_dir()) end, desc = "GUI File manager", icon = " " },
 
                 -- <leader> p --- project

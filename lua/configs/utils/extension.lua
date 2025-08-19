@@ -4,7 +4,7 @@ function M.find_files(path)
     Snacks.picker.files({ cwd = path })
 end
 
-function M.grep(path)
+function M.live_grep(path)
     Snacks.picker.grep({ dirs = { path } })
 end
 
@@ -15,11 +15,11 @@ function M.terminal(path)
     })
 end
 
-function M.neogit_open(path)
+function M.vcs_status(path)
     require("neogit").open({ cwd = path })
 end
 
-function M.neotree_open(path)
+function M.file_tree(path)
     require("neo-tree.command").execute({ toggle = true, dir = path })
 end
 
