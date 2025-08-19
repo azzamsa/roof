@@ -31,12 +31,14 @@ return {
             }
 
             dashboard.section.buttons.val = {
-                -- stylua: ignore start
-                button("f", Icons.ui.Files .. " Find file", ":FzfLua files <CR>"),
-                button("p", Icons.git.Repo .. " Find project", function() require("configs.utils").bookmarks() end),
+                button("f", Icons.ui.Files .. " Find file", function()
+                    Snacks.picker.files()
+                end),
+                button("p", Icons.git.Repo .. " Find project", function()
+                    require("configs.utils").bookmarks()
+                end),
                 button("r", Icons.ui.History .. " Recent files", ":FzfLua oldfiles <CR>"),
                 button("Q", Icons.ui.SignOut .. " Quit", ":qa<CR>"),
-                -- stylua: ignore end
             }
 
             dashboard.section.header.val = header
@@ -55,7 +57,7 @@ return {
                 callback = function()
                     vim.cmd([[
       set laststatus=0 | autocmd BufUnload <buffer> set laststatus=3
-    ]])
+      ]])
                 end,
             })
         end,
