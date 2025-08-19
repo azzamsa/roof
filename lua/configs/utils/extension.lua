@@ -1,3 +1,5 @@
+local Snacks = require("snacks")
+
 local M = {}
 
 function M.find_files(path)
