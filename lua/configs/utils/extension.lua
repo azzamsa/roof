@@ -1,17 +1,15 @@
-local Snacks = require("snacks")
-
 local M = {}
 
 function M.find_files(path)
-    Snacks.picker.files({ cwd = path })
+    require("snacks").picker.files({ cwd = path })
 end
 
 function M.live_grep(path)
-    Snacks.picker.grep({ dirs = { path } })
+    require("snacks").picker.grep({ dirs = { path } })
 end
 
 function M.terminal(path)
-    Snacks.terminal.toggle("fish", {
+    require("snacks").terminal.toggle("fish", {
         direction = "float", -- optional, setting cmd means float anyway
         cwd = path,
     })
