@@ -65,23 +65,4 @@ function M.spectre_open(path)
     })
 end
 
-function M.workspace_add(path, name)
-    require("workspaces").add(path, name)
-end
-
-function M.workspace_remove(name)
-    require("workspaces").remove(name)
-end
-
-function M.workspaces(paths)
-    require("fzf-lua").fzf_exec(paths, {
-        prompt = "📦 Workspace> ",
-        actions = {
-            ["default"] = function(selection)
-                require("workspaces").open(selection[1])
-            end,
-        },
-    })
-end
-
 return M

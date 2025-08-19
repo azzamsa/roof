@@ -407,10 +407,4 @@ return {
         event = "VeryLazy",
         opts = {},
     },
-    -- Workspace
-    {
-        "natecraddock/workspaces.nvim",
-        event = "VeryLazy",
-        opts = {},
-    },
 }
