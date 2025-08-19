@@ -1,17 +1,17 @@
 local M = {}
 
 function M.find_files(path)
-    require("fzf-lua").files({ cwd = path })
+    Snacks.picker.files({ cwd = path })
 end
 
-function M.live_grep(path)
-    require("fzf-lua").live_grep({
+function M.grep(path)
+    Snacks.picker.grep({ dirs = { path } })
+end
+
+function M.terminal(path)
+    Snacks.terminal.toggle("fish", {
+        direction = "float", -- optional, setting cmd means float anyway
         cwd = path,
-        winopts = {
-            preview = {
-                layout = "vertical",
-            },
-        },
     })
 end
 

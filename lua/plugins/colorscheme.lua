@@ -22,6 +22,7 @@ return {
                     colors.fg_float = "#ffffff" -- last filename in recentfile
                     colors.fg_dark = "#cdd6f4"
                     colors.fg_sidebar = "#cdd6f4"
+                    colors.fg_gutter = "#313244" -- the default is too bright for me
 
                     colors.dark3 = "#a6adc8" -- recentfile
                     -- default color is not WCAG AAA compliant

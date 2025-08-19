@@ -1,6 +1,46 @@
 local Path = require("configs.utils.path")
+local Utils = require("configs.utils")
 
 return {
+    -- 🍿 A collection of QoL plugins for Neovim.
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        ---@type snacks.Config
+        opts = {
+            bigfile = { enabled = true },
+            dashboard = { enabled = true },
+            explorer = { enabled = true },
+            indent = {
+                enabled = true,
+                only_scope = true, -- only show indent guides of the scope
+                only_current = true, -- only show indent guides in the current window
+            },
+            notifier = {
+                enabled = true,
+                timeout = 3000,
+            },
+            picker = { enabled = true },
+            quickfile = { enabled = true },
+            scope = { enabled = true, only_current = true, only_scope = true },
+            scroll = { enabled = true },
+            statuscolumn = { enabled = true },
+            words = { enabled = true },
+            styles = {
+                notification = {},
+            },
+        },
+        keys = {
+            {
+                "<c-/>",
+                function()
+                    Utils.teminal_here()
+                end,
+                desc = "Toggle Terminal",
+            },
+        },
+    },
     -- Git time machine.
     {
         "fredeeb/tardis.nvim",
@@ -59,42 +99,6 @@ return {
                 untracked = { text = "▎" },
             },
         },
-    },
-    --  Terminal
-    {
-        "akinsho/toggleterm.nvim",
-        event = "VeryLazy",
-        config = function()
-            require("toggleterm").setup({
-                open_mapping = [[<c-/>]],
-                direction = "float",
-                float_opts = {
-                    border = "rounded",
-                },
-
-                -- Runs everytime ToggleTerm toggled
-                on_open = function(term)
-                    -- Can't use `require("configs.utils.file").path()` because it returns
-                    -- ToggleTerm buffer path instead of current buffer path.
-                    local path = Path.previous_dir()
-                    if path then
-                        path = Path.sanitize(path)
-                    else
-                        -- Fallback to home if no previous directory found
-                        path = "~/"
-                    end
-
-                    -- Use project root if available, otherwise use the plain path.
-                    -- Sometimes, I want to open the terminal in a non-project directory.
-                    path = Path.project_root_or_cwd(path)
-                    if path ~= term.dir then
-                        term:change_dir(path)
-                    end
-                    -- Start in insert mode
-                    vim.cmd("startinsert!")
-                end,
-            })
-        end,
     },
     -- Dired for Nvim.
     {
@@ -236,30 +240,6 @@ return {
             })
         end,
     },
-    -- Fuzzy find things.
-    {
-        "ibhagwan/fzf-lua",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        config = function()
-            require("fzf-lua").setup({
-                winopts = {
-                    -- I have small monitors
-                    height = 0.90,
-                    width = 0.98,
-                    preview = {
-                        -- I have long path names, and the preview is not that important.
-                        horizontal = "right:40%",
-                        vertical = "up:80%",
-                    },
-                },
-                previewers = {
-                    git_diff = {
-                        pager = "delta",
-                    },
-                },
-            })
-        end,
-    },
     -- Find and replace across files.
     {
         "nvim-pack/nvim-spectre",
@@ -312,33 +292,6 @@ return {
                 },
             })
         end,
-    },
-    -- Project manager
-    {
-        {
-            "coffebar/neovim-project",
-            opts = {
-                projects = { -- define project roots
-                    "~/projects/*",
-                    "~/projects/playground/*",
-                    "~/.config/*",
-                    "~/canteen/*",
-                },
-                picker = {
-                    type = "fzf-lua",
-                },
-            },
-            init = function()
-                -- enable saving the state of plugins in the session
-                vim.opt.sessionoptions:append("globals") -- save global variables that start with an uppercase letter and contain at least one lowercase letter.
-            end,
-            dependencies = {
-                { "nvim-lua/plenary.nvim" },
-                { "Shatur/neovim-session-manager" },
-            },
-            lazy = false,
-            priority = 100,
-        },
     },
     -- Jump around (à la Avy)
     {
@@ -400,11 +353,5 @@ return {
     {
         "lambdalisue/suda.vim",
         event = "VeryLazy",
-    },
-    -- Handy utils
-    {
-        "folke/snacks.nvim",
-        event = "VeryLazy",
-        opts = {},
     },
 }

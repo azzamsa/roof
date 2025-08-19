@@ -11,13 +11,13 @@ end
 -- Live grep from current buffer directory
 function M.grep_from_here()
     local here = Path.sanitize(Path.current_dir())
-    Ext.live_grep(here)
+    Ext.grep(here)
 end
 
 -- Live grep from the project root.
 function M.grep_in_project()
     local path = Path.sanitize(Path.current_dir())
-    Ext.live_grep(Path.project_root_or_cwd(path))
+    Ext.grep(Path.project_root_or_cwd(path))
 end
 
 -- Find files from the directory of `config`
@@ -26,6 +26,9 @@ function M.find_files_in_config()
 end
 
 -- Find files from the directory of the currently opened buffer.
+-- Can't use something like `{ filter = { cwd = true }` here.
+-- As my `cwd` always points to `$HOME`, because I use nvim similar to Emacs workflow.
+-- I don't do `nvim .` in terminal, but one long lived Neovide instance.
 function M.find_files_from_here()
     local here = Path.sanitize(Path.current_dir())
     Ext.find_files(here)
@@ -81,6 +84,13 @@ function M.spectre_here()
     Ext.spectre_open(path)
 end
 
+-- Spectre from here
+function M.teminal_here()
+    local path = Path.sanitize(Path.current_dir())
+    path = Path.project_root_or_cwd(path)
+    Ext.terminal(path)
+end
+
 -- Copy filename to clipboard
 function M.copy_filename_to_clipboard()
     local path = Path.filename()
@@ -99,50 +109,6 @@ end
 -- Toggle
 --
 
-function M.toggle_opt(option)
-    vim.opt_local[option] = not vim.opt_local[option]:get()
-    local status = vim.opt_local[option]:get() and "Enabled" or "Disabled"
-    vim.notify(status .. " " .. option, "info")
-end
-
-local nu = { number = true, relativenumber = true }
-function M.toggle_line_number()
-    if vim.opt_local.number:get() or vim.opt_local.relativenumber:get() then
-        nu = { number = vim.opt_local.number:get(), relativenumber = vim.opt_local.relativenumber:get() }
-        vim.opt_local.number = false
-        vim.opt_local.relativenumber = false
-        vim.notify("Disabled line numbers", "info")
-    else
-        vim.opt_local.number = nu.number
-        vim.opt_local.relativenumber = nu.relativenumber
-        vim.notify("Enabled line numbers", "info")
-    end
-end
-
-local diagnostic_enabled = true
-function M.toggle_diagnostics()
-    diagnostic_enabled = not diagnostic_enabled
-    if diagnostic_enabled then
-        vim.diagnostic.enable()
-        vim.notify("Enabled diagnostics", "info")
-    else
-        vim.diagnostic.enable(false)
-        vim.notify("Disabled diagnostics", "info")
-    end
-end
-
-function M.toggle_inlay_hints(buf, value)
-    local ih = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
-    if type(ih) == "function" then
-        ih(buf, value)
-    elseif type(ih) == "table" and ih.enable then
-        if value == nil then
-            value = not ih.is_enabled(buf)
-        end
-        ih.enable(buf, value)
-    end
-end
-
 function M.toggle_autoformat()
     vim.g.autoformat = not vim.g.autoformat
     if vim.g.autoformat then
@@ -151,14 +117,6 @@ function M.toggle_autoformat()
     else
         vim.g.autoformat = false
         vim.notify("Disabled autoformat")
-    end
-end
-
-function M.toggle_treesitter()
-    if vim.b.ts_highlight then
-        vim.treesitter.stop()
-    else
-        vim.treesitter.start()
     end
 end
 

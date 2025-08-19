@@ -1,4 +1,5 @@
 local Icons = require("configs.icons")
+local Snacks = require("snacks")
 
 return {
     -- Dashboard
@@ -37,7 +38,9 @@ return {
                 button("p", Icons.git.Repo .. " Find project", function()
                     Snacks.picker.projects()
                 end),
-                button("r", Icons.ui.History .. " Recent files", ":FzfLua oldfiles <CR>"),
+                button("r", Icons.ui.History .. " Recent files", function()
+                    Snacks.picker.recent()
+                end),
                 button("Q", Icons.ui.SignOut .. " Quit", ":qa<CR>"),
             }
 
@@ -118,25 +121,6 @@ return {
         event = "VeryLazy",
         config = function()
             require("scrollbar").setup()
-        end,
-    },
-    {
-        "rcarriga/nvim-notify",
-        enabled = true,
-        event = "VeryLazy",
-        config = function()
-            require("notify").setup({
-                stages = "static", -- default: "fade_in_slide_out"
-                -- Timeout will never work if `stages` is set to anything other than `static`.
-                timeout = 3000,
-                -- on_open = function(win)
-                --     vim.api.nvim_win_set_config(win, { zindex = 100 })
-                -- end,
-                -- on_open = function(win)
-                --     -- Set the window to be non-focusable; otherwise, `C-w w` will treat it as a window.
-                --     vim.api.nvim_win_set_config(win, { focusable = false })
-                -- end,
-            })
         end,
     },
     -- Replaces the UI for messages, cmdline and the popupmenu.

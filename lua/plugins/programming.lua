@@ -85,35 +85,8 @@ return {
     {
         "folke/trouble.nvim",
         tag = "stable",
+        cmd = "Trouble",
         opts = { use_diagnostic_signs = true },
-    },
-    -- Displays vertical lines to indicate indentation levels.
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        event = "VeryLazy",
-        opts = {
-            indent = {
-                char = "│",
-                tab_char = "│",
-            },
-            scope = { show_start = false, show_end = false },
-            exclude = {
-                filetypes = {
-                    "help",
-                    "alpha",
-                    "dashboard",
-                    "neo-tree",
-                    "Trouble",
-                    "trouble",
-                    "lazy",
-                    "mason",
-                    "notify",
-                    "toggleterm",
-                    "lazyterm",
-                },
-            },
-        },
-        main = "ibl",
     },
     -- Color highlighter. à la Emacs rainbow-mode
     {

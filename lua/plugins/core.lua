@@ -7,32 +7,38 @@ return {
         tag = "stable",
         event = "VeryLazy",
         config = function()
+            local Snacks = require("snacks")
             local which_key = require("which-key")
             which_key.setup({})
+            -- https://github.com/doomemacs/doomemacs/blob/master/modules/config/default/%2Bevil-bindings.el
 
             -- stylua: ignore start
             which_key.add({
-                -- Every keymap that uses a custom functionmeans the default `FzfLua ...`
-                -- always starts from the `cwd`.
-                { "<leader>x", function() require("snacks").scratch() end, desc = "Toggle scratch buffer" },
-                { "<leader>'", "<cmd>FzfLua live_grep_resume<cr>", desc = "Resume last search" },
-                { "<leader>,", "<cmd>FzfLua buffers previewer=false<cr>", desc = "Switch buffer" },
+                -- LSP
+                { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+                { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+                { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+                { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+                { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+
+                { "<leader>x", function() Snacks.scratch() end, desc = "Toggle scratch buffer" },
                 { "<leader>.", function() Utils.find_files_from_here() end, desc = "Find file from here" },
+                { "<leader>'", function() Snacks.picker.resume() end, desc = "Resume last search" },
+                { "<leader>,", function() Snacks.picker.buffers() end, desc = "Switch buffer" },
                 { "<leader>/", function() Utils.grep_in_project() end, desc = "Search in project" },
-                { "<leader><cr>", function() Utils.bookmarks() end, desc = "Jump to bookmark" },
                 { "<leader><space>", function() Utils.find_files_in_project() end, desc = "Find project file" },
                 { "<leader>`", "<cmd>buffer#<cr>", desc = "Switch to last buffer" },
 
                 -- <leader> b --- buffer
                 { "<leader>b", group = "Buffers" },
-                { "<leader>bb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "Switch buffer" },
-                { "<leader>bk", "<cmd>bd<cr>", desc = "Kill buffer" },
-                { "<leader>bK", "<cmd>%bd!<cr>", desc = "Kill all buffer" },
+                { "<leader>bb", function() Snacks.picker.buffers() end, desc = "Switch buffer" },
+                { "<leader>bk", function() Snacks.bufdelete() end, desc = "Kill buffer" },
+                { "<leader>bk", function() Snacks.bufdelete.all() end, desc = "Kill all buffers" },
                 { "<leader>br", "<cmd>edit!<cr>", desc = "Revert buffer" },
                 { "<leader>bs", "<cmd>w<cr>", desc = "Save buffer" },
                 { "<leader>bS", "<cmd>wa<cr>", desc = "Save all buffers" },
                 { "<leader>bu", "<cmd>SudaWrite<cr>", desc = "Save buffer as root" },
-                { "<leader>bO", "<cmd>%bd <bar> e#<cr>", desc = "Kill other buffers" },
+                { "<leader>bO", function() Snacks.bufdelete.other() end, desc = "Kill other buffers" },
 
                 -- <leader> c --- code
                 { "<leader>c", group = "Code", desc = "Code" },
@@ -42,20 +48,20 @@ return {
                 { "<leader>cf", function() require("conform").format({ async = false, lsp_fallback = false }) end, desc = "Format" },
                 { "<leader>cp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview" },
                 { "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
-                { "<leader>cw", "<cmd>Trim<cr>", desc = "Delete trailing whitespaces" }, { "<leader>cx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Diagnostics" },
                 { "<leader>cS", "<cmd>SymbolsOutline<cr>", desc = "Symbols" },
+                { "<leader>cw", "<cmd>Trim<cr>", desc = "Delete trailing whitespaces" },
+                { "<leader>cx", function() Snacks.toggle.diagnostics() end, desc = "Diagnostics" },
                 { "<leader>cX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Project diagnostics" },
 
                 -- <leader> f --- file
                 { "<leader>f", group = "File" },
-                { "<leader>fd", "<cmd>Oil<cr>", desc = "Find directory" },
+                { "<leader>fd", "<cmd>Yazi<cr>", desc = "Find directory" },
                 { "<leader>fD", "<cmd>call delete(expand('%')) <bar> bdelete!<cr>", desc = "Delete this file" },
                 { "<leader>fy", function() Utils.copy_filename_to_clipboard() end, desc = "Copy file name" },
                 { "<leader>fY", function() Utils.copy_filepath_to_clipboard() end, desc = "Copy file path" },
-                { "<leader>fe", function() Utils.find_files_in_config() end, desc = "Find file in config" },
-                { "<leader>ff", function() Utils.find_files_in_project() end, desc = "Find file" },
-                { "<leader>fF", function() Utils.find_files_from_here() end, desc = "Find file from here" },
-                { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent file" },
+                { "<leader>ff", function() Snacks.picker.files() end, desc = "Find file" },
+                { "<leader>fF", "<cmd>Yazi cwd<cr>", desc = "Find file from here" },
+                { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent file" },
                 { "<leader>fR", function() Utils.spectre_here() end, desc = "Replace in files" },
                 { "<leader>fs", "<cmd>w<cr>", desc = "Save buffer" },
                 { "<leader>fS", "<cmd>wa<cr>", desc = "Save all buffers" },
@@ -67,10 +73,8 @@ return {
 
                 -- <leader> h --- help
                 { "<leader>h", group = "Help", icon = "󰞋" },
-                { "<leader>hc", "<cmd>FzfLua commands<cr>", desc = "Commands", icon = "󰞋" },
-                { "<leader>hh", "<cmd>FzfLua help_tags<cr>", desc = "Help", icon = "󰞋" },
-                { "<leader>hk", "<cmd>FzfLua keymaps<cr>", desc = "Keymaps", icon = "󰞋" },
-                { "<leader>hm", "<cmd>FzfLua man_pages<cr>", desc = "Man Pages", icon = "󰞋" },
+                { "<leader>hc", function() Snacks.picker.commands() end, desc = "Commands", icon = "󰞋" },
+                { "<leader>hk", function() Snacks.picker.keymaps() end, desc = "Keymaps", icon = "󰞋" },
 
                 -- <leader> i --- insert
                 { "<leader>i", group = "Insert", icon = "󰏪" },
@@ -80,14 +84,13 @@ return {
 
                 -- <leader> o --- open
                 { "<leader>o", group = "Open", icon = " " },
-                { "<leader>od", "<cmd>Oil<cr>", desc = "File manager from here", icon = " " },
                 { "<leader>op", function() Utils.ntree_here() end, desc = "Side panel", icon = " " },
                 { "<leader>oo", function() Utils.open_with(Path.current_dir()) end, desc = "GUI File manager", icon = " " },
 
                 -- <leader> p --- project
                 { "<leader>p", group = "Project", icon = "" },
                 { "<leader>pf", function() Utils.find_files_in_project() end, desc = "Find project file", icon = "" },
-                { "<leader>pp", "<cmd>NeovimProjectDiscover history<cr>", desc = "Open workdirs", icon = "" },
+                { "<leader>pp", function() Snacks.picker.projects() end, desc = "Open workdirs", icon = "" },
                 { "<leader>ps", function() Utils.grep_in_project() end, desc = "Search in project", icon = "" },
 
                 -- <leader> q --- quit
@@ -96,26 +99,25 @@ return {
 
                 -- <leader> s --- search
                 { "<leader>s", group = "Search" },
-                { "<leader>sc", "<cmd>FzfLua command_history<cr>", desc = "Command history" },
-                { "<leader>sC", "<cmd>FzfLua commands<cr>", desc = "Commands" },
-                { "<leader>sg", function() Utils.grep_from_here() end, desc = "Search" },
-                { "<leader>sr", "<cmd>FzfLua marks<cr>", desc = "Marks" },
-                { "<leader>ss", "<cmd>FzfLua spell_suggest<cr>", desc = "Spell candidate" },
-                { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Visual undo" },
-                { "<leader>sK", "<cmd>FzfLua keymaps<cr>", desc = "Keymaps" },
+                { "<leader>sc", function() Snacks.picker.command_history() end, desc = "Command History" },
+                { "<leader>sC", function() Snacks.picker.commands() end, desc = "Commands" },
+                { "<leader>sr", function() Snacks.picker.marks() end, desc = "Marks" },
+                { "<leader>ss", function() Snacks.picker.spelling() end, desc = "Spell candidate" },
+                { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo History" },
+                { "<leader>sK", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
 
                 -- <leader> t --- toggle
                 { "<leader>t", group = "Toggle" },
-                { "<leader>tc", function() Utils.toggle_opt("conceallevel") end, desc = "Conceal" },
+                { "<leader>tc", function() Snacks.toggle.option("conceallevel") end, desc = "Conceal" },
                 { "<leader>tC", "<cmd>ColorizerToggle<cr>", desc = "Rainbow color" },
-                { "<leader>td", function() Utils.toggle_diagnostics() end, desc = "Diagnostics" },
+                { "<leader>td", function() Snacks.toggle.diagnostics() end, desc = "Diagnostics" },
                 { "<leader>tf", function() Utils.toggle_autoformat() end, desc = "Auto format" },
-                { "<leader>th", function() Utils.toggle_inlay_hints() end, desc = "Inlay Hints", },
-                { "<leader>tl", function() Utils.toggle_line_number() end, desc = "Line numbers" },
-                { "<leader>tL", function() Utils.toggle_opt("relativenumber") end, desc = "Relative line numbers" },
-                { "<leader>ts", function() Utils.toggle_opt("spell") end, desc = "Spelling" },
-                { "<leader>tw", function() Utils.toggle_opt("wrap") end, desc = "Word wrap" },
-                { "<leader>tT", function() Utils.toggle_treesitter() end, desc = "Treesitter" },
+                { "<leader>th", function() Snacks.toggle.inlay_hints() end, desc = "Inlay Hints", },
+                { "<leader>tl", function() Snacks.toggle.line_number() end, desc = "Line numbers" },
+                { "<leader>tL", function() Snacks.toggle.option("relativenumber") end, desc = "Relative line numbers" },
+                { "<leader>ts", function() Snacks.toggle.option("spell") end, desc = "Spelling" },
+                { "<leader>tw", function() Snacks.toggle.option("wrap") end, desc = "Word wrap" },
+                { "<leader>tT", function() Snacks.toggle.treesitter() end, desc = "Treesitter" },
 
                 -- <leader> w --- window
                 { "<leader>w", group = "Window" },
@@ -134,10 +136,6 @@ return {
 
 
                 -- <leader> W --- Workspace
-                { "<leader>W", group = "Workspace" },
-                { "<leader>Wa", function() Utils.add_cwd_to_workspace() end, desc = "Add Workspace" },
-                { "<leader>Wx", function() Utils.remove_cwd_from_workspace() end, desc = "Remove Workspace" },
-                { "<leader>Ww", function() Utils.workspaces() end, desc = "Open Workspace" },
 
                 -- misc
                 { "<leader>m", "<cmd>MCstart<cr>", desc = "Multiple cursors", mode = "v" },

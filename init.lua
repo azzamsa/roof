@@ -1,9 +1,10 @@
+require("configs.options")
+
 -- Nvim package manager
 require("configs.lazy")
 
 require("configs.autocmds")
 require("configs.utils")
-require("configs.options")
 
 -- Colemak-DH keymap
 require("configs.keymaps")
