@@ -1,4 +1,3 @@
-local Path = require("configs.utils.path")
 local Utils = require("configs.utils")
 
 return {
@@ -35,9 +34,10 @@ return {
                 sections = {
                     { section = "header" },
                     {
+                        section = "terminal",
                         icon = " ",
-                        desc = "Practice, It's Practice, Practice.",
-                        padding = 2,
+                        cmd = "quotes",
+                        height = 2,
                         indent = 11,
                     },
                     { section = "keys", gap = 1, padding = 1 },

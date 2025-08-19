@@ -19,6 +19,3 @@
 ---
 --- Internal API
 ---
-
--- local quotes = require("etc.quotes").random()
--- print(quotes)
