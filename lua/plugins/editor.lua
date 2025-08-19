@@ -10,7 +10,40 @@ return {
         ---@type snacks.Config
         opts = {
             bigfile = { enabled = true },
-            dashboard = { enabled = true },
+            dashboard = {
+                enabled = true,
+                preset = {
+                    header = [[
+     ★ ✯   🛸        🪐   .°•
+         ° ★  •       🛰
+██████╗  ██████╗  ██████╗ ███████╗██╗
+██╔══██╗██╔═══██╗██╔═══██╗██╔════╝██║
+██████╔╝██║   ██║██║   ██║█████╗  ██║
+██╔══██╗██║   ██║██║   ██║██╔══╝  ╚═╝
+██║  ██║╚██████╔╝╚██████╔╝██║     ██╗
+╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝     ╚═╝]],
+
+                    -- stylua: ignore start
+                    keys = {
+                        { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+                        { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+                        { icon = " ", key = "p", desc = "Projects", action = ":lua Snacks.picker.projects()" },
+                        { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+                    },
+                    -- stylua: ignore end
+                },
+                sections = {
+                    { section = "header" },
+                    {
+                        icon = " ",
+                        desc = "Practice, It's Practice, Practice.",
+                        padding = 2,
+                        indent = 11,
+                    },
+                    { section = "keys", gap = 1, padding = 1 },
+                    { section = "startup" },
+                },
+            },
             explorer = { enabled = true },
             indent = {
                 enabled = true,
@@ -35,7 +68,7 @@ return {
             {
                 "<c-/>",
                 function()
-                    Utils.teminal_here()
+                    Utils.terminal()
                 end,
                 desc = "Toggle Terminal",
             },
@@ -68,9 +101,6 @@ return {
                         -- `C-c C-k` doesn't work
                         ["<c-c><c-g>"] = "Abort",
                         ["<c-c><c-k>"] = false,
-
-                        ["gi"] = "MoveUp", -- default: gk
-                        ["ge"] = "MoveDown", -- default: gj
                     },
                     status = {
                         ["s"] = "Stage",
@@ -102,142 +132,43 @@ return {
     },
     -- Dired for Nvim.
     {
-        "stevearc/oil.nvim",
+        "mikavilpas/yazi.nvim",
         event = "VeryLazy",
-        tag = "stable",
-        config = function()
-            require("oil").setup({
-                -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
-                delete_to_trash = true,
-                -- Skip the confirmation popup for simple operations
-                skip_confirm_for_simple_edits = false,
-                -- Selecting a new/moved/renamed file or directory will prompt you to save changes first
-                prompt_save_on_select_new_entry = true,
-                -- Set to false to disable all of the above keymaps
-                use_default_keymaps = true,
-                view_options = {
-                    sort = {
-                        -- sort order can be "asc" or "desc"
-                        -- see :help oil-columns to see which columns are sortable
-                        { "mtime", "desc" },
-                    },
-                },
-                keymaps = {
-                    ["<C-s>"] = "<cmd>w<cr><esc>",
-                },
-            })
-        end,
-    },
-    -- Fuzzy find things.
-    {
-        "nvim-telescope/telescope.nvim",
-        lazy = true,
-        cmd = "Telescope",
         dependencies = {
+            { "nvim-lua/plenary.nvim", lazy = true },
+        },
+        keys = {
+            -- 👇 in this section, choose your own keymappings!
             {
-                "nvim-telescope/telescope-fzf-native.nvim",
-                build = "make",
-                lazy = true,
+                "<leader>-",
+                mode = { "n", "v" },
+                "<cmd>Yazi<cr>",
+                desc = "Open yazi at the current file",
             },
             {
-                "debugloop/telescope-undo.nvim",
-                config = function()
-                    require("telescope").load_extension("undo")
-                end,
+                -- Open in the current working directory
+                "<leader>cw",
+                "<cmd>Yazi cwd<cr>",
+                desc = "Open the file manager in nvim's working directory",
+            },
+            {
+                "<c-up>",
+                "<cmd>Yazi toggle<cr>",
+                desc = "Resume the last yazi session",
             },
         },
-        config = function()
-            local icons = require("configs.icons")
-            local actions = require("telescope.actions")
-
-            local find_files_no_ignore = function()
-                local action_state = require("telescope.actions.state")
-                local line = action_state.get_current_line()
-                require("telescope.builtin").find_files({
-                    no_ignore = true,
-                    default_text = line,
-                })
-            end
-            local find_files_with_hidden = function()
-                local action_state = require("telescope.actions.state")
-                local line = action_state.get_current_line()
-                require("telescope.builtin").find_files({
-                    hidden = false,
-                    default_text = line,
-                })
-            end
-
-            require("telescope").setup({
-                defaults = {
-                    -- Ignore them; otherwise, they will pop up in `find_files`.
-                    file_ignore_patterns = { ".git" },
-                    prompt_prefix = icons.ui.Telescope .. " ",
-                    selection_caret = icons.ui.Forward .. " ",
-                    entry_prefix = "   ",
-                    initial_mode = "insert",
-                    selection_strategy = "reset",
-                    path_display = { "smart" },
-                    color_devicons = true,
-                    set_env = { ["COLORTERM"] = "truecolor" },
-                    sorting_strategy = nil,
-                    layout_strategy = nil,
-                    layout_config = {},
-                    vimgrep_arguments = {
-                        "rg",
-                        "--color=never",
-                        "--no-heading",
-                        "--with-filename",
-                        "--line-number",
-                        "--column",
-                        "--smart-case",
-                        "--hidden",
-                        "--glob=!.git/",
-                    },
-
-                    mappings = {
-                        i = {
-                            ["<a-i>"] = find_files_no_ignore,
-                            ["<a-h>"] = find_files_with_hidden,
-
-                            ["<C-Down>"] = actions.cycle_history_next,
-                            ["<C-Up>"] = actions.cycle_history_prev,
-                            ["<C-n>"] = actions.cycle_history_next,
-                            ["<C-p>"] = actions.cycle_history_prev,
-                        },
-                        n = {
-                            ["n"] = actions.move_selection_next,
-                            ["e"] = actions.move_selection_previous,
-                            ["<esc>"] = actions.close,
-                            ["q"] = actions.close,
-                        },
-                    },
-                    pickers = {
-                        find_files = {
-                            previewer = false,
-                        },
-                        buffers = {
-                            mappings = {
-                                i = {
-                                    ["<C-d>"] = actions.delete_buffer,
-                                },
-                                n = {
-                                    ["dd"] = actions.delete_buffer,
-                                },
-                            },
-                        },
-                    },
-                    extensions = {
-                        fzf = {
-                            fuzzy = true, -- false will only do exact matching
-                            override_generic_sorter = true, -- override the generic sorter
-                            override_file_sorter = true, -- override the file sorter
-                            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-                            theme = "ivy",
-                        },
-                        workspaces = {},
-                    },
-                },
-            })
+        opts = {
+            -- if you want to open yazi instead of netrw, see below for more info
+            open_for_directories = true,
+            keymaps = {
+                show_help = "<f1>",
+            },
+        },
+        -- 👇 if you use open_for_directories=true, this is recommended
+        init = function()
+            -- More details: https://github.com/mikavilpas/yazi.nvim/issues/802
+            -- vim.g.loaded_netrw = 1
+            vim.g.loaded_netrwPlugin = 1
         end,
     },
     -- Find and replace across files.
