@@ -36,7 +36,7 @@ return {
                     {
                         section = "terminal",
                         icon = " ",
-                        cmd = "quotes",
+                        cmd = "quotes -p -q",
                         height = 2,
                         indent = 11,
                     },
