@@ -158,9 +158,6 @@ return {
     {
         "mikavilpas/yazi.nvim",
         event = "VeryLazy",
-        dependencies = {
-            { "nvim-lua/plenary.nvim", lazy = true },
-        },
         opts = {
             -- if you want to open yazi instead of netrw, see below for more info
             open_for_directories = true,
@@ -233,13 +230,7 @@ return {
         "folke/flash.nvim",
         tag = "stable",
         event = "VeryLazy",
-        ---@type Flash.Config
         opts = {},
-    -- stylua: ignore
-    keys = {
-      {"gs", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash"},
-      {"gS", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter"},
-    },
     },
     -- Multiple cursors
     {
@@ -250,9 +241,6 @@ return {
         },
         opts = {},
         cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-        config = function()
-            require("multicursors").setup({})
-        end,
     },
     -- Super-save
     -- Save all files silently on focus lost or buffer leave

@@ -21,11 +21,6 @@ return {
     },
     {
         "jellydn/hurl.nvim",
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-        },
         ft = "hurl",
         opts = {
             -- Default formatter
@@ -42,7 +37,6 @@ return {
     {
         "wllfaria/ledger.nvim",
         -- tree sitter needs to be loaded before ledger.nvim loads
-        dependencies = { "nvim-treesitter/nvim-treesitter" },
         config = function()
             require("ledger").setup()
         end,

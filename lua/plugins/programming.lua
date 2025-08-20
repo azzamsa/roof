@@ -248,35 +248,6 @@ return {
             })
         end,
     },
-    -- Show symbols outline
-    {
-        "simrat39/symbols-outline.nvim",
-        cmd = "SymbolsOutline",
-        config = function()
-            require("symbols-outline").setup()
-        end,
-        opts = {
-            keymaps = {
-                fold = "z",
-                unfold = "Z",
-            },
-            lsp_blacklist = {},
-            symbol_blacklist = {},
-        },
-    },
-    -- Enhances commenting functionality.
-    {
-        "echasnovski/mini.comment",
-        event = "VeryLazy",
-        opts = {
-            options = {
-                custom_commentstring = function()
-                    return require("ts_context_commentstring.internal").calculate_commentstring()
-                        or vim.bo.commentstring
-                end,
-            },
-        },
-    },
     -- Treesitter support.
     {
         "nvim-treesitter/nvim-treesitter",
@@ -432,6 +403,35 @@ return {
                 require("lspconfig")[server].setup(server_opts)
             end
         end,
+    },
+    -- Show symbols outline
+    {
+        "simrat39/symbols-outline.nvim",
+        cmd = "SymbolsOutline",
+        config = function()
+            require("symbols-outline").setup()
+        end,
+        opts = {
+            keymaps = {
+                fold = "z",
+                unfold = "Z",
+            },
+            lsp_blacklist = {},
+            symbol_blacklist = {},
+        },
+    },
+    -- Enhances commenting functionality.
+    {
+        "echasnovski/mini.comment",
+        event = "VeryLazy",
+        opts = {
+            options = {
+                custom_commentstring = function()
+                    return require("ts_context_commentstring.internal").calculate_commentstring()
+                        or vim.bo.commentstring
+                end,
+            },
+        },
     },
     -- Automatically add closing tags for HTML and JSX
     {
@@ -661,8 +661,5 @@ return {
                 autocmd = { enabled = true },
             })
         end,
-    },
-    {
-        "aznhe21/actions-preview.nvim",
     },
 }

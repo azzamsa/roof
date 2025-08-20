@@ -19,15 +19,6 @@ return {
                 return ""
             end
 
-            local function ws_get_name()
-                local name = require("workspaces").name()
-                if name then
-                    return name
-                else
-                    return ""
-                end
-            end
-
             require("lualine").setup({
                 options = {
                     component_separators = { left = "", right = "" },
@@ -44,7 +35,7 @@ return {
                         -- Multi cursors
                         { mc_get_name, cond = mc_is_active },
                     },
-                    lualine_x = { "diagnostics", ws_get_name },
+                    lualine_x = { "diagnostics" },
                     lualine_y = { "filetype" },
                     lualine_z = { { "branch", icon = "" } },
                 },
@@ -64,7 +55,6 @@ return {
         "folke/noice.nvim",
         tag = "stable",
         event = "VeryLazy",
-        dependencies = {},
         config = function()
             require("noice").setup({
                 lsp = {
