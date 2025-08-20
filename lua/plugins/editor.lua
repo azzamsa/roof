@@ -35,10 +35,8 @@ return {
                     { section = "header" },
                     {
                         section = "terminal",
-                        icon = " ",
-                        cmd = "quotes -p -q",
+                        cmd = "quotes --period --quoted --emoji",
                         height = 2,
-                        indent = 11,
                     },
                     { section = "keys", gap = 1, padding = 1 },
                     { section = "startup" },
