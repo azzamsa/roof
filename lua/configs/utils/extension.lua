@@ -8,13 +8,6 @@ function M.live_grep(path)
     require("snacks").picker.grep({ dirs = { path } })
 end
 
-function M.terminal(path)
-    require("snacks").terminal.toggle("fish", {
-        direction = "float", -- optional, setting cmd means float anyway
-        cwd = path,
-    })
-end
-
 function M.vcs_status(path)
     require("neogit").open({ cwd = path })
 end

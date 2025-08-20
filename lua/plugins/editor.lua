@@ -1,4 +1,4 @@
-local Utils = require("configs.utils")
+local Path = require("configs.utils.path")
 
 return {
     -- 🍿 A collection of QoL plugins for Neovim.
@@ -44,7 +44,6 @@ return {
                     { section = "startup" },
                 },
             },
-            explorer = { enabled = true },
             indent = {
                 enabled = true,
                 only_scope = true, -- only show indent guides of the scope
@@ -57,22 +56,11 @@ return {
             picker = { enabled = true },
             quickfile = { enabled = true },
             scope = { enabled = true, only_current = true, only_scope = true },
-            scroll = { enabled = true },
-            statuscolumn = { enabled = true },
-            words = { enabled = true },
             styles = {
                 notification = {},
             },
         },
-        keys = {
-            {
-                "<c-/>",
-                function()
-                    Utils.terminal()
-                end,
-                desc = "Toggle Terminal",
-            },
-        },
+        keys = {},
     },
     -- Git time machine.
     {
@@ -130,32 +118,48 @@ return {
             },
         },
     },
+    --  Terminal
+    {
+        "akinsho/toggleterm.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("toggleterm").setup({
+                open_mapping = [[<c-/>]],
+                direction = "float",
+                float_opts = {
+                    border = "rounded",
+                },
+
+                -- Runs everytime ToggleTerm toggled
+                on_open = function(term)
+                    -- Can't use `require("configs.utils.file").path()` because it returns
+                    -- ToggleTerm buffer path instead of current buffer path.
+                    local path = Path.previous_dir()
+                    if path then
+                        path = Path.sanitize(path)
+                    else
+                        -- Fallback to home if no previous directory found
+                        path = "~/"
+                    end
+
+                    -- Use project root if available, otherwise use the plain path.
+                    -- Sometimes, I want to open the terminal in a non-project directory.
+                    path = Path.project_root_or_cwd(path)
+                    if path ~= term.dir then
+                        term:change_dir(path)
+                    end
+                    -- Start in insert mode
+                    vim.cmd("startinsert!")
+                end,
+            })
+        end,
+    },
     -- Dired for Nvim.
     {
         "mikavilpas/yazi.nvim",
         event = "VeryLazy",
         dependencies = {
             { "nvim-lua/plenary.nvim", lazy = true },
-        },
-        keys = {
-            -- 👇 in this section, choose your own keymappings!
-            {
-                "<leader>-",
-                mode = { "n", "v" },
-                "<cmd>Yazi<cr>",
-                desc = "Open yazi at the current file",
-            },
-            {
-                -- Open in the current working directory
-                "<leader>cw",
-                "<cmd>Yazi cwd<cr>",
-                desc = "Open the file manager in nvim's working directory",
-            },
-            {
-                "<c-up>",
-                "<cmd>Yazi toggle<cr>",
-                desc = "Resume the last yazi session",
-            },
         },
         opts = {
             -- if you want to open yazi instead of netrw, see below for more info
