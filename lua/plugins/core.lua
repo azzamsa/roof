@@ -25,6 +25,7 @@ return {
                 { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
 
                 { "<leader>x", function() Snacks.scratch() end, desc = "Toggle scratch buffer" },
+                { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
                 { "<leader>.", function() Utils.find_files_from_here() end, desc = "Find file from here" },
                 { "<leader>'", function() Snacks.picker.resume() end, desc = "Resume last search" },
                 { "<leader>,", function() Snacks.picker.buffers() end, desc = "Switch buffer" },
